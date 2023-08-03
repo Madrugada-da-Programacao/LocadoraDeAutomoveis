@@ -80,7 +80,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 				@"
                 DELETE FROM [DBO].[TBCliente];";
 
-			SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
+            SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
 
             sqlConnection.Open();
 
