@@ -1,4 +1,8 @@
+using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.WinApp.ModuloCliente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -84,7 +88,10 @@ namespace LocadoraDeAutomoveis.WinApp
 
 			// Usar os modelos de cima como base e inserir o codigo correto abaixo -----------------------------------
 
-
+			IRepositorioCliente RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
+			ValidadorCliente ValidadorCliente = new ValidadorCliente();
+			ServicoCliente ServicoCliente = new ServicoCliente(RepositorioCliente, ValidadorCliente);
+			controladores.Add("ControladorCliente", new ControladorCliente(RepositorioCliente, ServicoCliente));
 
 
 
@@ -120,7 +127,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
 		private void clienteMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(controladores["ControladorCliente"]);
 		}
 
 		private void condutorMenuItem_Click(object sender, EventArgs e)
@@ -218,7 +225,5 @@ namespace LocadoraDeAutomoveis.WinApp
 
 			panelRegistros.Controls.Add(listagemControl);
 		}
-
-
 	}
 }

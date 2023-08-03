@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.WinApp.Compartilhado
 {
 
-    public delegate Result GravarRegistroDelegate<TEntidade>(TEntidade disciplina)
+    public delegate Result GravarRegistroDelegate<TEntidade>(TEntidade registro)
         where TEntidade : EntidadeBase<TEntidade>;    
     
 }

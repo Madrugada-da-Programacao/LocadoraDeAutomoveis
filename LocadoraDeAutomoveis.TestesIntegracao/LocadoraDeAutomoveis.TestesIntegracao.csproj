@@ -21,4 +21,15 @@
     <PackageReference Include="NBuilder" Version="6.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LocadoraDeAutomoveis.Dominio\LocadoraDeAutomoveis.Dominio.csproj" />
+    <ProjectReference Include="..\LocadoraDeAutomoveis.Infra.Orm\LocadoraDeAutomoveis.Infra.Orm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,16 @@
-﻿namespace LocadoraDeAutomoveis.Dominio
+﻿using SequentialGuid;
+
+namespace LocadoraDeAutomoveis.Dominio
 {
     public abstract class EntidadeBase<T>
     {
-        public int Id { get; set; }        
+        public Guid Id { get; set; }
 
-        public abstract void Atualizar(T registro);
+		public EntidadeBase()
+		{
+			Id = SequentialGuidGenerator.Instance.NewGuid();
+		}
+
+		public abstract void Atualizar(T registro);
     }
 }

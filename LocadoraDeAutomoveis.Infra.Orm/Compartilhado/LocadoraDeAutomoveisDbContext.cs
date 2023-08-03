@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Reflection;
 
@@ -64,6 +65,15 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
 
             modelBuilder.ApplyConfiguration(new MapeadorTesteOrm());
             */
+
+
+
+
+
+            modelBuilder.ApplyConfiguration(new MapeadorClienteOrm());
+
+
+
 
             Assembly assembly = typeof(LocadoraDeAutomoveisDbContext).Assembly;
 

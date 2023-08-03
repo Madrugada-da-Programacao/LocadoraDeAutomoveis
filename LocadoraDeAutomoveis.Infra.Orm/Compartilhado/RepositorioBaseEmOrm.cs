@@ -21,7 +21,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
             dbContext.SaveChanges();
         }
 
-        public void Editar(T registro)
+        public virtual void Editar(T registro)
         {
             registros.Update(registro);
 
@@ -40,7 +40,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
             return registros.Contains(registro);
         }
       
-        public T? SelecionarPorId(int id)
+        public T? SelecionarPorId(Guid id)
         {
             return registros.Find(id);
         }
