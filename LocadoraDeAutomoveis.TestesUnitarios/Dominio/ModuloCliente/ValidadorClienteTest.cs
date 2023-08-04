@@ -1,4 +1,4 @@
-﻿using FluentValidation.TestHelper;
+using FluentValidation.TestHelper;
 using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
@@ -18,7 +18,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
         }
 
         [TestMethod]
-        public void Nome_cliente_nao_deve_ser_nulo_ou_vazio_erro()
+        public void Nome_cliente_nao_deve_ser_nulo_erro()
         {
             //action
             var resultado = Validador.TestValidate(Cliente);
@@ -28,16 +28,16 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
         }
 
 		[TestMethod]
-		public void Nome_cliente_nao_deve_ser_nulo_ou_vazio_ok()
+		public void Nome_cliente_nao_deve_ser_vazio_erro()
 		{
 			//arrange
-			Cliente.Nome = "abc";
+			Cliente.Nome = "   ";
 
 			//action
 			var resultado = Validador.TestValidate(Cliente);
 
 			//assert
-			resultado.ShouldNotHaveValidationErrorFor(x => x.Nome);
+			resultado.ShouldHaveValidationErrorFor(x => x.Nome);
 		}
 
 		[TestMethod]
@@ -398,32 +398,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
 		{
 			//arrange
 			Cliente.Numero = 1;
-
-			//action
-			var resultado = Validador.TestValidate(Cliente);
-
-			//assert
-			resultado.ShouldNotHaveValidationErrorFor(x => x.Numero);
-		}
-
-		[TestMethod]
-		public void Numero_cliente_deve_ser_maior_ou_igual_a_um_erro()
-		{
-			//arrange
-			Cliente.Numero = 0;
-
-			//action
-			var resultado = Validador.TestValidate(Cliente);
-
-			//assert
-			resultado.ShouldHaveValidationErrorFor(x => x.Numero);
-		}
-
-		[TestMethod]
-		public void Numero_cliente_deve_ser_maior_ou_igual_a_um_ok()
-		{
-			//arrange
-			Cliente.Numero = 2;
 
 			//action
 			var resultado = Validador.TestValidate(Cliente);

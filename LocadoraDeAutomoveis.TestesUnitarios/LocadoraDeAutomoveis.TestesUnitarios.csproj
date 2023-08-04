@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LocadoraDeAutomoveis.Aplicacao\LocadoraDeAutomoveis.Aplicacao.csproj" />
     <ProjectReference Include="..\LocadoraDeAutomoveis.Dominio\LocadoraDeAutomoveis.Dominio.csproj" />
   </ItemGroup>
 
