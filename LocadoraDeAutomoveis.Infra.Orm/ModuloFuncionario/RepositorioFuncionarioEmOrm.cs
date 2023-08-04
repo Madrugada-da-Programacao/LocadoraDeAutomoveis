@@ -7,5 +7,10 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario
         public RepositorioFuncionarioEmOrm(LocadoraDeAutomoveisDbContext dbContext) : base(dbContext)
         {
         }
+
+        public Funcionario SelecionarPorNome(string nome)
+        {
+            return registros.FirstOrDefault(x => x.Nome == nome);
+        }
     }
 }

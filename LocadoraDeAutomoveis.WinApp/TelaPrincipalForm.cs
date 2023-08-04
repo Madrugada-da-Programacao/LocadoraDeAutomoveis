@@ -1,7 +1,9 @@
 using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -92,10 +94,14 @@ namespace LocadoraDeAutomoveis.WinApp
 			ValidadorCliente ValidadorCliente = new ValidadorCliente();
 			ServicoCliente ServicoCliente = new ServicoCliente(RepositorioCliente, ValidadorCliente);
 			controladores.Add("ControladorCliente", new ControladorCliente(RepositorioCliente, ServicoCliente));
+			/*
+            IRepositorioFuncionario RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+            ValidadorFuncionario ValidadorFuncionario = new ValidadorFuncionario();
+            ServicoFuncionario ServicoFuncionario = new ServicoFuncionario(RepositorioFuncionario, ValidadorFuncionario);
+            controladores.Add("ControladorFuncionario", new ControladorFuncionario(RepositorioFuncionario, ServicoFuncionario));
+			*/
 
-
-
-		}
+        }
 
 		public static TelaPrincipalForm Instancia
 		{

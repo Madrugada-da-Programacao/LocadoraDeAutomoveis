@@ -69,6 +69,26 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 
                     b.ToTable("TBCliente", (string)null);
                 });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloFuncionario.Funcionario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DataAdmissao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Salario")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBFuncionario", (string)null);
+                });
 #pragma warning restore 612, 618
         }
     }
