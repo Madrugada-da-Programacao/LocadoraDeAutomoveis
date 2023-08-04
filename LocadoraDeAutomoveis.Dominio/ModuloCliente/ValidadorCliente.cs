@@ -71,10 +71,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 
 			RuleFor(x => x.Numero)
 				.NotEmpty()
-				.NotNull()
-				.GreaterThanOrEqualTo(1)
-				.WithMessage("Numero deve ser maior ou igual a 1.");
-
+				.NotNull();
 		}
 	}
 }

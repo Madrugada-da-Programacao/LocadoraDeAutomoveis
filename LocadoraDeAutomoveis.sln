@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.WinApp", "LocadoraDeAutomoveis.WinApp\LocadoraDeAutomoveis.WinApp.csproj", "{D6BBAE44-CED4-4D1E-8D5B-7CE4DDCD97D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.WinApp", "LocadoraDeAutomoveis.WinApp\LocadoraDeAutomoveis.WinApp.csproj", "{D6BBAE44-CED4-4D1E-8D5B-7CE4DDCD97D5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC} = {7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}
 		{E7E5D10E-E893-42F7-B7FC-1EF61C230A9D} = {E7E5D10E-E893-42F7-B7FC-1EF61C230A9D}
@@ -13,14 +13,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Apresentação", "1. Apr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Aplicação", "2. Aplicação", "{E9D31523-5228-4C45-9C9C-0B4113B753AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Aplicacao", "LocadoraDeAutomoveis.Aplicacao\LocadoraDeAutomoveis.Aplicacao.csproj", "{E7E5D10E-E893-42F7-B7FC-1EF61C230A9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.Aplicacao", "LocadoraDeAutomoveis.Aplicacao\LocadoraDeAutomoveis.Aplicacao.csproj", "{E7E5D10E-E893-42F7-B7FC-1EF61C230A9D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18} = {B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domínio", "3. Domínio", "{F2EB01FB-3056-4680-BE7E-F68035E2397E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Dominio", "LocadoraDeAutomoveis.Dominio\LocadoraDeAutomoveis.Dominio.csproj", "{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.Dominio", "LocadoraDeAutomoveis.Dominio\LocadoraDeAutomoveis.Dominio.csproj", "{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infra", "4. Infra", "{1D628328-3BF8-4DEC-B3BF-7EAEECC12DAD}"
 EndProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Banco de Dados", "Banco de 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orm", "Orm", "{CFDBF197-C84D-4207-AB5D-777C22621A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.Infra.Orm", "LocadoraDeAutomoveis.Infra.Orm\LocadoraDeAutomoveis.Infra.Orm.csproj", "{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.Infra.Orm", "LocadoraDeAutomoveis.Infra.Orm\LocadoraDeAutomoveis.Infra.Orm.csproj", "{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18} = {B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}
 	EndProjectSection
@@ -39,13 +39,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.1 UnitTests", "5.1 UnitTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2 IntegrationTests", "5.2 IntegrationTests", "{952F89C3-FA97-46BB-B426-9E4B74CA2996}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.TestesUnitarios", "LocadoraDeAutomoveis.TestesUnitarios\LocadoraDeAutomoveis.TestesUnitarios.csproj", "{5C94869A-FDC3-4EC1-BBB4-730C5A56BB4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.TestesUnitarios", "LocadoraDeAutomoveis.TestesUnitarios\LocadoraDeAutomoveis.TestesUnitarios.csproj", "{5C94869A-FDC3-4EC1-BBB4-730C5A56BB4C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC} = {7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}
 		{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18} = {B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}
+		{E7E5D10E-E893-42F7-B7FC-1EF61C230A9D} = {E7E5D10E-E893-42F7-B7FC-1EF61C230A9D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.TestesIntegracao", "LocadoraDeAutomoveis.TestesIntegracao\LocadoraDeAutomoveis.TestesIntegracao.csproj", "{D4417FE6-A04C-43C9-A503-0BB225C0F482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.TestesIntegracao", "LocadoraDeAutomoveis.TestesIntegracao\LocadoraDeAutomoveis.TestesIntegracao.csproj", "{D4417FE6-A04C-43C9-A503-0BB225C0F482}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC} = {7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}
 		{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18} = {B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}
@@ -55,7 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.1 Acesso a Dados", "4.1 A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.3 Massa de Dados", "4.3 Massa de Dados", "{1C52BE6F-6023-4D59-9095-FD5CED08B519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocadoraDeAutomoveis.MassaDados", "LocadoraDeAutomoveis.MassaDados\LocadoraDeAutomoveis.MassaDados.csproj", "{A3D5F7C5-3E2F-488B-85AF-6B8D3F537D91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocadoraDeAutomoveis.MassaDados", "LocadoraDeAutomoveis.MassaDados\LocadoraDeAutomoveis.MassaDados.csproj", "{A3D5F7C5-3E2F-488B-85AF-6B8D3F537D91}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC} = {7F0D2A59-87DF-4E6F-9AEF-04CFD0B456EC}
 		{B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18} = {B393D9CE-5B67-40D6-B5DF-1ECBDA9C2B18}

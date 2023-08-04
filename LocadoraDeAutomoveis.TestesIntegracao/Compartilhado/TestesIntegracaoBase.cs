@@ -18,11 +18,9 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 
         public TestesIntegracaoBase()
         {
-			InicializarOBanco();
-
 			LimparTabelas();
 
-			string connectionString = ObterConnectionString();
+			string? connectionString = ObterConnectionString();
 
 			var optionsBuilder = new DbContextOptionsBuilder<LocadoraDeAutomoveisDbContext>();
 
@@ -30,23 +28,30 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 
 			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
 
-			var migracoesPendentes = dbContext.Database.GetPendingMigrations();
-
-			if (migracoesPendentes.Count() > 0)
-			{
-				dbContext.Database.Migrate();
-			}
-
-
-
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 
-            BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
+			BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
+		}
 
-            RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+		protected static void LimparTabelas()
+		{
+			string? connectionString = ObterConnectionString();
 
-            BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
-        }
+			SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+			string sqlLimpezaTabela =
+                @"
+                DELETE FROM [DBO].[TBCliente];
+				DELETE FROM [DBO].[TBFUNCIONARIO];";
+
+            SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
+
+			sqlConnection.Open();
+
+			comando.ExecuteNonQuery();
+
+			sqlConnection.Close();
+		}
 
 		protected static string? ObterConnectionString()
 		{
@@ -58,43 +63,5 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			var connectionString = configuracao.GetConnectionString("SqlServer");
 			return connectionString;
 		}
-
-		protected static void InicializarOBanco()
-		{
-			var connectionString = ObterConnectionString();
-
-			var optionsBuilder = new DbContextOptionsBuilder<LocadoraDeAutomoveisDbContext>();
-
-			optionsBuilder.UseSqlServer(connectionString);
-
-			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
-
-			var migracoesPendentes = dbContext.Database.GetPendingMigrations();
-
-			if (migracoesPendentes.Count() > 0)
-			{
-				dbContext.Database.Migrate();
-			}
-		}
-
-		protected static void LimparTabelas()
-        {
-            string? connectionString = ObterConnectionString();
-
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
-
-			string sqlLimpezaTabela =
-                @"
-                DELETE FROM [DBO].[TBCliente];
-				DELETE FROM [DBO].[TBFUNCIONARIO];";
-
-            SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
-
-            sqlConnection.Open();
-
-            comando.ExecuteNonQuery();
-
-            sqlConnection.Close();
-        }
-    }
+	}
 }

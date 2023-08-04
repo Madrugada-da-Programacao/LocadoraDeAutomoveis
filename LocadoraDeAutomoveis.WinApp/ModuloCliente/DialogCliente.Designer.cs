@@ -252,10 +252,12 @@
 			// numericUpDownNumero
 			// 
 			numericUpDownNumero.Location = new Point(109, 504);
-			numericUpDownNumero.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+			numericUpDownNumero.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+			numericUpDownNumero.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
 			numericUpDownNumero.Name = "numericUpDownNumero";
 			numericUpDownNumero.Size = new Size(120, 23);
 			numericUpDownNumero.TabIndex = 10;
+			numericUpDownNumero.Value = new decimal(new int[] { 1, 0, 0, 0 });
 			// 
 			// maskedtxtCPF
 			// 
