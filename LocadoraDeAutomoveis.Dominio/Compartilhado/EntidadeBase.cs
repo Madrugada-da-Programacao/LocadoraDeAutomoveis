@@ -11,6 +11,9 @@ namespace LocadoraDeAutomoveis.Dominio
 			Id = SequentialGuidGenerator.Instance.NewGuid();
 		}
 
-		public abstract void Atualizar(T registro);
+		public virtual void Atualizar(T registro)
+		{
+
+		}
     }
 }

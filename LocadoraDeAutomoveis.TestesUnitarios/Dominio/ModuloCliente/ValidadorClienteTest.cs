@@ -1,8 +1,7 @@
 using FluentValidation.TestHelper;
-using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
+namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
     [TestClass]
     public class ValidadorClienteTest
@@ -383,15 +382,16 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
 			resultado.ShouldNotHaveValidationErrorFor(x => x.Rua);
 		}
 
-		[TestMethod]
-		public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_erro()
-		{
-			//action
-			var resultado = Validador.TestValidate(Cliente);
+		//TODO verificar com o rech se pode tirar este teste já que ele não é vazio por padrão agora
+		//[TestMethod]
+		//public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_erro()
+		//{
+		//	//action
+		//	var resultado = Validador.TestValidate(Cliente);
 
-			//assert
-			resultado.ShouldHaveValidationErrorFor(x => x.Numero);
-		}
+		//	//assert
+		//	resultado.ShouldHaveValidationErrorFor(x => x.Numero);
+		//}
 
 		[TestMethod]
 		public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_ok()

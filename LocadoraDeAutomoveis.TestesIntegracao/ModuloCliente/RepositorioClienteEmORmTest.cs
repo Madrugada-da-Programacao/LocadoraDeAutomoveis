@@ -1,6 +1,6 @@
 using FizzWare.NBuilder;
 using FluentAssertions;
-using LocadoraDeAutomoveis.Dominio;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloDisciplina
 {
@@ -27,7 +27,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloDisciplina
             var clienteId = Builder<Cliente>.CreateNew().Persist().Id;
 
             var cliente = RepositorioCliente.SelecionarPorId(clienteId);
-            cliente.Nome = "Ricardo";
+            cliente!.Nome = "Ricardo";
 
             //action
             RepositorioCliente.Editar(cliente);

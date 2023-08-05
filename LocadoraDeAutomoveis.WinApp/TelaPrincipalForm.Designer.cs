@@ -130,8 +130,8 @@
 			taxasEServicosMenuItem.Name = "taxasEServicosMenuItem";
 			taxasEServicosMenuItem.ShortcutKeys = Keys.F8;
 			taxasEServicosMenuItem.Size = new Size(209, 22);
-			taxasEServicosMenuItem.Text = "Taxas e Servicos";
-			taxasEServicosMenuItem.Click += taxasEServicosMenuItem_Click;
+			taxasEServicosMenuItem.Text = "Taxas ou Servicos";
+			taxasEServicosMenuItem.Click += taxasOuServicosMenuItem_Click;
 			// 
 			// toolbox
 			// 

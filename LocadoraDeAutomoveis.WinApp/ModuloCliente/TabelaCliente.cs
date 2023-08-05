@@ -1,6 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Dominio;
-using System.ComponentModel;
-using System.Drawing.Drawing2D;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 {
