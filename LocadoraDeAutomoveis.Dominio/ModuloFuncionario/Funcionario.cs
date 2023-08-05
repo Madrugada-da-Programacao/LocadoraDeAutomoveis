@@ -14,16 +14,14 @@
             Salario = salario;
         }
 
-        public Funcionario(Guid id, string nome, DateTime dataAdmissao, int salario)
+        public Funcionario(Guid id, string nome, DateTime dataAdmissao, int salario) : this(nome, dataAdmissao, salario)
         {
             Id = id;
-            Nome = nome;
-            DataAdmissao = dataAdmissao;
-            Salario = salario;
         }
 
         public Funcionario()
-        { }
+        {
+        }
 
         public override void Atualizar(Funcionario registro)
         {

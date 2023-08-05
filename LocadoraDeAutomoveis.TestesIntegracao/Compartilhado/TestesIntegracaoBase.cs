@@ -30,8 +30,12 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 
-			BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
-		}
+            RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+
+            BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
+
+            BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
+        }
 
 		protected static void LimparTabelas()
 		{
