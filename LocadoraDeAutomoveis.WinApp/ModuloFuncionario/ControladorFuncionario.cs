@@ -30,6 +30,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
             funcionario.DataAdmissao = DateTime.Now;
 
+            funcionario.Salario = 1;
+
             dialog.Funcionario = funcionario;
 
             DialogResult resultado = dialog.ShowDialog();

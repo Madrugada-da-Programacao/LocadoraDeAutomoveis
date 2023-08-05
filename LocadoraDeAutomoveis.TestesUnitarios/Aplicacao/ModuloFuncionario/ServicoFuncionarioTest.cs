@@ -12,7 +12,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
     public class ServicoFuncionarioTest
     {
         Mock<IRepositorioFuncionario> repositorioFuncionarioMoq;
-        Mock<IValidadorFuncionario> validadorMoq;
+        Mock<IValidadorFuncionario> validodorMoq;
 
         private ServicoFuncionario servicoFuncionario;
 
@@ -21,13 +21,13 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         public ServicoFuncionarioTest()
         {
             repositorioFuncionarioMoq = new Mock<IRepositorioFuncionario>();
-            validadorMoq = new Mock<IValidadorFuncionario>();
-            servicoFuncionario = new ServicoFuncionario(repositorioFuncionarioMoq.Object, validadorMoq.Object);
+            validodorMoq = new Mock<IValidadorFuncionario>();
+            servicoFuncionario = new ServicoFuncionario(repositorioFuncionarioMoq.Object, validodorMoq.Object);
             funcionario = new Funcionario("João", Convert.ToDateTime("20/02/2022"), 555);
         }
 
         [TestMethod]
-        public void Deve_inserir_funcionario_caso_ela_for_valida() //cenário 1
+        public void Deve_inserir_funcionario_caso_ele_for_valido() //cenário 1
         {
             //arrange
             funcionario = new Funcionario("João", Convert.ToDateTime("20/02/2022"), 555);
@@ -41,10 +41,10 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         }
 
         [TestMethod]
-        public void Nao_deve_inserir_funcionario_caso_ela_seja_invalida() //cenário 2
+        public void Nao_deve_inserir_funcionario_caso_ele_seja_invalido() //cenário 2
         {
             //arrange
-            validadorMoq.Setup(x => x.Validate(It.IsAny<Funcionario>()))
+            validodorMoq.Setup(x => x.Validate(It.IsAny<Funcionario>()))
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
@@ -99,7 +99,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 
 
         [TestMethod]
-        public void Deve_editar_funcionario_caso_ela_for_valida() //cenário 1
+        public void Deve_editar_funcionario_caso_ele_for_valido() //cenário 1
         {
             //arrange           
             funcionario = new Funcionario(Guid.NewGuid(), "João", Convert.ToDateTime("20/02/2022"), 555);
@@ -113,10 +113,10 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         }
 
         [TestMethod]
-        public void Nao_deve_editar_funcionario_caso_ela_seja_invalida() //cenário 2
+        public void Nao_deve_editar_funcionario_caso_ele_seja_invalido() //cenário 2
         {
             //arrange
-            validadorMoq.Setup(x => x.Validate(It.IsAny<Funcionario>()))
+            validodorMoq.Setup(x => x.Validate(It.IsAny<Funcionario>()))
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
@@ -195,7 +195,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 
 
         [TestMethod]
-        public void Deve_excluir_funcionario_caso_ela_esteja_cadastrada() //cenário 1
+        public void Deve_excluir_funcionario_caso_ele_esteja_cadastrada() //cenário 1
         {
             //arrange
             var funcionario = new Funcionario(Guid.NewGuid(), "João", Convert.ToDateTime("20/02/2022"), 555);
@@ -215,7 +215,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         }
 
         [TestMethod]
-        public void Nao_deve_excluir_funcionario_caso_ela_nao_esteja_cadastrada() //cenário 2
+        public void Nao_deve_excluir_funcionario_caso_ele_nao_esteja_cadastrada() //cenário 2
         {
             //arrange
 
@@ -236,7 +236,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         }
 /*TODO 
         [TestMethod]
-        public void Nao_deve_excluir_funcionario_caso_ela_esteja_relacionada_com_materia() //cenário 3
+        public void Nao_deve_excluir_funcionario_caso_ele_esteja_relacionada_com_materia() //cenário 3
         {
             var funcionario = new Funcionario(Guid.NewGuid(), "Matemática");
 

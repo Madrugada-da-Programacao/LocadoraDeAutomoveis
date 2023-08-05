@@ -12,7 +12,9 @@
 
             RuleFor(x => x.DataAdmissao)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .LessThan(p => DateTime.Now)
+                .WithMessage("'Data de Admissão' deve estar no passado");
 
             RuleFor(x => x.Salario)
                 .NotEmpty()

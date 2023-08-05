@@ -25,6 +25,8 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloFuncionario
 
             //assert
             resultado.ShouldHaveValidationErrorFor(x => x.Nome);
+
+            DateTime reslt;
         }
 
         [TestMethod]

@@ -125,12 +125,23 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
             if (NomeDuplicado(registro))
                 erros.Add($"Este nome '{registro.Nome}' já está sendo utilizado");
 
+            if (DataNoFuturo(registro))
+                erros.Add("A Data de Admissão precisa estar no passado");
+
             foreach (string erro in erros)
             {
                 Log.Warning(erro);
             }
 
             return erros;
+        }
+
+        private bool DataNoFuturo(Funcionario registro)
+        {
+            if (registro.DataAdmissao > DateTime.Now)
+                return true;
+
+            return false;
         }
 
         private bool NomeDuplicado(Funcionario funcionario)
