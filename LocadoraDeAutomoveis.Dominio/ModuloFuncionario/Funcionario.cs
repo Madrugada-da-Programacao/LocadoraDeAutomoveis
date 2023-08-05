@@ -22,6 +22,9 @@
             Salario = salario;
         }
 
+        public Funcionario()
+        { }
+
         public override void Atualizar(Funcionario registro)
         {
             throw new NotImplementedException();

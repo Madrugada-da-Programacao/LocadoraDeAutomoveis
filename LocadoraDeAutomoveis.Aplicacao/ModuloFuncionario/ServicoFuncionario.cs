@@ -123,7 +123,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
                 erros.AddRange(resultadoValidacao.Errors.Select(x => x.ErrorMessage));
 
             if (NomeDuplicado(registro))
-                erros.Add($"Este nome '{registro.Nome}' com este tipo de funcionario {registro.TipoFuncionario}já está sendo utilizado");
+                erros.Add($"Este nome '{registro.Nome}' já está sendo utilizado");
 
             foreach (string erro in erros)
             {

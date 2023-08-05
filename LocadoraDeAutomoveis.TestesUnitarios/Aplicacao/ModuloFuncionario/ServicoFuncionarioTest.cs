@@ -8,6 +8,7 @@ using Moq;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 {
+    [TestClass]
     public class ServicoFuncionarioTest
     {
         Mock<IRepositorioFuncionario> repositorioFuncionarioMoq;
@@ -135,21 +136,23 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         public void Deve_editar_funcionario_com_o_mesmo_nome() //cenário 3
         {
             //arrange
+            Guid id = Guid.NewGuid();
+
             repositorioFuncionarioMoq.Setup(x => x.SelecionarPorNome("João"))
                  .Returns(() =>
                  {
-                     return new Funcionario(Guid.NewGuid(), "João", Convert.ToDateTime("20/02/2022"), 555);
+                     return new Funcionario(id, "João", Convert.ToDateTime("20/02/2022"), 555);
                  });
 
-            Funcionario outraFuncionario = new Funcionario(Guid.NewGuid(), "João", Convert.ToDateTime("20/02/2022"), 555);
+            Funcionario outroFuncionario = new Funcionario(id, "João", Convert.ToDateTime("20/02/2022"), 555);
 
             //action
-            var resultado = servicoFuncionario.Editar(outraFuncionario);
+            var resultado = servicoFuncionario.Editar(outroFuncionario);
 
             //assert 
             resultado.Should().BeSuccess();
 
-            repositorioFuncionarioMoq.Verify(x => x.Editar(outraFuncionario), Times.Once());
+            repositorioFuncionarioMoq.Verify(x => x.Editar(outroFuncionario), Times.Once());
         }
 
         [TestMethod]
@@ -272,7 +275,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         [TestMethod]
         public void Deve_tratar_erro_caso_ocorra_falha_ao_tentar_excluir_funcionario() //cenário 4
         {
-            var funcionario = new Funcionario(Guid.NewGuid(), "Matemática");
+            var funcionario = new Funcionario(Guid.NewGuid(), "João", Convert.ToDateTime("20/02/2022"), 555);
 
             repositorioFuncionarioMoq.Setup(x => x.Existe(funcionario))
               .Throws(() =>
