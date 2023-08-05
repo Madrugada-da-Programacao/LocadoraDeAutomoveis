@@ -42,7 +42,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(60, 60);
+            label1.Location = new Point(60, 55);
             label1.Name = "label1";
             label1.Size = new Size(43, 15);
             label1.TabIndex = 0;
@@ -50,14 +50,14 @@
             // 
             // txtNome
             // 
-            txtNome.Location = new Point(109, 57);
+            txtNome.Location = new Point(109, 52);
             txtNome.Name = "txtNome";
             txtNome.Size = new Size(200, 23);
             txtNome.TabIndex = 1;
             // 
             // dtpAdmissao
             // 
-            dtpAdmissao.Location = new Point(33, 83);
+            dtpAdmissao.Location = new Point(33, 80);
             dtpAdmissao.Name = "dtpAdmissao";
             dtpAdmissao.RightToLeft = RightToLeft.No;
             dtpAdmissao.Size = new Size(70, 36);
@@ -70,13 +70,13 @@
             txtAdmissao.Format = DateTimePickerFormat.Short;
             txtAdmissao.Location = new Point(109, 88);
             txtAdmissao.Name = "txtAdmissao";
-            txtAdmissao.Size = new Size(200, 23);
+            txtAdmissao.Size = new Size(107, 23);
             txtAdmissao.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(60, 123);
+            label2.Location = new Point(58, 123);
             label2.Name = "label2";
             label2.Size = new Size(45, 15);
             label2.TabIndex = 4;
@@ -87,7 +87,7 @@
             txtSalario.Location = new Point(109, 121);
             txtSalario.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             txtSalario.Name = "txtSalario";
-            txtSalario.Size = new Size(200, 23);
+            txtSalario.Size = new Size(107, 23);
             txtSalario.TabIndex = 5;
             txtSalario.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
@@ -126,7 +126,7 @@
             Controls.Add(txtNome);
             Controls.Add(label1);
             Name = "DialogFuncionario";
-            Text = "DialogFuncionario";
+            Text = "Cadastro de Funcionario";
             ((System.ComponentModel.ISupportInitialize)txtSalario).EndInit();
             ResumeLayout(false);
             PerformLayout();
