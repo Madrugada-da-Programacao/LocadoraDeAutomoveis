@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 {
     [DbContext(typeof(LocadoraDeAutomoveisDbContext))]
-    [Migration("20230803033747_ModuloCliente")]
-    partial class ModuloCliente
+    [Migration("20230803181126_Add-TBCliente")]
+    partial class AddTBCliente
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,26 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBCliente", (string)null);
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloFuncionario.Funcionario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DataAdmissao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Salario")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TBFuncionario", (string)null);
                 });
 #pragma warning restore 612, 618
         }
