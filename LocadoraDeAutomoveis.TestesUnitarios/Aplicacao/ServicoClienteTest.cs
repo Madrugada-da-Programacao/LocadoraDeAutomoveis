@@ -3,9 +3,7 @@ using FluentResults;
 using FluentResults.Extensions.FluentAssertions;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
-using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
-using Microsoft.Win32;
 using Moq;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
@@ -14,17 +12,17 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     public class ServicoClienteTest
     {
         Mock<IRepositorioCliente> RepositorioClienteMoq { get; set; }
-        Mock<IValidadorCliente> ValidadorDisciplinaMoq { get; set; }
+        Mock<IValidadorCliente> ValidadorClienteMoq { get; set; }
 
         private ServicoCliente ServicoCliente { get; set; }
 
-        Cliente Cliente { get; set; }
+		Cliente Cliente { get; set; }
 
         public ServicoClienteTest()
         {
             RepositorioClienteMoq = new Mock<IRepositorioCliente>();
-            ValidadorDisciplinaMoq = new Mock<IValidadorCliente>();
-            ServicoCliente = new ServicoCliente(RepositorioClienteMoq.Object, ValidadorDisciplinaMoq.Object);
+            ValidadorClienteMoq = new Mock<IValidadorCliente>();
+            ServicoCliente = new ServicoCliente(RepositorioClienteMoq.Object, ValidadorClienteMoq.Object);
             Cliente = new Cliente("Bob"
 								 ,Cliente.TipoDeCliente.PessoaFisica
 								 ,"000.000.000-00"
@@ -64,7 +62,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         public void Nao_deve_inserir_cliente_caso_ele_seja_invalido() //cenário 2
         {
             //arrange
-            ValidadorDisciplinaMoq.Setup(x => x.Validate(It.IsAny<Cliente>()))
+            ValidadorClienteMoq.Setup(x => x.Validate(It.IsAny<Cliente>()))
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
@@ -189,7 +187,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         public void Nao_deve_editar_cliente_caso_ele_seja_invalido() //cenário 2
         {
             //arrange
-            ValidadorDisciplinaMoq.Setup(x => x.Validate(It.IsAny<Cliente>()))
+            ValidadorClienteMoq.Setup(x => x.Validate(It.IsAny<Cliente>()))
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
@@ -206,7 +204,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         }
 
         [TestMethod]
-        public void Deve_editar_disciplina_com_o_mesmo_nome() //cenário 3
+        public void Deve_editar_cliente_com_o_mesmo_nome() //cenário 3
         {
             //arrange
             Guid id = Guid.NewGuid();
@@ -229,7 +227,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 									  ,1);
 				 });
 
-            Cliente outraDisciplina = new Cliente(id
+            Cliente outroCliente = new Cliente(id
 									            , nomeCliente
 									            , tipoDeCliente
 									            , "00.000.000/0000-00"
@@ -242,12 +240,12 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 									            , 1);
 
 			//action
-			var resultado = ServicoCliente.Editar(outraDisciplina);
+			var resultado = ServicoCliente.Editar(outroCliente);
 
             //assert 
             resultado.Should().BeSuccess();
 
-            RepositorioClienteMoq.Verify(x => x.Editar(outraDisciplina), Times.Once());
+            RepositorioClienteMoq.Verify(x => x.Editar(outroCliente), Times.Once());
         }
 
         [TestMethod]
@@ -272,7 +270,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 									  , 1);
 				 });
 
-            Cliente novaDisciplina = new Cliente(nomeCliente
+            Cliente novoCliente = new Cliente(nomeCliente
 									          , tipoDeCliente
 									          , "00.000.000/0000-00"
 									          , "exemplo@exemplo.exemplo"
@@ -284,12 +282,12 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 									          , 1); ;
 
             //action
-            var resultado = ServicoCliente.Editar(novaDisciplina);
+            var resultado = ServicoCliente.Editar(novoCliente);
 
             //assert 
             resultado.Should().BeFailure();
 
-            RepositorioClienteMoq.Verify(x => x.Editar(novaDisciplina), Times.Never());
+            RepositorioClienteMoq.Verify(x => x.Editar(novoCliente), Times.Never());
         }
 
         [TestMethod]
@@ -311,10 +309,10 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 
 
         [TestMethod]
-        public void Deve_excluir_disciplina_caso_ela_esteja_cadastrada() //cenário 1
+        public void Deve_excluir_cliente_caso_ela_esteja_cadastrada() //cenário 1
         {
             //arrange
-            var disciplina = new Cliente("Bob"
+            var cliente = new Cliente("Bob"
 								 , Cliente.TipoDeCliente.PessoaFisica
 								 , "000.000.000-00"
 								 , "exemplo@exemplo.exemplo"
@@ -325,18 +323,18 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 								 , "Frei Gabriel"
 								 , 1);
 
-			RepositorioClienteMoq.Setup(x => x.Existe(disciplina))
+			RepositorioClienteMoq.Setup(x => x.Existe(cliente))
                .Returns(() =>
                {
                    return true;
                });
 
             //action
-            var resultado = ServicoCliente.Excluir(disciplina);
+            var resultado = ServicoCliente.Excluir(cliente);
 
             //assert 
             resultado.Should().BeSuccess();
-            RepositorioClienteMoq.Verify(x => x.Excluir(disciplina), Times.Once());
+            RepositorioClienteMoq.Verify(x => x.Excluir(cliente), Times.Once());
         }
 
         [TestMethod]
@@ -344,7 +342,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         {
             //arrange
 
-            var disciplina = new Cliente("Bob"
+            var cliente = new Cliente("Bob"
 								       , Cliente.TipoDeCliente.PessoaFisica
 								       , "000.000.000-00"
 								       , "exemplo@exemplo.exemplo"
@@ -355,61 +353,62 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 								       , "Frei Gabriel"
 								       , 1);
 
-			RepositorioClienteMoq.Setup(x => x.Existe(disciplina))
+			RepositorioClienteMoq.Setup(x => x.Existe(cliente))
                .Returns(() =>
                {
                    return false;
                });
 
             //action
-            var resultado = ServicoCliente.Excluir(disciplina);
+            var resultado = ServicoCliente.Excluir(cliente);
 
             //assert 
             resultado.Should().BeFailure();
-            RepositorioClienteMoq.Verify(x => x.Excluir(disciplina), Times.Never());
+            RepositorioClienteMoq.Verify(x => x.Excluir(cliente), Times.Never());
         }
 
-        //[TestMethod]
-        //public void Nao_deve_excluir_disciplina_caso_ela_esteja_relacionada_com_materia() //cenário 3
-        //{            
-        //    var disciplina = new Disciplina("Matemática");
+		//TODO verificar quando o modulo que dependa deste modo estiver pronto implementar esse teste
+		//[TestMethod]
+		//public void Nao_deve_excluir_disciplina_caso_ela_esteja_relacionada_com_materia() //cenário 3
+		//{            
+		//    var disciplina = new Disciplina("Matemática");
 
-        //    RepositorioClienteMoq.Setup(x => x.Existe(disciplina))
-        //       .Returns(() =>
-        //       {
-        //           return true;
-        //       });
+		//    RepositorioClienteMoq.Setup(x => x.Existe(disciplina))
+		//       .Returns(() =>
+		//       {
+		//           return true;
+		//       });
 
-        //    // como configurar um método para ele lançar uma sqlexception utilizando moq
+		//    // como configurar um método para ele lançar uma sqlexception utilizando moq
 
-        //    RepositorioClienteMoq.Setup(x => x.Excluir(It.IsAny<Disciplina>()))
-        //        .Throws(() =>
-        //        {
-        //            /** Solução utilizando Chat GPT
-        //               *  var exception = (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
-        //               *  
-        //               *  FieldInfo messageField = typeof(SqlException).GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic);
-        //               *  if (messageField != null)
-        //               *  {
-        //               *      messageField.SetValue(exception, "Esta é uma mensagem personalizada para a exceção SQL.");
-        //               *  }
-        //               */
+		//    RepositorioClienteMoq.Setup(x => x.Excluir(It.IsAny<Disciplina>()))
+		//        .Throws(() =>
+		//        {
+		//            /** Solução utilizando Chat GPT
+		//               *  var exception = (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+		//               *  
+		//               *  FieldInfo messageField = typeof(SqlException).GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic);
+		//               *  if (messageField != null)
+		//               *  {
+		//               *      messageField.SetValue(exception, "Esta é uma mensagem personalizada para a exceção SQL.");
+		//               *  }
+		//               */
 
-        //            return SqlExceptionCreator.NewSqlException(errorMessage: "FK_TBMateria_TBDisciplina");
-        //        });
+		//            return SqlExceptionCreator.NewSqlException(errorMessage: "FK_TBMateria_TBDisciplina");
+		//        });
 
-        //    //action
-        //    Result resultado = ServicoCliente.Excluir(disciplina);
+		//    //action
+		//    Result resultado = ServicoCliente.Excluir(disciplina);
 
-        //    //assert 
-        //    resultado.Should().BeFailure();
-        //    resultado.Reasons[0].Message.Should().Be("Esta disciplina está relacionada com uma matéria e não pode ser excluída");
-        //}
+		//    //assert 
+		//    resultado.Should().BeFailure();
+		//    resultado.Reasons[0].Message.Should().Be("Esta disciplina está relacionada com uma matéria e não pode ser excluída");
+		//}
 
-        [TestMethod]
+		[TestMethod]
         public void Deve_tratar_erro_caso_ocorra_falha_ao_tentar_excluir_cliente() //cenário 4
         {
-            var disciplina = new Cliente("Bob"
+            var cliente = new Cliente("Bob"
 								       , Cliente.TipoDeCliente.PessoaFisica
 								       , "000.000.000-00"
 								       , "exemplo@exemplo.exemplo"
@@ -420,14 +419,14 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 								       , "Frei Gabriel"
 								       , 1);
 
-			RepositorioClienteMoq.Setup(x => x.Existe(disciplina))
+			RepositorioClienteMoq.Setup(x => x.Existe(cliente))
               .Throws(() =>
               {
                   return SqlExceptionCreator.NewSqlException();
               });
 
             //action
-            Result resultado = ServicoCliente.Excluir(disciplina);
+            Result resultado = ServicoCliente.Excluir(cliente);
 
             //assert 
             resultado.Should().BeFailure();

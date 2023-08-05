@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			label1 = new Label();
 			txtNome = new TextBox();
 			label2 = new Label();
 			label3 = new Label();
@@ -49,7 +48,6 @@
 			label11 = new Label();
 			txtRua = new TextBox();
 			label12 = new Label();
-			labelId = new Label();
 			numericUpDownNumero = new NumericUpDown();
 			maskedtxtCPF = new MaskedTextBox();
 			maskedtxtCNPJ = new MaskedTextBox();
@@ -57,15 +55,6 @@
 			btnCancelar = new Button();
 			((System.ComponentModel.ISupportInitialize)numericUpDownNumero).BeginInit();
 			SuspendLayout();
-			// 
-			// label1
-			// 
-			label1.AutoSize = true;
-			label1.Location = new Point(81, 18);
-			label1.Name = "label1";
-			label1.Size = new Size(20, 15);
-			label1.TabIndex = 0;
-			label1.Text = "Id:";
 			// 
 			// txtNome
 			// 
@@ -240,15 +229,6 @@
 			label12.TabIndex = 23;
 			label12.Text = "Número:";
 			// 
-			// labelId
-			// 
-			labelId.AutoSize = true;
-			labelId.Location = new Point(109, 18);
-			labelId.Name = "labelId";
-			labelId.Size = new Size(13, 15);
-			labelId.TabIndex = 25;
-			labelId.Text = "0";
-			// 
 			// numericUpDownNumero
 			// 
 			numericUpDownNumero.Location = new Point(109, 504);
@@ -306,7 +286,6 @@
 			Controls.Add(maskedtxtCNPJ);
 			Controls.Add(maskedtxtCPF);
 			Controls.Add(numericUpDownNumero);
-			Controls.Add(labelId);
 			Controls.Add(label12);
 			Controls.Add(txtRua);
 			Controls.Add(label11);
@@ -327,7 +306,6 @@
 			Controls.Add(label3);
 			Controls.Add(label2);
 			Controls.Add(txtNome);
-			Controls.Add(label1);
 			Name = "DialogCliente";
 			Text = "DialogCliente";
 			((System.ComponentModel.ISupportInitialize)numericUpDownNumero).EndInit();
@@ -336,8 +314,6 @@
 		}
 
 		#endregion
-
-		private Label label1;
 		private TextBox txtNome;
 		private Label label2;
 		private Label label3;
@@ -358,7 +334,6 @@
 		private Label label11;
 		private TextBox txtRua;
 		private Label label12;
-		private Label labelId;
 		private NumericUpDown numericUpDownNumero;
 		private MaskedTextBox maskedtxtCPF;
 		private MaskedTextBox maskedtxtCNPJ;

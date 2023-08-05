@@ -1,9 +1,7 @@
-﻿using static LocadoraDeAutomoveis.Dominio.Cliente;
-
-namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
+﻿namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 {
 	public interface IRepositorioCliente : IRepositorio<Cliente>
 	{
-		Cliente? SelecionarPorNomeETipoDeCliente(string nome, TipoDeCliente tipoDeCliente);
+		Cliente? SelecionarPorNomeETipoDeCliente(string nome, Cliente.TipoDeCliente tipoDeCliente);
 	}
 }

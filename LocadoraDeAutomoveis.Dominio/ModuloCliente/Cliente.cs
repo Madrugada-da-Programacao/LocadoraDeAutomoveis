@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LocadoraDeAutomoveis.Dominio
+namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 {
 	public class Cliente : EntidadeBase<Cliente>
 	{
@@ -13,16 +13,16 @@ namespace LocadoraDeAutomoveis.Dominio
 			PessoaJuridica = 1
 		}
 
-		public string Nome { get; set; }
+		public string Nome { get; set; } = "";
 		public TipoDeCliente TipoCliente { get; set; }
-		public string NumeroDoDocumento { get; set; }
-		public string Email { get; set; }
-		public string Telefone { get; set; }
-		public string Estado { get; set; }
-		public string Cidade { get; set; }
-		public string Bairro { get; set; }
-		public string Rua { get; set; }
-		public int Numero { get; set; }
+		public string NumeroDoDocumento { get; set; } = "";
+		public string Email { get; set; } = "";
+		public string Telefone { get; set; } = "";
+		public string Estado { get; set; } = "";
+		public string Cidade { get; set; } = "";
+		public string Bairro { get; set; } = "";
+		public string Rua { get; set; } = "";
+		public int Numero { get; set; } = 1;
 
 		public Cliente()
 		{
@@ -48,20 +48,6 @@ namespace LocadoraDeAutomoveis.Dominio
 			this(nome, tipoCliente, numeroDoDocumento, email, telefone, estado, cidade, bairro, rua, numero)
 		{
 			this.Id = id;
-		}
-
-		public override void Atualizar(Cliente registro)
-		{
-			Nome = registro.Nome;
-			TipoCliente = registro.TipoCliente;
-			NumeroDoDocumento = registro.NumeroDoDocumento;
-			Email = registro.Email;
-			Telefone = registro.Telefone;
-			Estado = registro.Estado;
-			Cidade = registro.Cidade;
-			Bairro= registro.Bairro;
-			Rua = registro.Rua;
-			Numero = registro.Numero;
 		}
 	}
 }

@@ -1,12 +1,16 @@
 using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
 using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
+using LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
+using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
 using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
+using LocadoraDeAutomoveis.WinApp.ModuloTaxaOuServico;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -14,9 +18,9 @@ namespace LocadoraDeAutomoveis.WinApp
 {
 	public partial class TelaPrincipalForm : Form
 	{
-		private Dictionary<string, ControladorBase> controladores;
+		private Dictionary<string, ControladorBase> controladores { get; set; }
 
-		private ControladorBase controlador;
+		private ControladorBase? controlador { get; set; }
 
 		public TelaPrincipalForm()
 		{
@@ -49,7 +53,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
 			var migracoesPendentes = dbContext.Database.GetPendingMigrations();
 
-			if (migracoesPendentes.Count() > 0)
+			if (migracoesPendentes.Any())
 			{
 				dbContext.Database.Migrate();
 			}
@@ -102,10 +106,15 @@ namespace LocadoraDeAutomoveis.WinApp
             ServicoFuncionario ServicoFuncionario = new ServicoFuncionario(RepositorioFuncionario, ValidadorFuncionario);
             controladores.Add("ControladorFuncionario", new ControladorFuncionario(RepositorioFuncionario, ServicoFuncionario));
 			
+			IRepositorioTaxaOuServico RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
+			ValidadorTaxaOuServico ValidadorTaxaOuServico = new ValidadorTaxaOuServico();
+			ServicoTaxaOuServico ServicoTaxaOuServico = new ServicoTaxaOuServico(RepositorioTaxaOuServico, ValidadorTaxaOuServico);
+			controladores.Add("ControladorTaxaOuServico", new ControladorTaxaOuServico(RepositorioTaxaOuServico, ServicoTaxaOuServico));
 
-        }
 
-		public static TelaPrincipalForm Instancia
+		}
+
+		public static TelaPrincipalForm? Instancia
 		{
 			get;
 			private set;
@@ -113,7 +122,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
 		public void AtualizarRodape()
 		{
-			string mensagemRodape = controlador.ObterMensagemRodape();
+			string mensagemRodape = controlador!.ObterMensagemRodape();
 
 			AtualizarRodape(mensagemRodape);
 		}
@@ -158,24 +167,24 @@ namespace LocadoraDeAutomoveis.WinApp
 			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
 		}
 
-		private void taxasEServicosMenuItem_Click(object sender, EventArgs e)
+		private void taxasOuServicosMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(controladores["ControladorTaxaOuServico"]);
 		}
 
 		private void btnInserir_Click(object sender, EventArgs e)
 		{
-			controlador.Inserir();
+			controlador!.Inserir();
 		}
 
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
-			controlador.Editar();
+			controlador!.Editar();
 		}
 
 		private void btnExcluir_Click(object sender, EventArgs e)
 		{
-			controlador.Excluir();
+			controlador!.Excluir();
 		}
 
 		private void ConfigurarBotoes(ConfiguracaoToolboxBase configuracao)
@@ -207,7 +216,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
 		private void ConfigurarToolbox()
 		{
-			ConfiguracaoToolboxBase configuracao = controlador.ObtemConfiguracaoToolbox();
+			ConfiguracaoToolboxBase configuracao = controlador!.ObtemConfiguracaoToolbox();
 
 			if (configuracao != null)
 			{
@@ -225,7 +234,7 @@ namespace LocadoraDeAutomoveis.WinApp
 		{
 			AtualizarRodape("");
 
-			var listagemControl = controlador.ObtemListagem();
+			var listagemControl = controlador!.ObtemListagem();
 
 			panelRegistros.Controls.Clear();
 

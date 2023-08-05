@@ -1,23 +1,22 @@
 using FluentAssertions;
-using LocadoraDeAutomoveis.Dominio;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
+namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
-    [TestClass]
-    public class ClienteTest
-    {
-        private Cliente Cliente { get; set; }
+    //[TestClass]
+    //public class ClienteTest
+    //{
+    //    private Cliente Cliente { get; set; }
 
-        public ClienteTest()
-        {
-			Cliente = new Cliente();
-		}
+    //    public ClienteTest()
+    //    {
+    //        Cliente = new Cliente();
+    //    }
 
-		//TODO fazer testes especificos de cliente
-		//[TestMethod]
-  //      public void Clientes_Devem_____()
-  //      {
-		//	//TODO fazer o teste
-		//}
-	}
+    //    TODO fazer testes especificos de cliente
+    //    [TestMethod]
+    //    public void Clientes_Devem_____()
+    //    {
+    //        //TODO fazer o teste
+    //    }
+    //}
 }
