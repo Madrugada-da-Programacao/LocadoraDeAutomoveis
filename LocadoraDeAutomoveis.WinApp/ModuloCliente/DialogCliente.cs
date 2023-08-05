@@ -1,13 +1,13 @@
-﻿using LocadoraDeAutomoveis.Dominio;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.WinApp.Compartilhado;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 {
 	public partial class DialogCliente : Form
 	{
-		private Cliente cliente;
+		private Cliente? cliente;
 
-		public event GravarRegistroDelegate<Cliente> onGravarRegistro;
+		public event GravarRegistroDelegate<Cliente>? onGravarRegistro;
 		public DialogCliente()
 		{
 			InitializeComponent();
@@ -19,7 +19,6 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 			set
 			{
 				cliente = value;
-				labelId.Text = cliente.Id.ToString();
 				txtNome.Text = cliente.Nome;
 				txtEmail.Text = cliente.Email;
 				maskedtxtTelefone.Text = cliente.Telefone;
@@ -43,46 +42,40 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 			}
 			get
 			{
+				cliente.Nome = txtNome.Text;
+				cliente.Email = txtEmail.Text;
+				cliente.Telefone = maskedtxtTelefone.Text;
+
+				if (radioButtonPessoaFisica.Checked == true)
+				{
+					cliente.TipoCliente = Cliente.TipoDeCliente.PessoaFisica;
+					cliente.NumeroDoDocumento = maskedtxtCPF.Text;
+				}
+				else
+				{
+					cliente.TipoCliente = Cliente.TipoDeCliente.PessoaJuridica;
+					cliente.NumeroDoDocumento = maskedtxtCNPJ.Text;
+				}
+
+				cliente.Estado = txtEstado.Text;
+				cliente.Cidade = txtCidade.Text;
+				cliente.Bairro = txtBairro.Text;
+				cliente.Rua = txtRua.Text;
+				cliente.Numero = (int)numericUpDownNumero.Value;
+
 				return cliente;
 			}
 		}
 
-		public Cliente ObterCliente()
-		{
-			cliente.Id = Guid.Parse(labelId.Text);
-			cliente.Nome = txtNome.Text;
-			cliente.Email = txtEmail.Text;
-			cliente.Telefone = maskedtxtTelefone.Text;
-
-			if (radioButtonPessoaFisica.Checked == true)
-			{
-				cliente.TipoCliente = Cliente.TipoDeCliente.PessoaFisica;
-				cliente.NumeroDoDocumento = maskedtxtCPF.Text;
-			}
-			else
-			{
-				cliente.TipoCliente = Cliente.TipoDeCliente.PessoaJuridica;
-				cliente.NumeroDoDocumento = maskedtxtCNPJ.Text;
-			}
-
-			cliente.Estado = txtEstado.Text;
-			cliente.Cidade = txtCidade.Text;
-			cliente.Bairro = txtBairro.Text;
-			cliente.Rua = txtRua.Text;
-			cliente.Numero = (int)numericUpDownNumero.Value;
-
-			return cliente;
-		}
-
 		private void btnGravar_Click(object sender, EventArgs e)
 		{
-			Result resultado = onGravarRegistro(ObterCliente());
+			Result resultado = onGravarRegistro!(Cliente);
 
 			if (resultado.IsFailed)
 			{
 				string erro = resultado.Errors[0].Message;
 
-				TelaPrincipalForm.Instancia.AtualizarRodape(erro);
+				TelaPrincipalForm.Instancia!.AtualizarRodape(erro);
 
 				DialogResult = DialogResult.None;
 			}
