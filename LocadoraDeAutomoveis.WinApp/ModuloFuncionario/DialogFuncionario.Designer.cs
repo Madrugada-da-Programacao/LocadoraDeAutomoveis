@@ -84,7 +84,9 @@
             // 
             // txtSalario
             // 
+            txtSalario.DecimalPlaces = 2;
             txtSalario.Location = new Point(109, 121);
+            txtSalario.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
             txtSalario.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             txtSalario.Name = "txtSalario";
             txtSalario.Size = new Size(107, 23);
