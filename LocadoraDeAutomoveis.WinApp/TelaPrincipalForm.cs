@@ -116,12 +116,6 @@ namespace LocadoraDeAutomoveis.WinApp
             ServicoTaxaOuServico ServicoTaxaOuServico = new ServicoTaxaOuServico(RepositorioTaxaOuServico, ValidadorTaxaOuServico);
             controladores.Add("ControladorTaxaOuServico", new ControladorTaxaOuServico(RepositorioTaxaOuServico, ServicoTaxaOuServico));
 
-            ContextoDados contexto = new ContextoDados(carregarDados: true);
-            IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);
-            ValidadorConfiguracaoDePrecos ValidadorConfiguracaoDePrecos = new ValidadorConfiguracaoDePrecos();
-            ServicoConfiguracaoDePrecos ServicoConfiguracaoDePrecos = new ServicoConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos);
-            controladores.Add("ControladorConfiguracaoDePrecos", new ControladorConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ServicoConfiguracaoDePrecos));
-
         }
 
         public static TelaPrincipalForm? Instancia
@@ -132,9 +126,11 @@ namespace LocadoraDeAutomoveis.WinApp
 
         public void AtualizarRodape()
         {
-            string mensagemRodape = controlador!.ObterMensagemRodape();
-
-            AtualizarRodape(mensagemRodape);
+            if (controlador != null)
+            {
+                string mensagemRodape = controlador!.ObterMensagemRodape();
+                AtualizarRodape(mensagemRodape);
+            }
         }
 
         public void AtualizarRodape(string mensagem)
@@ -184,13 +180,20 @@ namespace LocadoraDeAutomoveis.WinApp
 
         private void configurarPreçosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.controlador = controladores["ControladorConfiguracaoDePrecos"];
+            ContextoDados contexto = new ContextoDados(carregarDados: true);
+            IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);
+            ValidadorConfiguracaoDePrecos ValidadorConfiguracaoDePrecos = new ValidadorConfiguracaoDePrecos();
+            ServicoConfiguracaoDePrecos ServicoConfiguracaoDePrecos = new ServicoConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos);
 
-            string mensagemRodape = controlador.ObterMensagemRodape();
+            ConfiguracaoDePrecos registro = RepositorioConfiguracaoDePrecos.SelecionarRegistro();
 
-            AtualizarRodape(mensagemRodape);
+            DialogConfiguracaoDePrecos dialog = new DialogConfiguracaoDePrecos();
 
-            controlador.Editar();
+            dialog.onGravarRegistro += ServicoConfiguracaoDePrecos.Editar;
+
+            dialog.ConfiguracaoDePrecos = registro;
+
+            DialogResult resultado = dialog.ShowDialog();
         }
 
         private void btnInserir_Click(object sender, EventArgs e)
