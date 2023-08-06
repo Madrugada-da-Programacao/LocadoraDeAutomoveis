@@ -1,6 +1,6 @@
 ﻿namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 {
-	public class ConfiguracaoToolboxCliente : ConfiguracaoToolboxBase
+	public class ConfiguracaoToolboxConfiguracaoDePrecos : ConfiguracaoToolboxBase
 	{
 		public override string TipoEntidade => "Cliente";
 	}

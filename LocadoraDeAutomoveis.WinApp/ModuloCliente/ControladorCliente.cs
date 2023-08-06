@@ -98,7 +98,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 
 		public override ConfiguracaoToolboxBase ObtemConfiguracaoToolbox()
 		{
-			return new ConfiguracaoToolboxCliente();
+			return new ConfiguracaoToolboxConfiguracaoDePrecos();
 		}
 
 		public override UserControl ObtemListagem()

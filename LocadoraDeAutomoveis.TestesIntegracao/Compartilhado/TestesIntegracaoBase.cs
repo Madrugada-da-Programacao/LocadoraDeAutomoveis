@@ -1,7 +1,10 @@
 using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
+using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
@@ -17,10 +20,15 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
         protected IRepositorioCliente RepositorioCliente { get; set; }
 		protected IRepositorioTaxaOuServico RepositorioTaxaOuServico { get; set; }
         protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
+		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
+		protected ContextoDados Contexto { get; set; }
 
-		public TestesIntegracaoBase()
+
+        public TestesIntegracaoBase()
         {
 			LimparTabelas();
+
+			LimparArquivo();
 
 			string? connectionString = ObterConnectionString();
 
@@ -30,18 +38,28 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 
 			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
 
+            Contexto = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
+
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
-
-			BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(RepositorioTaxaOuServico.Inserir);
             RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(Contexto);
+
+            BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(RepositorioTaxaOuServico.Inserir);
 
             BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
 
             BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
         }
 
-		protected static void LimparTabelas()
+        private void LimparArquivo()
+        {
+			Contexto.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(1,1,1,1);
+
+			Contexto.GravarEmArquivoJson();
+        }
+
+        protected static void LimparTabelas()
 		{
 			string? connectionString = ObterConnectionString();
 

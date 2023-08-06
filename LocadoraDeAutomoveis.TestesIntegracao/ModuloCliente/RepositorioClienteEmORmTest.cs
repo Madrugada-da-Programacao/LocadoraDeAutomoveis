@@ -2,7 +2,7 @@ using FizzWare.NBuilder;
 using FluentAssertions;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
-namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloDisciplina
+namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloCliente
 {
     [TestClass]
     public class RepositorioClienteEmORmTest : TestesIntegracaoBase
