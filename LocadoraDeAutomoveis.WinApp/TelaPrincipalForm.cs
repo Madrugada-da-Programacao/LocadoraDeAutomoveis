@@ -178,7 +178,7 @@ namespace LocadoraDeAutomoveis.WinApp
             ConfigurarTelaPrincipal(controladores["ControladorTaxaOuServico"]);
         }
 
-        private void configurarPreçosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void configurarPrecosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ContextoDados contexto = new ContextoDados(carregarDados: true);
             IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);

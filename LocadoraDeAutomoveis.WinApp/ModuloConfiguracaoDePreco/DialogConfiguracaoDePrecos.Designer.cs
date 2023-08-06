@@ -29,15 +29,19 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            txtGasolina = new TextBox();
             label2 = new Label();
-            txtGas = new TextBox();
             label3 = new Label();
-            txtDiesel = new TextBox();
-            txtAlcool = new TextBox();
             label4 = new Label();
             btnGravar = new Button();
             btnCancelar = new Button();
+            txtGasolina = new NumericUpDown();
+            txtGas = new NumericUpDown();
+            txtDiesel = new NumericUpDown();
+            txtAlcool = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)txtGasolina).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtGas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtDiesel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtAlcool).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -49,13 +53,6 @@
             label1.TabIndex = 0;
             label1.Text = "Gasolina:";
             // 
-            // txtGasolina
-            // 
-            txtGasolina.Location = new Point(84, 46);
-            txtGasolina.Name = "txtGasolina";
-            txtGasolina.Size = new Size(267, 23);
-            txtGasolina.TabIndex = 1;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -65,13 +62,6 @@
             label2.TabIndex = 2;
             label2.Text = "Gás:";
             // 
-            // txtGas
-            // 
-            txtGas.Location = new Point(84, 81);
-            txtGas.Name = "txtGas";
-            txtGas.Size = new Size(267, 23);
-            txtGas.TabIndex = 3;
-            // 
             // label3
             // 
             label3.AutoSize = true;
@@ -80,20 +70,6 @@
             label3.Size = new Size(41, 15);
             label3.TabIndex = 4;
             label3.Text = "Diesel:";
-            // 
-            // txtDiesel
-            // 
-            txtDiesel.Location = new Point(84, 118);
-            txtDiesel.Name = "txtDiesel";
-            txtDiesel.Size = new Size(267, 23);
-            txtDiesel.TabIndex = 5;
-            // 
-            // txtAlcool
-            // 
-            txtAlcool.Location = new Point(84, 156);
-            txtAlcool.Name = "txtAlcool";
-            txtAlcool.Size = new Size(267, 23);
-            txtAlcool.TabIndex = 6;
             // 
             // label4
             // 
@@ -125,23 +101,71 @@
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
             // 
+            // txtGasolina
+            // 
+            txtGasolina.DecimalPlaces = 2;
+            txtGasolina.Location = new Point(87, 47);
+            txtGasolina.Maximum = new decimal(new int[] { 1316134911, 2328, 0, 0 });
+            txtGasolina.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtGasolina.Name = "txtGasolina";
+            txtGasolina.Size = new Size(264, 23);
+            txtGasolina.TabIndex = 103;
+            txtGasolina.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // txtGas
+            // 
+            txtGas.DecimalPlaces = 2;
+            txtGas.Location = new Point(87, 82);
+            txtGas.Maximum = new decimal(new int[] { 1316134911, 2328, 0, 0 });
+            txtGas.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtGas.Name = "txtGas";
+            txtGas.Size = new Size(264, 23);
+            txtGas.TabIndex = 104;
+            txtGas.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // txtDiesel
+            // 
+            txtDiesel.DecimalPlaces = 2;
+            txtDiesel.Location = new Point(87, 119);
+            txtDiesel.Maximum = new decimal(new int[] { 1316134911, 2328, 0, 0 });
+            txtDiesel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtDiesel.Name = "txtDiesel";
+            txtDiesel.Size = new Size(264, 23);
+            txtDiesel.TabIndex = 105;
+            txtDiesel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // txtAlcool
+            // 
+            txtAlcool.DecimalPlaces = 2;
+            txtAlcool.Location = new Point(87, 157);
+            txtAlcool.Maximum = new decimal(new int[] { 1316134911, 2328, 0, 0 });
+            txtAlcool.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            txtAlcool.Name = "txtAlcool";
+            txtAlcool.Size = new Size(264, 23);
+            txtAlcool.TabIndex = 106;
+            txtAlcool.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
             // DialogConfiguracaoDePrecos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(398, 256);
+            Controls.Add(txtAlcool);
+            Controls.Add(txtDiesel);
+            Controls.Add(txtGas);
+            Controls.Add(txtGasolina);
             Controls.Add(btnCancelar);
             Controls.Add(btnGravar);
             Controls.Add(label4);
-            Controls.Add(txtAlcool);
-            Controls.Add(txtDiesel);
             Controls.Add(label3);
-            Controls.Add(txtGas);
             Controls.Add(label2);
-            Controls.Add(txtGasolina);
             Controls.Add(label1);
             Name = "DialogConfiguracaoDePrecos";
             Text = "Configuração de Preços";
+            ((System.ComponentModel.ISupportInitialize)txtGasolina).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtGas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtDiesel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtAlcool).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -149,14 +173,14 @@
         #endregion
 
         private Label label1;
-        private TextBox txtGasolina;
         private Label label2;
-        private TextBox txtGas;
         private Label label3;
-        private TextBox txtDiesel;
-        private TextBox txtAlcool;
         private Label label4;
         private Button btnGravar;
         private Button btnCancelar;
+        private NumericUpDown txtGasolina;
+        private NumericUpDown txtGas;
+        private NumericUpDown txtDiesel;
+        private NumericUpDown txtAlcool;
     }
 }

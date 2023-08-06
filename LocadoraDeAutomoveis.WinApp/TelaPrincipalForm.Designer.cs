@@ -38,6 +38,7 @@
             grupoDeAutomoveisMenuItem = new ToolStripMenuItem();
             planoDeCobrancaMenuItem = new ToolStripMenuItem();
             taxasEServicosMenuItem = new ToolStripMenuItem();
+            configurarPrecosToolStripMenuItem = new ToolStripMenuItem();
             toolbox = new ToolStrip();
             btnInserir = new ToolStripButton();
             btnEditar = new ToolStripButton();
@@ -47,7 +48,6 @@
             statusStrip1 = new StatusStrip();
             labelRodape = new ToolStripStatusLabel();
             panelRegistros = new Panel();
-            configurarPreçosToolStripMenuItem = new ToolStripMenuItem();
             menu.SuspendLayout();
             toolbox.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -56,7 +56,7 @@
             // menu
             // 
             menu.ImageScalingSize = new Size(20, 20);
-            menu.Items.AddRange(new ToolStripItem[] { cadastrosToolStripMenuItem, configurarPreçosToolStripMenuItem });
+            menu.Items.AddRange(new ToolStripItem[] { cadastrosToolStripMenuItem, configurarPrecosToolStripMenuItem });
             menu.Location = new Point(0, 0);
             menu.Name = "menu";
             menu.Size = new Size(686, 24);
@@ -133,6 +133,13 @@
             taxasEServicosMenuItem.Size = new Size(209, 22);
             taxasEServicosMenuItem.Text = "Taxas ou Servicos";
             taxasEServicosMenuItem.Click += taxasOuServicosMenuItem_Click;
+            // 
+            // configurarPrecosToolStripMenuItem
+            // 
+            configurarPrecosToolStripMenuItem.Name = "configurarPrecosToolStripMenuItem";
+            configurarPrecosToolStripMenuItem.Size = new Size(114, 20);
+            configurarPrecosToolStripMenuItem.Text = "Configurar Preços";
+            configurarPrecosToolStripMenuItem.Click += configurarPrecosToolStripMenuItem_Click;
             // 
             // toolbox
             // 
@@ -214,13 +221,6 @@
             panelRegistros.Size = new Size(686, 343);
             panelRegistros.TabIndex = 3;
             // 
-            // configurarPreçosToolStripMenuItem
-            // 
-            configurarPreçosToolStripMenuItem.Name = "configurarPreçosToolStripMenuItem";
-            configurarPreçosToolStripMenuItem.Size = new Size(114, 20);
-            configurarPreçosToolStripMenuItem.Text = "Configurar Preços";
-            configurarPreçosToolStripMenuItem.Click += configurarPreçosToolStripMenuItem_Click;
-            // 
             // TelaPrincipalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -268,6 +268,6 @@
         private ToolStripMenuItem grupoDeAutomoveisMenuItem;
         private ToolStripMenuItem planoDeCobrancaMenuItem;
         private ToolStripMenuItem taxasEServicosMenuItem;
-        private ToolStripMenuItem configurarPreçosToolStripMenuItem;
+        private ToolStripMenuItem configurarPrecosToolStripMenuItem;
     }
 }
