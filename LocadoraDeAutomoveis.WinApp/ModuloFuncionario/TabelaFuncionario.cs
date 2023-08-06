@@ -37,7 +37,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
             registros.ForEach(r => grid.Rows.Add(r.Id
                                                 , r.Nome
-                                                , r.DataAdmissao
+                                                , r.DataAdmissao.ToShortDateString()
                                                 , r.Salario));
         }
 

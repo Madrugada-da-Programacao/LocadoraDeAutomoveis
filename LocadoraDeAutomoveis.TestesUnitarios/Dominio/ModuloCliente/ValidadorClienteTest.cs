@@ -5,7 +5,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
     [TestClass]
     public class ValidadorClienteTest
-    {
+	{
         private Cliente Cliente { get; set; }
         private ValidadorCliente Validador { get; set; }
 

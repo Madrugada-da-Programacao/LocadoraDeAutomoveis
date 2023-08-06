@@ -1,6 +1,7 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
+using FluentAssertions;
+using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloFuncionario
+namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
     [TestClass]
     public class FuncionarioTest

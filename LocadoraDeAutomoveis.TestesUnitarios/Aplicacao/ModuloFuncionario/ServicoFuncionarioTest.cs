@@ -10,7 +10,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 {
     [TestClass]
     public class ServicoFuncionarioTest
-    {
+	{
         Mock<IRepositorioFuncionario> repositorioFuncionarioMoq;
         Mock<IValidadorFuncionario> validodorMoq;
 
