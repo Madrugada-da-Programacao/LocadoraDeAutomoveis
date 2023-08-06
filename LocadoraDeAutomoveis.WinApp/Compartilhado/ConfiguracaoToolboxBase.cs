@@ -14,9 +14,9 @@
 		#endregion
 
 		#region estados dos botões
-		public virtual bool InserirHabilitado => false;
-		public virtual bool EditarHabilitado => false;
-		public virtual bool ExcluirHabilitado => false;
+		public virtual bool InserirHabilitado => true;
+		public virtual bool EditarHabilitado => true;
+		public virtual bool ExcluirHabilitado => true;
 
         #endregion
 

@@ -4,12 +4,12 @@ using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
     [TestClass]
-    public class ValidadorConfiguracaoDePrecosTest
-    {
+    public class ValidadorClienteTest
+	{
         private Cliente Cliente { get; set; }
         private ValidadorCliente Validador { get; set; }
 
-		public ValidadorConfiguracaoDePrecosTest()
+		public ValidadorClienteTest()
         {
 			Cliente = new Cliente();
 

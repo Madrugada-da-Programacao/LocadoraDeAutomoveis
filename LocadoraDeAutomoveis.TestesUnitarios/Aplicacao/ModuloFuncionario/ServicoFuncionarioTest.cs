@@ -9,8 +9,8 @@ using Moq;
 namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 {
     [TestClass]
-    public class ServicoConfiguracaoDePrecosTest
-    {
+    public class ServicoFuncionarioTest
+	{
         Mock<IRepositorioFuncionario> repositorioFuncionarioMoq;
         Mock<IValidadorFuncionario> validodorMoq;
 
@@ -18,7 +18,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
 
         Funcionario funcionario;
 
-        public ServicoConfiguracaoDePrecosTest()
+        public ServicoFuncionarioTest()
         {
             repositorioFuncionarioMoq = new Mock<IRepositorioFuncionario>();
             validodorMoq = new Mock<IValidadorFuncionario>();

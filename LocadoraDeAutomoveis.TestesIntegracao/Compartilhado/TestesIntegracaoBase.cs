@@ -28,6 +28,8 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
         {
 			LimparTabelas();
 
+            Contexto = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
+
 			LimparArquivo();
 
 			string? connectionString = ObterConnectionString();
@@ -37,8 +39,6 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			optionsBuilder.UseSqlServer(connectionString);
 
 			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
-
-            Contexto = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
 
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
