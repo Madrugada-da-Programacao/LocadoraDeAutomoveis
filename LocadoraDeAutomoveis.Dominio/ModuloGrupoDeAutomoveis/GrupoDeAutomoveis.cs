@@ -8,7 +8,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis
 {
     public class GrupoDeAutomoveis : EntidadeBase<GrupoDeAutomoveis>
     {
-        public string Nome { get; set; }
+        public string Nome { get; set; } = "";
 
         public GrupoDeAutomoveis() { }
         public GrupoDeAutomoveis(string nome)
