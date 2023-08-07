@@ -2,12 +2,14 @@ using FizzWare.NBuilder;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,8 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 		protected IRepositorioTaxaOuServico RepositorioTaxaOuServico { get; set; }
         protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
 		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
-		protected ContextoDados Contexto { get; set; }
+        protected IRepositorioPlanoDeCobranca RepositorioPlanoDeCobranca { get; set; }
+        protected ContextoDados Contexto { get; set; }
 
 
         public TestesIntegracaoBase()
@@ -43,6 +46,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
             RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+			RepositorioPlanoDeCobranca = new RepositorioPlanoDeCobrancaEmOrm(dbContext);
 			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(Contexto);
 
             BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(RepositorioTaxaOuServico.Inserir);
@@ -50,6 +54,8 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
             BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
 
             BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
+
+            BuilderSetup.SetCreatePersistenceMethod<PlanoDeCobranca>(RepositorioPlanoDeCobranca.Inserir);
         }
 
         private void LimparArquivo()
@@ -66,10 +72,11 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			SqlConnection sqlConnection = new SqlConnection(connectionString);
 
 			string sqlLimpezaTabela =
-				@"
+                @"
                 DELETE FROM [DBO].[TBCliente];
                 DELETE FROM [DBO].[TBFUNCIONARIO];
-				DELETE FROM [DBO].[TBTaxaOuServico];";
+				DELETE FROM [DBO].[TBTaxaOuServico];
+				DELETE FROM [DBO].[TBPLANODECOBRANCA];";
 
             SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
 
