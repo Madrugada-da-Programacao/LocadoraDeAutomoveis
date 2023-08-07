@@ -1,8 +1,12 @@
 using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
+using LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
+using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -93,9 +97,15 @@ namespace LocadoraDeAutomoveis.WinApp
 			ServicoCliente ServicoCliente = new ServicoCliente(RepositorioCliente, ValidadorCliente);
 			controladores.Add("ControladorCliente", new ControladorCliente(RepositorioCliente, ServicoCliente));
 
+			IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
+			ValidadorGrupoDeAutomoveis ValidadorGrupoDeAutomoveis = new ValidadorGrupoDeAutomoveis();
+			ServicoGrupoDeAutomoveis ServicoGrupoDeAutomoveis = new ServicoGrupoDeAutomoveis(RepositorioGrupoDeAutomoveis, ValidadorGrupoDeAutomoveis);
+			controladores.Add("ControladorGrupoDeAutomoveis", new ControladorGrupoDeAutomoveis(RepositorioGrupoDeAutomoveis, ServicoGrupoDeAutomoveis));
 
 
-		}
+
+
+        }
 
 		public static TelaPrincipalForm Instancia
 		{
@@ -142,7 +152,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
 		private void grupoDeAutomoveisMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(controladores["ControladorGrupoDeAutomoveis"]);
 		}
 
 		private void planoDeCobrancaMenuItem_Click(object sender, EventArgs e)
