@@ -1,4 +1,3 @@
-﻿using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloCliente
@@ -6,19 +5,19 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCliente
 	public class ServicoCliente
 	{
 		private IRepositorioCliente RepositorioCliente { get; set; }
-		private IValidadorCliente ValidadorCliente { get; set;}
+		private IValidadorCliente Validador { get; set;}
 
 		public ServicoCliente(IRepositorioCliente repositorioCliente, IValidadorCliente validadorCliente)
 		{
 			RepositorioCliente = repositorioCliente;
-			ValidadorCliente = validadorCliente;
+			Validador = validadorCliente;
 		}
 
 		public Result Inserir(Cliente registro)
 		{
 			Log.Debug("Tentando inserir cliente...{@c}", registro);
 
-			List<string> erros = ValidarDisciplina(registro);
+			List<string> erros = ValidadorCliente(registro);
 
 			if (erros.Count() > 0)
 				return Result.Fail(erros); //cenário 2
@@ -45,7 +44,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCliente
 		{
 			Log.Debug("Tentando editar cliente...{@c}", registro);
 
-			List<string> erros = ValidarDisciplina(registro);
+			List<string> erros = ValidadorCliente(registro);
 
 			if (erros.Count() > 0)
 				return Result.Fail(erros);
@@ -74,9 +73,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCliente
 
 			try
 			{
-				bool disciplinaExiste = RepositorioCliente.Existe(registro);
+				bool registroExiste = RepositorioCliente.Existe(registro);
 
-				if (disciplinaExiste == false)
+				if (registroExiste == false)
 				{
 					Log.Warning("Cliente {ClienteId} não encontrada para excluir", registro.Id);
 
@@ -113,9 +112,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCliente
 
 
 
-		private List<string> ValidarDisciplina(Cliente registro)
+		private List<string> ValidadorCliente(Cliente registro)
 		{
-			var resultadoValidacao = ValidadorCliente.Validate(registro);
+			var resultadoValidacao = Validador.Validate(registro);
 
 			List<string> erros = new List<string>();
 

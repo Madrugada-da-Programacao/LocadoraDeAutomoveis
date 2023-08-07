@@ -1,6 +1,4 @@
-﻿using static LocadoraDeAutomoveis.Dominio.Cliente;
-
-namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
+﻿namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 {
 	public class ValidadorCliente : AbstractValidator<Cliente>, IValidadorCliente
 	{
@@ -15,7 +13,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 			RuleFor(x => x.TipoCliente)
 				.IsInEnum();
 
-			When(x => x.TipoCliente == TipoDeCliente.PessoaFisica, () =>
+			When(x => x.TipoCliente == Cliente.TipoDeCliente.PessoaFisica, () =>
 			{
 				RuleFor(x => x.NumeroDoDocumento)
 					.NotEmpty()
@@ -24,7 +22,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 					.WithMessage("Formato invalido para CPF. Use o padrão: 000.000.000-00");
 			});
 
-			When(x => x.TipoCliente == TipoDeCliente.PessoaJuridica, () =>
+			When(x => x.TipoCliente == Cliente.TipoDeCliente.PessoaJuridica, () =>
 			{
 				RuleFor(x => x.NumeroDoDocumento)
 					.NotEmpty()
@@ -71,10 +69,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 
 			RuleFor(x => x.Numero)
 				.NotEmpty()
-				.NotNull()
-				.GreaterThanOrEqualTo(1)
-				.WithMessage("Numero deve ser maior ou igual a 1.");
-
+				.NotNull();
 		}
 	}
 }

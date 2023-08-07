@@ -1,5 +1,4 @@
 ﻿using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
-using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
@@ -8,7 +7,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 	{
 		private IRepositorioCliente RepositorioCliente { get; set; }
 		private ServicoCliente ServicoCliente { get; set; }
-		private TabelaCliente TabelaCliente { get; set; }
+		private TabelaCliente? TabelaCliente { get; set; }
 
 		public ControladorCliente(IRepositorioCliente repositorioCliente, ServicoCliente servicoCliente)
 		{
@@ -34,7 +33,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 
 		public override void Editar()
 		{
-			Guid idRegistro = TabelaCliente.ObtemIdSelecionado();
+			Guid idRegistro = TabelaCliente!.ObtemIdSelecionado();
 			Cliente? registro = RepositorioCliente.SelecionarPorId(idRegistro);
 
 			if (registro == null)
@@ -63,7 +62,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 
 		public override void Excluir()
 		{
-			Guid idRegistro = TabelaCliente.ObtemIdSelecionado();
+			Guid idRegistro = TabelaCliente!.ObtemIdSelecionado();
 			Cliente? registro = RepositorioCliente.SelecionarPorId(idRegistro);
 
 			if (registro == null)
@@ -115,11 +114,11 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 		{
 			List<Cliente> registros = RepositorioCliente.SelecionarTodos();
 
-			TabelaCliente.AtualizarRegistros(registros);
+			TabelaCliente!.AtualizarRegistros(registros);
 
 			mensagemRodape = string.Format("Visualizando {0} cliente{1}", registros.Count, registros.Count == 1 ? "" : "s");
 
-			TelaPrincipalForm.Instancia.AtualizarRodape(mensagemRodape);
+			TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
 		}
 	}
 }

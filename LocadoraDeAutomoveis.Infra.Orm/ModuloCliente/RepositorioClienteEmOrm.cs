@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Dominio;
-using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCliente
 {

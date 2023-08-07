@@ -1,12 +1,11 @@
-ï»¿using FluentValidation.TestHelper;
-using LocadoraDeAutomoveis.Dominio;
+using FluentValidation.TestHelper;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
+namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 {
     [TestClass]
     public class ValidadorClienteTest
-    {
+	{
         private Cliente Cliente { get; set; }
         private ValidadorCliente Validador { get; set; }
 
@@ -18,7 +17,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
         }
 
         [TestMethod]
-        public void Nome_cliente_nao_deve_ser_nulo_ou_vazio_erro()
+        public void Nome_cliente_nao_deve_ser_nulo_erro()
         {
             //action
             var resultado = Validador.TestValidate(Cliente);
@@ -28,16 +27,16 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
         }
 
 		[TestMethod]
-		public void Nome_cliente_nao_deve_ser_nulo_ou_vazio_ok()
+		public void Nome_cliente_nao_deve_ser_vazio_erro()
 		{
 			//arrange
-			Cliente.Nome = "abc";
+			Cliente.Nome = "   ";
 
 			//action
 			var resultado = Validador.TestValidate(Cliente);
 
 			//assert
-			resultado.ShouldNotHaveValidationErrorFor(x => x.Nome);
+			resultado.ShouldHaveValidationErrorFor(x => x.Nome);
 		}
 
 		[TestMethod]
@@ -383,47 +382,22 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio
 			resultado.ShouldNotHaveValidationErrorFor(x => x.Rua);
 		}
 
-		[TestMethod]
-		public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_erro()
-		{
-			//action
-			var resultado = Validador.TestValidate(Cliente);
+		//TODO verificar com o rech se pode tirar este teste já que ele não é vazio por padrão agora
+		//[TestMethod]
+		//public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_erro()
+		//{
+		//	//action
+		//	var resultado = Validador.TestValidate(Cliente);
 
-			//assert
-			resultado.ShouldHaveValidationErrorFor(x => x.Numero);
-		}
+		//	//assert
+		//	resultado.ShouldHaveValidationErrorFor(x => x.Numero);
+		//}
 
 		[TestMethod]
 		public void Numero_cliente_nao_deve_ser_nulo_ou_vazio_ok()
 		{
 			//arrange
 			Cliente.Numero = 1;
-
-			//action
-			var resultado = Validador.TestValidate(Cliente);
-
-			//assert
-			resultado.ShouldNotHaveValidationErrorFor(x => x.Numero);
-		}
-
-		[TestMethod]
-		public void Numero_cliente_deve_ser_maior_ou_igual_a_um_erro()
-		{
-			//arrange
-			Cliente.Numero = 0;
-
-			//action
-			var resultado = Validador.TestValidate(Cliente);
-
-			//assert
-			resultado.ShouldHaveValidationErrorFor(x => x.Numero);
-		}
-
-		[TestMethod]
-		public void Numero_cliente_deve_ser_maior_ou_igual_a_um_ok()
-		{
-			//arrange
-			Cliente.Numero = 2;
 
 			//action
 			var resultado = Validador.TestValidate(Cliente);
