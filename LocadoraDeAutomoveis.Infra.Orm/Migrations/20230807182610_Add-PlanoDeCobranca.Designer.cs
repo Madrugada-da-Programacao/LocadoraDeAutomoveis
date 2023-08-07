@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 {
     [DbContext(typeof(LocadoraDeAutomoveisDbContext))]
-    partial class LocadoraDeAutomoveisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230807182610_Add-PlanoDeCobranca")]
+    partial class AddPlanoDeCobranca
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,20 +71,6 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBCliente", (string)null);
-                });
-
-            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TBGrupoDeAutomoveis", (string)null);
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloFuncionario.Funcionario", b =>
