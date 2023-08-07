@@ -119,7 +119,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloTaxaOuServico
 
 			mensagemRodape = string.Format("Visualizando {0} taxa{1} ou serviço{1}", registros.Count, registros.Count == 1 ? "" : "s");
 
-			TelaPrincipalForm.Instancia.AtualizarRodape(mensagemRodape);
+			TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
 		}
 	}
 }

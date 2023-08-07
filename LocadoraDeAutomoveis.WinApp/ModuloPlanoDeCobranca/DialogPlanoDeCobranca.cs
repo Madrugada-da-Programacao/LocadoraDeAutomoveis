@@ -29,7 +29,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
             }
             get
             {
-                planoDeCobranca.TipoDoPlano = (TipoDoPlanoEnum)cmbTipoDoPlano.SelectedItem;
+                planoDeCobranca!.TipoDoPlano = (TipoDoPlanoEnum)cmbTipoDoPlano.SelectedItem;
                 planoDeCobranca.PrecoDiaria = txtPrecoDiaria.Value;
                 planoDeCobranca.PrecoKm = txtPrecoKm.Value;
                 planoDeCobranca.KmDisponiveis = Convert.ToInt32(txtKmDisponiveis.Value);

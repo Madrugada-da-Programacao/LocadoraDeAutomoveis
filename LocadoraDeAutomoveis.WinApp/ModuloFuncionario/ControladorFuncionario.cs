@@ -10,9 +10,9 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 {
     internal class ControladorFuncionario : ControladorBase
     {
-        private IRepositorioFuncionario RepositorioFuncionario { get; set; }
-        private ServicoFuncionario ServicoFuncionario { get; set; }
-        private TabelaFuncionario TabelaFuncionario { get; set; }
+        private IRepositorioFuncionario? RepositorioFuncionario { get; set; }
+        private ServicoFuncionario? ServicoFuncionario { get; set; }
+        private TabelaFuncionario? TabelaFuncionario { get; set; }
 
         public ControladorFuncionario(IRepositorioFuncionario repositorioFuncionario, ServicoFuncionario servicoFuncionario)
         {
@@ -24,7 +24,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
         {
             DialogFuncionario dialog = new DialogFuncionario();
 
-            dialog.onGravarRegistro += ServicoFuncionario.Inserir;
+            dialog.onGravarRegistro += ServicoFuncionario!.Inserir;
 
             Funcionario funcionario = new Funcionario();
 
@@ -44,8 +44,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
         public override void Editar()
         {
-            Guid idRegistro = TabelaFuncionario.ObtemIdSelecionado();
-            Funcionario? registro = RepositorioFuncionario.SelecionarPorId(idRegistro);
+            Guid idRegistro = TabelaFuncionario!.ObtemIdSelecionado();
+            Funcionario? registro = RepositorioFuncionario!.SelecionarPorId(idRegistro);
 
             if (registro == null)
             {
@@ -59,7 +59,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
             DialogFuncionario dialog = new DialogFuncionario();
 
-            dialog.onGravarRegistro += ServicoFuncionario.Editar;
+            dialog.onGravarRegistro += ServicoFuncionario!.Editar;
 
             dialog.Funcionario = registro;
 
@@ -73,8 +73,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
         public override void Excluir()
         {
-            Guid idRegistro = TabelaFuncionario.ObtemIdSelecionado();
-            Funcionario? registro = RepositorioFuncionario.SelecionarPorId(idRegistro);
+            Guid idRegistro = TabelaFuncionario!.ObtemIdSelecionado();
+            Funcionario? registro = RepositorioFuncionario!.SelecionarPorId(idRegistro);
 
             if (registro == null)
             {
@@ -93,7 +93,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
             if (opcao == DialogResult.OK)
             {
-                Result resultado = ServicoFuncionario.Excluir(registro);
+                Result resultado = ServicoFuncionario!.Excluir(registro);
 
                 if (resultado.IsFailed)
                 {
@@ -123,13 +123,13 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloFuncionario
 
         private void CarregarEntidades()
         {
-            List<Funcionario> registros = RepositorioFuncionario.SelecionarTodos();
+            List<Funcionario> registros = RepositorioFuncionario!.SelecionarTodos();
 
-            TabelaFuncionario.AtualizarRegistros(registros);
+            TabelaFuncionario!.AtualizarRegistros(registros);
 
             mensagemRodape = string.Format("Visualizando {0} funcionario{1}", registros.Count, registros.Count == 1 ? "" : "s");
 
-            TelaPrincipalForm.Instancia.AtualizarRodape(mensagemRodape);
+            TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
         }
     }
 }

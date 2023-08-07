@@ -42,7 +42,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 			}
 			get
 			{
-				cliente.Nome = txtNome.Text;
+				cliente!.Nome = txtNome.Text;
 				cliente.Email = txtEmail.Text;
 				cliente.Telefone = maskedtxtTelefone.Text;
 

@@ -30,7 +30,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloConfiguracaoDePreco
             }
             get
             {
-                configuracaoDePrecos.Gasolina = Convert.ToDecimal(txtGasolina.Value);
+                configuracaoDePrecos!.Gasolina = Convert.ToDecimal(txtGasolina.Value);
                 configuracaoDePrecos.Gas = Convert.ToDecimal(txtGas.Value);
                 configuracaoDePrecos.Diesel = Convert.ToDecimal(txtDiesel.Value);
                 configuracaoDePrecos.Alcool = Convert.ToDecimal(txtAlcool.Value);

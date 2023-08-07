@@ -10,9 +10,9 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 {
     public class ControladorGrupoDeAutomoveis : ControladorBase
     {
-        private IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis { get; set; }
-        private ServicoGrupoDeAutomoveis servicoGrupoDeAutomoveis { get; set; }
-        private TabelaGrupoDeAutomoveis tabelaGrupoDeAutomoveis { get; set; }
+        private IRepositorioGrupoDeAutomoveis? repositorioGrupoDeAutomoveis { get; set; }
+        private ServicoGrupoDeAutomoveis? servicoGrupoDeAutomoveis { get; set; }
+        private TabelaGrupoDeAutomoveis? tabelaGrupoDeAutomoveis { get; set; }
 
         public ControladorGrupoDeAutomoveis(IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis, ServicoGrupoDeAutomoveis servicoGrupoDeAutomoveis)
         {
@@ -24,7 +24,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
         {
             DialogGrupoDeAutomoveis dialog = new DialogGrupoDeAutomoveis();
 
-            dialog.onGravarRegistro += servicoGrupoDeAutomoveis.Inserir;
+            dialog.onGravarRegistro += servicoGrupoDeAutomoveis!.Inserir;
 
             dialog.GrupoDeAutomoveis = new GrupoDeAutomoveis();
 
@@ -38,8 +38,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 
         public override void Editar()
         {
-            Guid idRegistro = tabelaGrupoDeAutomoveis.ObtemIdSelecionado();
-            GrupoDeAutomoveis? registro = repositorioGrupoDeAutomoveis.SelecionarPorId(idRegistro);
+            Guid idRegistro = tabelaGrupoDeAutomoveis!.ObtemIdSelecionado();
+            GrupoDeAutomoveis? registro = repositorioGrupoDeAutomoveis!.SelecionarPorId(idRegistro);
 
             if (registro == null)
             {
@@ -53,7 +53,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 
             DialogGrupoDeAutomoveis dialog = new DialogGrupoDeAutomoveis();
 
-            dialog.onGravarRegistro += servicoGrupoDeAutomoveis.Editar;
+            dialog.onGravarRegistro += servicoGrupoDeAutomoveis!.Editar;
 
             dialog.GrupoDeAutomoveis = registro;
 
@@ -67,8 +67,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 
         public override void Excluir()
         {
-            Guid idRegistro = tabelaGrupoDeAutomoveis.ObtemIdSelecionado();
-            GrupoDeAutomoveis? registro = repositorioGrupoDeAutomoveis.SelecionarPorId(idRegistro);
+            Guid idRegistro = tabelaGrupoDeAutomoveis!.ObtemIdSelecionado();
+            GrupoDeAutomoveis? registro = repositorioGrupoDeAutomoveis!.SelecionarPorId(idRegistro);
 
             if (registro == null)
             {
@@ -87,7 +87,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 
             if (opcao == DialogResult.OK)
             {
-                Result resultado = servicoGrupoDeAutomoveis.Excluir(registro);
+                Result resultado = servicoGrupoDeAutomoveis!.Excluir(registro);
 
                 if (resultado.IsFailed)
                 {
@@ -117,13 +117,13 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis
 
         private void CarregarEntidades()
         {
-            List<GrupoDeAutomoveis> registros = repositorioGrupoDeAutomoveis.SelecionarTodos();
+            List<GrupoDeAutomoveis> registros = repositorioGrupoDeAutomoveis!.SelecionarTodos();
 
-            tabelaGrupoDeAutomoveis.AtualizarRegistros(registros);
+            tabelaGrupoDeAutomoveis!.AtualizarRegistros(registros);
 
             mensagemRodape = string.Format("Visualizando {0} cliente{1}", registros.Count, registros.Count == 1 ? "" : "s");
 
-            TelaPrincipalForm.Instancia.AtualizarRodape(mensagemRodape);
+            TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
         }
     }
 }
