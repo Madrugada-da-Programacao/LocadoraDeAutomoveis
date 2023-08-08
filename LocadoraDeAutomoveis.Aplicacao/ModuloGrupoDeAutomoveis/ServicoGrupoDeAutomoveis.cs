@@ -37,7 +37,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
             {
                 string msgErro = "Falha ao tentar inserir grupo de automoveis.";
 
-                Log.Error(exc, msgErro + "{@c}", registro);
+                Log.Error(exc, msgErro + "{@g}", registro);
 
                 return Result.Fail(msgErro);
             }
@@ -110,9 +110,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
 
             try
             {
-                bool disciplinaExiste = RepositorioGrupoDeAutomoveis.Existe(registro);
+                bool grupoExiste = RepositorioGrupoDeAutomoveis.Existe(registro);
 
-                if (disciplinaExiste == false)
+                if (grupoExiste == false)
                 {
                     Log.Warning("Grupo de Automoveis {GrupoID} não encontrado para excluir", registro.Id);
 
