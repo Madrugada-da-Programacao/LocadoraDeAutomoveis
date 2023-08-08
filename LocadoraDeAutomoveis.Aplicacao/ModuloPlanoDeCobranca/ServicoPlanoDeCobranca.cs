@@ -15,7 +15,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 
         public Result Inserir(PlanoDeCobranca registro)
         {
-            Log.Debug("Tentando inserir planoDeCobranca...{@p}", registro);
+            Log.Debug("Tentando inserir plano de cobranca...{@p}", registro);
 
             List<string> erros = ValidadorPlanoDeCobranca(registro);
 
@@ -32,7 +32,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar inserir planoDeCobranca.";
+                string msgErro = "Falha ao tentar inserir plano de cobranca.";
 
                 Log.Error(exc, msgErro + "{@p}", registro);
 
@@ -42,7 +42,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 
         public Result Editar(PlanoDeCobranca registro)
         {
-            Log.Debug("Tentando editar planoDeCobranca...{@p}", registro);
+            Log.Debug("Tentando editar plano de cobranca...{@p}", registro);
 
             List<string> erros = ValidadorPlanoDeCobranca(registro);
 
@@ -59,7 +59,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar editar planoDeCobranca.";
+                string msgErro = "Falha ao tentar editar plano de cobranca.";
 
                 Log.Error(exc, msgErro + "{@p}", registro);
 
@@ -69,7 +69,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 
         public Result Excluir(PlanoDeCobranca registro)
         {
-            Log.Debug("Tentando excluir planoDeCobranca...{@p}", registro);
+            Log.Debug("Tentando excluir plano de cobranca...{@p}", registro);
 
             try
             {
@@ -94,13 +94,13 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 
                 string msgErro;
 
-                //TODO adicionar a parte que planoDeCobranca é dependente para gerar os errors quando tentar excluir
+                //TODO Aluguel adicionar a parte que planoDeCobranca é dependente para gerar os errors quando tentar excluir
                 //if (ex.Message.Contains("FK_TBMateria_TBDisciplina"))
                 //	msgErro = "Esta disciplina está relacionada com uma matéria e não pode ser excluída";
                 //else
                 //	msgErro = "Falha ao tentar excluir disciplina";
 
-                msgErro = "Falha ao tentar excluir planoDeCobranca";
+                msgErro = "Falha ao tentar excluir plano de cobranca";
 
                 erros.Add(msgErro);
 
@@ -121,9 +121,6 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
             if (resultadoValidacao != null)
                 erros.AddRange(resultadoValidacao.Errors.Select(x => x.ErrorMessage));
 
-            //if (NomeETipoDePlanoDeCobrancaDuplicado(registro))
-            //    erros.Add($"Este nome '{registro.Nome}' com este tipo de planoDeCobranca {registro.TipoPlanoDeCobranca}já está sendo utilizado");
-
             foreach (string erro in erros)
             {
                 Log.Warning(erro);
@@ -131,20 +128,5 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 
             return erros;
         }
-
-        //private bool NomeETipoDePlanoDeCobrancaDuplicado(PlanoDeCobranca registro)
-        //{
-        //    PlanoDeCobranca? possivelRegistroComMesmoNomeETipoDePlanoDeCobranca = RepositorioPlanoDeCobranca.SelecionarPorNomeETipoDePlanoDeCobranca(registro.Nome, registro.TipoPlanoDeCobranca);
-
-        //    if (possivelRegistroComMesmoNomeETipoDePlanoDeCobranca != null &&
-        //        possivelRegistroComMesmoNomeETipoDePlanoDeCobranca.Id != registro.Id &&
-        //        possivelRegistroComMesmoNomeETipoDePlanoDeCobranca.Nome == registro.Nome &&
-        //        possivelRegistroComMesmoNomeETipoDePlanoDeCobranca.TipoPlanoDeCobranca == registro.TipoPlanoDeCobranca)
-        //    {
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
     }
 }

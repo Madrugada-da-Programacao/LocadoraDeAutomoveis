@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis
     public class GrupoDeAutomoveis : EntidadeBase<GrupoDeAutomoveis>
     {
         public string Nome { get; set; } = "";
+
+        public PlanoDeCobranca PlanoDeCobranca { get; set; }
 
         public GrupoDeAutomoveis() { }
         public GrupoDeAutomoveis(string nome)

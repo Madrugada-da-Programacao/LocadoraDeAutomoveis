@@ -28,7 +28,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloPlanoDeCobranca
             var planoDeCobrancaId = Builder<PlanoDeCobranca>.CreateNew().Persist().Id;
 
             var planoDeCobranca = RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobrancaId);
-            planoDeCobranca!.TipoDoPlano = TipoDoPlanoEnum.PlanoDiario;
+            planoDeCobranca!.PrecoDiariaPlanoDiario = 5m;
 
             //action
             RepositorioPlanoDeCobranca.Editar(planoDeCobranca);

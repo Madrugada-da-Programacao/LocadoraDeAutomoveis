@@ -1,4 +1,7 @@
-﻿using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+﻿using LocadoraDeAutomoveis.Dominio;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -19,6 +22,8 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
          *     this.connectionString = connectionString;
          * }
         */
+
+
         public LocadoraDeAutomoveisDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -73,12 +78,15 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
 
             modelBuilder.ApplyConfiguration(new MapeadorClienteOrm());
 
-
 			modelBuilder.ApplyConfiguration(new MapeadorTaxaOuServicoOrm());
 
+            modelBuilder.ApplyConfiguration(new MapeadorFuncionarioOrm());
+
+            modelBuilder.ApplyConfiguration(new MapeadorPlanoDeCobrancaOrm());
 
 
-			Assembly assembly = typeof(LocadoraDeAutomoveisDbContext).Assembly;
+
+            Assembly assembly = typeof(LocadoraDeAutomoveisDbContext).Assembly;
 
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
 
