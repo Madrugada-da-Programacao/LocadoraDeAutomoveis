@@ -27,4 +27,8 @@
     <ProjectReference Include="..\LocadoraDeAutomoveis.Dominio\LocadoraDeAutomoveis.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Aplicacao\ModuloParceiro\" />
+  </ItemGroup>
+
 </Project>

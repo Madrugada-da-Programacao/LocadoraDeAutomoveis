@@ -13,9 +13,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     {
         Mock<IRepositorioCliente> RepositorioClienteMoq { get; set; }
         Mock<IValidadorCliente> ValidadorClienteMoq { get; set; }
-
         private ServicoCliente ServicoCliente { get; set; }
-
 		Cliente Cliente { get; set; }
 
         public ServicoClienteTest()
