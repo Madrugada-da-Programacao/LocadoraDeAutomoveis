@@ -16,6 +16,8 @@ using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 {
@@ -26,7 +28,8 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
         protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
 		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
         protected IRepositorioPlanoDeCobranca RepositorioPlanoDeCobranca { get; set; }
-        protected ContextoDados Contexto { get; set; }
+		protected IRepositorioParceiro RepositorioParceiro { get; set; }
+		protected ContextoDados Contexto { get; set; }
 
 		protected IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
 
@@ -52,6 +55,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			RepositorioPlanoDeCobranca = new RepositorioPlanoDeCobrancaEmOrm(dbContext);
 			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(Contexto);
             RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
+			RepositorioParceiro = new RepositorioParceiroEmOrm(dbContext);
 
             BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(RepositorioTaxaOuServico.Inserir);
 
@@ -60,8 +64,8 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
             BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
             
             BuilderSetup.SetCreatePersistenceMethod<GrupoDeAutomoveis>(RepositorioGrupoDeAutomoveis.Inserir);
-            
-            
+
+			BuilderSetup.SetCreatePersistenceMethod<Parceiro>(RepositorioParceiro.Inserir);
             
             
             
@@ -86,11 +90,12 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			SqlConnection sqlConnection = new SqlConnection(connectionString);
 
 			string sqlLimpezaTabela =
-                @"
+				@"
                 DELETE FROM [DBO].[TBCliente];
                 DELETE FROM [DBO].[TBFUNCIONARIO];
                 DELETE FROM [DBO].[TBTaxaOuServico];
 				DELETE FROM [DBO].[TBPLANODECOBRANCA];
+				DELETE FROM [DBO].[TBPARCEIRO];
                 DELETE FROM [DBO].[TBGrupoDeAutomoveis];";
 				
 

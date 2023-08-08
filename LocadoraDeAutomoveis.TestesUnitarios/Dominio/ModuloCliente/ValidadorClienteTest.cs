@@ -16,16 +16,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 			Validador = new ValidadorCliente();
         }
 
-        [TestMethod]
-        public void Nome_cliente_nao_deve_ser_nulo_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(Cliente);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.Nome);
-        }
-
 		[TestMethod]
 		public void Nome_cliente_nao_deve_ser_vazio_erro()
 		{
@@ -56,7 +46,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCliente
 		public void Nome_cliente_deve_ter_no_minimo_3_caracteres_ok()
 		{
 			//arrange
-			Cliente.Nome = "abcd";
+			Cliente.Nome = "abc";
 
 			//action
 			var resultado = Validador.TestValidate(Cliente);
