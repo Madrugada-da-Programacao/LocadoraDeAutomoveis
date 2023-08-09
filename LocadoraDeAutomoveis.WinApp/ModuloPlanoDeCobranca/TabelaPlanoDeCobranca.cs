@@ -21,13 +21,17 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
                 new DataGridViewTextBoxColumn { Name = "GrupoDeAutomoveis", HeaderText = "Grupo de Automóveis"},
 
-                new DataGridViewTextBoxColumn { Name = "TipoDoPlano", HeaderText = "Tipo do Plano"},
+                new DataGridViewTextBoxColumn { Name = "PrecoDiariaPlanoDiario", HeaderText = "Preço Diaria Plano Diario"},
 
-                new DataGridViewTextBoxColumn { Name = "PrecoDiaria", HeaderText = "Preço Diaria"},
+                new DataGridViewTextBoxColumn { Name = "PrecoKmPlanoDiario", HeaderText = "Preço por Km Plano Diario"},
 
-                new DataGridViewTextBoxColumn { Name = "PrecoKm", HeaderText = "Preço por Km"},
+                new DataGridViewTextBoxColumn { Name = "PrecoDiariaKmControlado", HeaderText = "Preço Diaria Plano Km Controlado"},
 
-                new DataGridViewTextBoxColumn { Name = "KmDisponiveis", HeaderText = "Km Disponíveis"},
+                new DataGridViewTextBoxColumn { Name = "PrecoKmExtrapoladoKmControlado", HeaderText = "Preço por Km Extrapolado Plano Km Controlado"},
+
+                new DataGridViewTextBoxColumn { Name = "KmDisponiveisKmControlado", HeaderText = "Km Disponíveis Plano Km Controlado"},
+
+                new DataGridViewTextBoxColumn { Name = "PrecoDiariaKmLivre", HeaderText = "Preço DiariaPlano Km Livre"}
             };
 
             return colunas;
@@ -38,10 +42,13 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
             grid.Rows.Clear();
 
             registros.ForEach(r => grid.Rows.Add(r.Id
-                                                , r.TipoDoPlano
-                                                , r.PrecoDiaria
-                                                , r.PrecoKm
-                                                , r.KmDisponiveis));
+                                                , r.GrupoDeAutomoveis.Nome
+                                                , r.PrecoDiariaPlanoDiario
+                                                , r.PrecoKmPlanoDiario
+                                                , r.PrecoDiariaKmControlado
+                                                , r.PrecoKmExtrapoladoKmControlado
+                                                , r.KmDisponiveisKmControlado
+                                                , r.PrecoDiariaKmLivre));
         }
 
         public Guid ObtemIdSelecionado()

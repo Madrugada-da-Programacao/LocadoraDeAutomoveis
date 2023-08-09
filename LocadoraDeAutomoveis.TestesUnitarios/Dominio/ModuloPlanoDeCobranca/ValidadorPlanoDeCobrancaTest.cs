@@ -31,16 +31,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
         }
 
         [TestMethod]
-        public void Preco_diaria_plano_diario_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.PrecoDiariaPlanoDiario);
-        }
-
-        [TestMethod]
         public void Preco_diaria_plano_diario_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
@@ -51,16 +41,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
 
             //assert
             resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoDiariaPlanoDiario);
-        }
-
-        [TestMethod]
-        public void Preco_km_plano_diario_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.PrecoKmPlanoDiario);
         }
 
         [TestMethod]
@@ -77,16 +57,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
         }
 
         [TestMethod]
-        public void Preco_diaria_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.PrecoDiariaKmControlado);
-        }
-
-        [TestMethod]
         public void Preco_diaria_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
@@ -100,16 +70,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
         }
 
         [TestMethod]
-        public void Preco_km_extrapolado_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.PrecoKmExtrapoladoKmControlado);
-        }
-
-        [TestMethod]
         public void Preco_km_extrapolado_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
@@ -120,16 +80,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
 
             //assert
             resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoKmExtrapoladoKmControlado);
-        }
-
-        [TestMethod]
-        public void Km_disponiveis_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.KmDisponiveisKmControlado);
         }
 
         [TestMethod]

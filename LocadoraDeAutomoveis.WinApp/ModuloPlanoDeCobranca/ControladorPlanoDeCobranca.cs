@@ -20,13 +20,11 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
         public override void Inserir()
         {
-            DialogPlanoDeCobranca dialog = new DialogPlanoDeCobranca();
+            DialogPlanoDeCobranca dialog = new DialogPlanoDeCobranca(SelecionarGruposDeAutomoveis());
 
             dialog.onGravarRegistro += ServicoPlanoDeCobranca.Inserir;
 
             dialog.PlanoDeCobranca = new PlanoDeCobranca();
-
-            dialog.grupoDeAutomoveis = SelecionarGruposDeAutomoveis();
 
             DialogResult resultado = dialog.ShowDialog();
 

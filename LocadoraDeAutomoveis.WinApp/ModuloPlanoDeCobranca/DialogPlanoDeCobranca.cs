@@ -9,21 +9,20 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
     {
         private PlanoDeCobranca? planoDeCobranca;
 
-        public List<GrupoDeAutomoveis> grupoDeAutomoveis { get; set; }
-
         public event GravarRegistroDelegate<PlanoDeCobranca>? onGravarRegistro;
-        public DialogPlanoDeCobranca()
+        public DialogPlanoDeCobranca(List<GrupoDeAutomoveis> grupos)
         {
             InitializeComponent();
             this.ConfigurarDialog();
-            CarregarGrupoDeAutomoveis();
 
+            CarregarGrupoDeAutomoveis(grupos);
+            
             cmbGrupoAutomoveis.DisplayMember = "Nome";
         }
 
-        private void CarregarGrupoDeAutomoveis()
+        private void CarregarGrupoDeAutomoveis(List<GrupoDeAutomoveis> grupos)
         {
-            foreach (GrupoDeAutomoveis g in grupoDeAutomoveis)
+            foreach (GrupoDeAutomoveis g in grupos)
             {
                 cmbGrupoAutomoveis.Items.Add(g);
             }
@@ -35,6 +34,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
             {
                 planoDeCobranca = value;
 
+                cmbGrupoAutomoveis.SelectedItem = planoDeCobranca.GrupoDeAutomoveis;
                 txtPrecoDiariaPlanoDiaria.Value = planoDeCobranca.PrecoDiariaPlanoDiario;
                 txtPrecoKmPlanoDiaria.Value = planoDeCobranca.PrecoKmPlanoDiario;
                 txtPrecoDiariaKmControlado.Value = planoDeCobranca.PrecoDiariaKmControlado;
@@ -44,6 +44,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
             }
             get
             {
+                planoDeCobranca.GrupoDeAutomoveis = (GrupoDeAutomoveis)cmbGrupoAutomoveis.SelectedItem;
                 planoDeCobranca.PrecoDiariaPlanoDiario = txtPrecoDiariaPlanoDiaria.Value;
                 planoDeCobranca.PrecoKmPlanoDiario = txtPrecoKmPlanoDiaria.Value;
                 planoDeCobranca.PrecoDiariaKmControlado = txtPrecoDiariaKmControlado.Value;

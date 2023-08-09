@@ -1,4 +1,8 @@
-﻿using LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca;
+﻿using FluentAssertions;
+using FluentResults;
+using FluentResults.Extensions.FluentAssertions;
+using FluentValidation.Results;
+using LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 using Moq;
@@ -46,7 +50,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
-                    resultado.Errors.Add(new ValidationFailure("Nome", "Nome não pode ter caracteres especiais"));
+                    resultado.Errors.Add(new ValidationFailure("PrecoDiariaPlanoDiario", "Preço Diária do Plano Diario precisa ter apenas números"));
                     return resultado;
                 });
 
@@ -55,27 +59,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 
             //assert             
             resultado.Should().BeFailure();
-            RepositorioPlanoDeCobrancaMoq.Verify(x => x.Inserir(PlanoDeCobranca), Times.Never());
-        }
-
-        [TestMethod]
-        public void Nao_deve_inserir_plano_de_cobranca_caso_o_nome_ja_esteja_cadastrado() //cenário 3
-        {
-            //arrange
-            string nomePlanoDeCobranca = "Lavar o carro";
-
-            RepositorioPlanoDeCobrancaMoq.Setup(x => x.SelecionarPorNome(nomePlanoDeCobranca))
-                .Returns(() =>
-                {
-                    return new PlanoDeCobranca(Grupo, 5, 5, 5, 5, 5, 5);
-                });
-
-            //action
-            var resultado = ServicoPlanoDeCobranca.Inserir(PlanoDeCobranca);
-
-            //assert 
-            resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be($"Este nome '{nomePlanoDeCobranca}' já está sendo utilizado");
             RepositorioPlanoDeCobrancaMoq.Verify(x => x.Inserir(PlanoDeCobranca), Times.Never());
         }
 
@@ -119,7 +102,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
                 .Returns(() =>
                 {
                     var resultado = new ValidationResult();
-                    resultado.Errors.Add(new ValidationFailure("Nome", "Nome não pode ter caracteres especiais"));
+                    resultado.Errors.Add(new ValidationFailure("PrecoDiariaPlanoDiario", "Preço Diária do Plano Diario precisa ter apenas números"));
                     return resultado;
                 });
 
@@ -131,62 +114,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
             RepositorioPlanoDeCobrancaMoq.Verify(x => x.Editar(PlanoDeCobranca), Times.Never());
         }
 
-        [TestMethod]
-        public void Deve_editar_plano_de_cobranca_com_o_mesmo_nome() //cenário 3
-        {
-            //arrange
-            Guid id = Guid.NewGuid();
-            string nomePlanoDeCobranca = "Lavar o carro";
 
-            RepositorioPlanoDeCobrancaMoq.Setup(x => x.SelecionarPorNome(nomePlanoDeCobranca))
-                 .Returns(() =>
-                 {
-                     return new PlanoDeCobranca(id
-                                             , nomePlanoDeCobranca
-                                             , 0.01m
-                                             , PlanoDeCobranca.TipoDeCobranca.PrecoFixo);
-                 });
-
-            PlanoDeCobranca outraPlanoDeCobranca = new PlanoDeCobranca(id
-                                                            , nomePlanoDeCobranca
-                                                            , 0.01m
-                                                            , PlanoDeCobranca.TipoDeCobranca.PrecoFixo);
-
-            //action
-            var resultado = ServicoPlanoDeCobranca.Editar(outraPlanoDeCobranca);
-
-            //assert 
-            resultado.Should().BeSuccess();
-
-            RepositorioPlanoDeCobrancaMoq.Verify(x => x.Editar(outraPlanoDeCobranca), Times.Once());
-        }
-
-        [TestMethod]
-        public void Nao_deve_editar_plano_de_cobranca_caso_o_nome_ja_esteja_cadastrado() //cenário 4
-        {
-            //arrange
-            string nomePlanoDeCobranca = "Lavar o carro";
-
-            RepositorioPlanoDeCobrancaMoq.Setup(x => x.SelecionarPorNome(nomePlanoDeCobranca))
-                 .Returns(() =>
-                 {
-                     return new PlanoDeCobranca(nomePlanoDeCobranca
-                                             , 0.01m
-                                             , PlanoDeCobranca.TipoDeCobranca.PrecoFixo);
-                 });
-
-            PlanoDeCobranca novaPlanoDeCobranca = new PlanoDeCobranca(nomePlanoDeCobranca
-                                             , 0.01m
-                                             , PlanoDeCobranca.TipoDeCobranca.PrecoFixo);
-
-            //action
-            var resultado = ServicoPlanoDeCobranca.Editar(novaPlanoDeCobranca);
-
-            //assert 
-            resultado.Should().BeFailure();
-
-            RepositorioPlanoDeCobrancaMoq.Verify(x => x.Editar(novaPlanoDeCobranca), Times.Never());
-        }
 
         [TestMethod]
         public void Deve_tratar_erro_caso_ocorra_falha_ao_tentar_editar_plano_de_cobranca() //cenário 5

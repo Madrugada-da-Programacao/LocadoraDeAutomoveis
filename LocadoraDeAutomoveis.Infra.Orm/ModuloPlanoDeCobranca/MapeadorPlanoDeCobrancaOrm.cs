@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca
 {
@@ -22,11 +23,12 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca
 
             builder.Property(p => p.PrecoDiariaKmLivre).HasColumnType("decimal(18, 2)").IsRequired();
 
-            builder.HasOne(m => m.GrupoDeAutomoveis)
-                .WithOne(d => d.PlanoDeCobranca)
-                .IsRequired()
-                .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel")
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(p => p.GrupoDeAutomoveis)
+                        .WithOne()
+                        .HasForeignKey<PlanoDeCobranca>(p => p.GrupoDeAutomoveisId)
+                        .IsRequired(false)
+                        .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel")
+                        .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

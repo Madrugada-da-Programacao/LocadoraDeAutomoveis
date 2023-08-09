@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
+﻿using LocadoraDeAutomoveis.Dominio;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca
 {
