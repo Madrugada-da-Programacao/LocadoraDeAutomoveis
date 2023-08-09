@@ -38,7 +38,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
                 .NotEmpty()
                 .NotNull()
                 .Must(CapacidadeCombustivel => CapacidadeCombustivel > 5)
-                .WithMessage("A capacidade de combustivel não pode ser negativa ou menor que 5L (Ou no caso de veiculos eletricos 5 KM)");
+                .WithMessage("A capacidade de combustivel não pode ser negativa ou menor que 5L!");
             RuleFor(x => x.KM)
                 .NotEmpty()
                 .NotNull()

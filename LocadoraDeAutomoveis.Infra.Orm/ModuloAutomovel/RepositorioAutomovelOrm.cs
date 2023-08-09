@@ -19,7 +19,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
 
         public List<Automovel>? SelecionarPorGrupo(GrupoDeAutomoveis grupoDeAutomoveis)
         {
-            return registros.Where(x => x.GrupoDeAutomovel == grupoDeAutomoveis.Id).ToList();
+            return registros.Where(x => x.GrupoDeAutomovel == grupoDeAutomoveis).ToList();
         }
     }
 }

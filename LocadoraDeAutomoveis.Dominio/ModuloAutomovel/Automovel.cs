@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
 
         public byte[] Imagem { get; set; }
 
-        public Guid GrupoDeAutomovel { get; set; }
+        public GrupoDeAutomoveis GrupoDeAutomovel { get; set; }
 
         public Automovel() { }
-        public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, Guid grupoDeAutomovel)
+        public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel)
         {
             Placa = placa;
             Marca = marca;
@@ -37,7 +38,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
             Imagem = imagem;
             GrupoDeAutomovel = grupoDeAutomovel;
         }
-        public Automovel(Guid ID,string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, Guid grupoDeAutomovel) : this(placa, marca, cor, modelo, tipoCombustivel, capacidadeCombustivel, ano, kM, imagem, grupoDeAutomovel)
+        public Automovel(Guid ID,string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel) : this(placa, marca, cor, modelo, tipoCombustivel, capacidadeCombustivel, ano, kM, imagem, grupoDeAutomovel)
         {
             this.Id = ID;
         }
@@ -50,14 +51,12 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
             Etanol = 2,
             [Description("Diesel")]
             Diesel = 3,
-            [Description("Elétrico")]
-            Eletrico = 4,
             [Description("Etanol & GNV")]
-            EtanolGas = 5,
+            EtanolGas = 4,
             [Description("Gasolina & GNV")]
-            GasolinaGas = 6,
+            GasolinaGas = 5,
             [Description("Total Flex")]
-            Tflex = 7
+            Tflex = 6
         }
     }
 }
