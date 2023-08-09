@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCondutor
 {
     public class Condutor : EntidadeBase<Condutor>
     {
-
+        [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
         public bool ClienteEhCondutor { get; set; }
         public string Nome { get; set; } = "";
@@ -19,7 +20,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCondutor
         public string Cpf { get; set; } = "";
         public string Cnh { get; set; } = "";
         public DateTime Validade { get; set; }
-
+        public Guid ClienteId { get; set; }
         public Condutor()
         {
         }

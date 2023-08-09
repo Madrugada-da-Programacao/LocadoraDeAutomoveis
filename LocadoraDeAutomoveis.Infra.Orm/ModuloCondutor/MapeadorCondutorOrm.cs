@@ -15,7 +15,6 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
 
             builder.Property(c => c.Nome).HasColumnType("varchar(100)").IsRequired();
 
-
             builder.Property(c => c.Email).HasColumnType("varchar(100)").IsRequired();
 
             builder.Property(c => c.Telefone).HasColumnType("varchar(20)").IsRequired();
@@ -26,8 +25,12 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
 
             builder.Property(f => f.Validade).HasColumnType("datetime").IsRequired();
 
+            builder.HasOne(p => p.Cliente)
+                        .WithOne(p => p.Condutor)
+                        .IsRequired(false)
+                        .HasConstraintName("FK_TBCondutor_TBCliente")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Property(c => c.Numero).HasConversion<int>().IsRequired();
         }
     }
 }

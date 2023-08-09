@@ -3,18 +3,21 @@ using FluentResults;
 using FluentResults.Extensions.FluentAssertions;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Aplicacao.ModuloCondutor;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
 using Moq;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 {
-    public class SerivcoCondutorTest
+    [TestClass]
+    public class ServicoCondutorTest
     {
         Mock<IRepositorioCondutor> RepositorioCondutorMoq { get; set; }
         Mock<IValidadorCondutor> ValidadorCondutorMoq { get; set; }
         Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
         private ServicoCondutor ServicoCondutor { get; set; }
         Condutor Condutor { get; set; }
+        Cliente Cliente { get; set; }
 
         public ServicoCondutorTest()
         {
@@ -22,8 +25,8 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
             ValidadorCondutorMoq = new Mock<IValidadorCondutor>();
             ContextoPersistencia = new Mock<IContextoPersistencia>();
             ServicoCondutor = new ServicoCondutor(RepositorioCondutorMoq.Object, ValidadorCondutorMoq.Object, ContextoPersistencia.Object);
-            Condutor = new Condutor("Bob"
-                                 , Condutor.TipoDeCondutor.PessoaFisica
+            Cliente = new Cliente("Junior"
+                                 , Cliente.TipoDeCliente.PessoaFisica
                                  , "000.000.000-00"
                                  , "exemplo@exemplo.exemplo"
                                  , "(00) 0 0000-0000"
@@ -32,22 +35,29 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
                                  , "Centro"
                                  , "Frei Gabriel"
                                  , 1);
+
+            Condutor = new Condutor(Cliente 
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
         }
 
         [TestMethod]
-        public void Deve_inserir_Condutor_caso_ele_for_valido() //cenário 1
+        public void Deve_inserir_condutor_caso_ele_for_valido() //cenário 1
         {
             //arrange
-            Condutor = new Condutor("Bob"
-                                 , Condutor.TipoDeCondutor.PessoaFisica
-                                 , "000.000.000-00"
-                                 , "exemplo@exemplo.exemplo"
-                                 , "(00) 0 0000-0000"
-                                 , "SC"
-                                 , "Lages"
-                                 , "Centro"
-                                 , "Frei Gabriel"
-                                 , 1);
+            Condutor = new Condutor(Cliente
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
 
             //action
             Result resultado = ServicoCondutor.Inserir(Condutor);
@@ -78,25 +88,22 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         }
 
         [TestMethod]
-        public void Nao_deve_inserir_Condutor_caso_o_nome_e_tipo_de_Condutor_pessoa_fisica_ja_esteja_cadastrado() //cenário 3.1
+        public void Nao_deve_inserir_Condutor_caso_o_nome_ja_esteja_cadastrado() //cenário 3.1
         {
             //arrange
-            string nomeCondutor = "Bob";
-            Condutor.TipoDeCondutor tipoDeCondutor = Condutor.TipoDeCondutor.PessoaFisica;
+            string nomeCondutor = "Junior";
 
-            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNomeETipoDeCondutor(nomeCondutor, tipoDeCondutor))
+            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNome(nomeCondutor))
                 .Returns(() =>
                 {
-                    return new Condutor(nomeCondutor
-                                      , tipoDeCondutor
-                                      , "000.000.000-00"
-                                      , "exemplo@exemplo.exemplo"
-                                      , "(00) 0 0000-0000"
-                                      , "SC"
-                                      , "Lages"
-                                      , "Centro"
-                                      , "Frei Gabriel"
-                                      , 1);
+                    return new Condutor(Cliente
+                                   , false
+                                   , nomeCondutor
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
                 });
 
             //action
@@ -104,40 +111,7 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 
             //assert 
             resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be($"Este nome '{nomeCondutor}' com este tipo de Condutor {tipoDeCondutor}já está sendo utilizado");
-            RepositorioCondutorMoq.Verify(x => x.Inserir(Condutor), Times.Never());
-        }
-
-        [TestMethod]
-        public void Nao_deve_inserir_Condutor_caso_o_nome_e_tipo_de_Condutor_pessoa_juridica_ja_esteja_cadastrado() //cenário 3.2
-        {
-            //arrange
-            string nomeCondutor = "Bob";
-            Condutor.TipoDeCondutor tipoDeCondutor = Condutor.TipoDeCondutor.PessoaJuridica;
-            Condutor.TipoCondutor = tipoDeCondutor;
-            Condutor.NumeroDoDocumento = "00.000.000/0000-00";
-
-            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNomeETipoDeCondutor(nomeCondutor, tipoDeCondutor))
-                .Returns(() =>
-                {
-                    return new Condutor(nomeCondutor
-                                      , tipoDeCondutor
-                                      , "00.000.000/0000-00"
-                                      , "exemplo@exemplo.exemplo"
-                                      , "(00) 0 0000-0000"
-                                      , "SC"
-                                      , "Lages"
-                                      , "Centro"
-                                      , "Frei Gabriel"
-                                      , 1);
-                });
-
-            //action
-            var resultado = ServicoCondutor.Inserir(Condutor);
-
-            //assert 
-            resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be($"Este nome '{nomeCondutor}' com este tipo de Condutor {tipoDeCondutor}já está sendo utilizado");
+            resultado.Reasons[0].Message.Should().Be($"Este nome '{nomeCondutor}' já está sendo utilizado");
             RepositorioCondutorMoq.Verify(x => x.Inserir(Condutor), Times.Never());
         }
 
@@ -155,24 +129,22 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 
             //assert 
             resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be("Falha ao tentar inserir Condutor.");
+            resultado.Reasons[0].Message.Should().Be("Falha ao tentar inserir condutor.");
         }
 
 
         [TestMethod]
         public void Deve_editar_Condutor_caso_ele_for_valido() //cenário 1
         {
-            //arrange           
-            Condutor = new Condutor("Ricardo"
-                                 , Condutor.TipoDeCondutor.PessoaFisica
-                                 , "000.000.000-00"
-                                 , "exemplo@exemplo.exemplo"
-                                 , "(00) 0 0000-0000"
-                                 , "SC"
-                                 , "Lages"
-                                 , "Centro"
-                                 , "Frei Gabriel"
-                                 , 1);
+            //arrange
+            Condutor = new Condutor(Cliente
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
 
             //action
             Result resultado = ServicoCondutor.Editar(Condutor);
@@ -207,36 +179,31 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         {
             //arrange
             Guid id = Guid.NewGuid();
-            string nomeCondutor = "Bob";
-            Condutor.TipoDeCondutor tipoDeCondutor = Condutor.TipoDeCondutor.PessoaFisica;
+            string nomeCondutor = "Junior";
 
-            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNomeETipoDeCondutor(nomeCondutor, tipoDeCondutor))
+            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNome(nomeCondutor))
                  .Returns(() =>
                  {
                      return new Condutor(id
-                                      , nomeCondutor
-                                      , tipoDeCondutor
-                                      , "00.000.000/0000-00"
-                                      , "exemplo@exemplo.exemplo"
-                                      , "(00) 0 0000-0000"
-                                      , "SC"
-                                      , "Lages"
-                                      , "Centro"
-                                      , "Frei Gabriel"
-                                      , 1);
+                                        , Cliente
+                                        , false
+                                        , nomeCondutor
+                                        , "exemplo@exemplo.exemplo"
+                                        , "(00) 0 0000-0000"
+                                        , "555.555.555-55"
+                                        , "000000000000"
+                                        , Convert.ToDateTime("05/02/2022"));
                  });
 
             Condutor outroCondutor = new Condutor(id
+                                                , Cliente
+                                                , false
                                                 , nomeCondutor
-                                                , tipoDeCondutor
-                                                , "00.000.000/0000-00"
                                                 , "exemplo@exemplo.exemplo"
                                                 , "(00) 0 0000-0000"
-                                                , "SC"
-                                                , "Lages"
-                                                , "Centro"
-                                                , "Frei Gabriel"
-                                                , 1);
+                                                , "555.555.555-55"
+                                                , "000000000000"
+                                                , Convert.ToDateTime("05/02/2022"));
 
             //action
             var resultado = ServicoCondutor.Editar(outroCondutor);
@@ -251,34 +218,29 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         public void Nao_deve_editar_Condutor_caso_o_nome_ja_esteja_cadastrado() //cenário 4
         {
             //arrange
-            string nomeCondutor = "Bob";
-            Condutor.TipoDeCondutor tipoDeCondutor = Condutor.TipoDeCondutor.PessoaFisica;
+            string nomeCondutor = "Junior";
 
-            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNomeETipoDeCondutor(nomeCondutor, tipoDeCondutor))
+            RepositorioCondutorMoq.Setup(x => x.SelecionarPorNome(nomeCondutor))
                  .Returns(() =>
                  {
-                     return new Condutor(nomeCondutor
-                                      , tipoDeCondutor
-                                      , "00.000.000/0000-00"
-                                      , "exemplo@exemplo.exemplo"
-                                      , "(00) 0 0000-0000"
-                                      , "SC"
-                                      , "Lages"
-                                      , "Centro"
-                                      , "Frei Gabriel"
-                                      , 1);
+                     return new Condutor(Cliente
+                                   , false
+                                   , nomeCondutor
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
                  });
 
-            Condutor novoCondutor = new Condutor(nomeCondutor
-                                              , tipoDeCondutor
-                                              , "00.000.000/0000-00"
-                                              , "exemplo@exemplo.exemplo"
-                                              , "(00) 0 0000-0000"
-                                              , "SC"
-                                              , "Lages"
-                                              , "Centro"
-                                              , "Frei Gabriel"
-                                              , 1); ;
+            Condutor novoCondutor = new Condutor(Cliente
+                                   , false
+                                   , nomeCondutor
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022")); ;
 
             //action
             var resultado = ServicoCondutor.Editar(novoCondutor);
@@ -303,72 +265,68 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 
             //assert 
             resultado.Should().BeFailure();
-            resultado.Errors[0].Message.Should().Be("Falha ao tentar editar Condutor.");
+            resultado.Errors[0].Message.Should().Be("Falha ao tentar editar condutor.");
         }
 
 
         [TestMethod]
-        public void Deve_excluir_Condutor_caso_ela_esteja_cadastrada() //cenário 1
+        public void Deve_excluir_Condutor_caso_ele_esteja_cadastrado() //cenário 1
         {
             //arrange
-            var Condutor = new Condutor("Bob"
-                                 , Condutor.TipoDeCondutor.PessoaFisica
-                                 , "000.000.000-00"
-                                 , "exemplo@exemplo.exemplo"
-                                 , "(00) 0 0000-0000"
-                                 , "SC"
-                                 , "Lages"
-                                 , "Centro"
-                                 , "Frei Gabriel"
-                                 , 1);
+            var condutor = new Condutor(Cliente
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
 
-            RepositorioCondutorMoq.Setup(x => x.Existe(Condutor))
+            RepositorioCondutorMoq.Setup(x => x.Existe(condutor))
                .Returns(() =>
                {
                    return true;
                });
 
             //action
-            var resultado = ServicoCondutor.Excluir(Condutor);
+            var resultado = ServicoCondutor.Excluir(condutor);
 
             //assert 
             resultado.Should().BeSuccess();
-            RepositorioCondutorMoq.Verify(x => x.Excluir(Condutor), Times.Once());
+            RepositorioCondutorMoq.Verify(x => x.Excluir(condutor), Times.Once());
         }
 
         [TestMethod]
-        public void Nao_deve_excluir_Condutor_caso_ela_nao_esteja_cadastrada() //cenário 2
+        public void Nao_deve_excluir_Condutor_caso_ele_nao_esteja_cadastrado() //cenário 2
         {
             //arrange
 
-            var Condutor = new Condutor("Bob"
-                                       , Condutor.TipoDeCondutor.PessoaFisica
-                                       , "000.000.000-00"
-                                       , "exemplo@exemplo.exemplo"
-                                       , "(00) 0 0000-0000"
-                                       , "SC"
-                                       , "Lages"
-                                       , "Centro"
-                                       , "Frei Gabriel"
-                                       , 1);
+            var condutor = new Condutor(Cliente
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
 
-            RepositorioCondutorMoq.Setup(x => x.Existe(Condutor))
+            RepositorioCondutorMoq.Setup(x => x.Existe(condutor))
                .Returns(() =>
                {
                    return false;
                });
 
             //action
-            var resultado = ServicoCondutor.Excluir(Condutor);
+            var resultado = ServicoCondutor.Excluir(condutor);
 
             //assert 
             resultado.Should().BeFailure();
-            RepositorioCondutorMoq.Verify(x => x.Excluir(Condutor), Times.Never());
+            RepositorioCondutorMoq.Verify(x => x.Excluir(condutor), Times.Never());
         }
 
         //TODO verificar quando o modulo que dependa deste modo estiver pronto implementar esse teste
         //[TestMethod]
-        //public void Nao_deve_excluir_disciplina_caso_ela_esteja_relacionada_com_materia() //cenário 3
+        //public void Nao_deve_excluir_disciplina_caso_ele_esteja_relecionada_com_materia() //cenário 3
         //{            
         //    var disciplina = new Disciplina("Matemática");
 
@@ -407,29 +365,27 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         [TestMethod]
         public void Deve_tratar_erro_caso_ocorra_falha_ao_tentar_excluir_Condutor() //cenário 4
         {
-            var Condutor = new Condutor("Bob"
-                                       , Condutor.TipoDeCondutor.PessoaFisica
-                                       , "000.000.000-00"
-                                       , "exemplo@exemplo.exemplo"
-                                       , "(00) 0 0000-0000"
-                                       , "SC"
-                                       , "Lages"
-                                       , "Centro"
-                                       , "Frei Gabriel"
-                                       , 1);
+            var condutor = new Condutor(Cliente
+                                   , false
+                                   , "Junior"
+                                   , "exemplo@exemplo.exemplo"
+                                   , "(00) 0 0000-0000"
+                                   , "555.555.555-55"
+                                   , "000000000000"
+                                   , Convert.ToDateTime("05/02/2022"));
 
-            RepositorioCondutorMoq.Setup(x => x.Existe(Condutor))
+            RepositorioCondutorMoq.Setup(x => x.Existe(condutor))
               .Throws(() =>
               {
                   return SqlExceptionCreator.NewSqlException();
               });
 
             //action
-            Result resultado = ServicoCondutor.Excluir(Condutor);
+            Result resultado = ServicoCondutor.Excluir(condutor);
 
             //assert 
             resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be("Falha ao tentar excluir Condutor");
+            resultado.Reasons[0].Message.Should().Be("Falha ao tentar excluir condutor");
         }
     }
 }

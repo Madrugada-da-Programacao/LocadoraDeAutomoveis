@@ -7,7 +7,6 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCondutor
         private readonly IRepositorioCondutor repositorioCondutor;
         private readonly IValidadorCondutor validador;
         private readonly IContextoPersistencia contextoPersistencia;
-        /*
         public ServicoCondutor(IRepositorioCondutor repositorioCondutor, IValidadorCondutor validador, IContextoPersistencia contextoPersistencia)
         {
             this.repositorioCondutor = repositorioCondutor;
@@ -139,8 +138,8 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCondutor
             if (resultadoValidacao != null)
                 erros.AddRange(resultadoValidacao.Errors.Select(x => x.ErrorMessage));
 
-            if (NomeETipoDeCondutorDuplicado(registro))
-                erros.Add($"Este nome '{registro.Nome}' com este tipo de condutor {registro.TipoCondutor}já está sendo utilizado");
+            if (NomeDuplicado(registro))
+                erros.Add($"Este nome '{registro.Nome}' já está sendo utilizado");
 
             foreach (string erro in erros)
             {
@@ -150,20 +149,18 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCondutor
             return erros;
         }
 
-        private bool NomeETipoDeCondutorDuplicado(Condutor registro)
+        private bool NomeDuplicado(Condutor registro)
         {
-            Condutor? possivelRegistroComMesmoNomeETipoDeCondutor = repositorioCondutor.SelecionarPorNomeETipoDeCondutor(registro.Nome, registro.TipoCondutor);
+            Condutor? possivelRegistroComMesmoNome = repositorioCondutor.SelecionarPorNome(registro.Nome);
 
-            if (possivelRegistroComMesmoNomeETipoDeCondutor != null &&
-                possivelRegistroComMesmoNomeETipoDeCondutor.Id != registro.Id &&
-                possivelRegistroComMesmoNomeETipoDeCondutor.Nome == registro.Nome &&
-                possivelRegistroComMesmoNomeETipoDeCondutor.TipoCondutor == registro.TipoCondutor)
+            if (possivelRegistroComMesmoNome != null &&
+                possivelRegistroComMesmoNome.Id != registro.Id &&
+                possivelRegistroComMesmoNome.Nome == registro.Nome)
             {
                 return true;
             }
 
             return false;
         }
-        */
     }
 }
