@@ -1,10 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio;
-using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis
 {
@@ -15,6 +10,12 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis
             builder.ToTable("TBGrupoDeAutomoveis");
             builder.Property(g => g.Id).IsRequired().ValueGeneratedNever();
             builder.Property(g => g.Nome).HasColumnType("varchar(100)").IsRequired();
-        }
+
+			builder.HasOne(p => p.PlanoDeCobranca)
+						.WithOne(p => p.GrupoDeAutomoveis)
+						.IsRequired(false)
+						.HasConstraintName("FK_TBGrupoDeAutomovel_TBPlanoDeCobranca")
+						.OnDelete(DeleteBehavior.Restrict);
+		}
     }
 }
