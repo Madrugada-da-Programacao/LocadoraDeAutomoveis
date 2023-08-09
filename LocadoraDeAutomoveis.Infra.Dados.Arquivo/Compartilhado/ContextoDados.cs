@@ -45,9 +45,9 @@ namespace LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado
 
                 if (registrosJson.Length > 0)
                 {
-                    ContextoDados ctx = JsonSerializer.Deserialize<ContextoDados>(registrosJson, config);
+                    ContextoDados? ctx = JsonSerializer.Deserialize<ContextoDados>(registrosJson, config);
 
-                    this.ConfiguracaoDePrecos = ctx.ConfiguracaoDePrecos;
+                    this.ConfiguracaoDePrecos = ctx!.ConfiguracaoDePrecos;
                 }
             }
         }

@@ -4,27 +4,33 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 {
 	public class ServicoParceiro
 	{
-		private IRepositorioParceiro RepositorioParceiro { get; set; }
-		private IValidadorParceiro Validador { get; set; }
+		private readonly IRepositorioParceiro repositorioParceiro;
+		private readonly IValidadorParceiro validador;
+		private readonly IContextoPersistencia contextoPersistencia;
 
-		public ServicoParceiro(IRepositorioParceiro repositorioParceiro, IValidadorParceiro validador)
+		public ServicoParceiro(IRepositorioParceiro repositorioParceiro, IValidadorParceiro validador, IContextoPersistencia contextoPersistencia)
 		{
-			RepositorioParceiro = repositorioParceiro;
-			Validador = validador;
+			this.repositorioParceiro = repositorioParceiro;
+			this.validador = validador;
+			this.contextoPersistencia = contextoPersistencia;
 		}
 
 		public Result Inserir(Parceiro registro)
 		{
-			Log.Debug("Tentando inserir parceiro...{@c}", registro);
+			Log.Debug("Tentando inserir parceiro...{@p}", registro);
 
 			List<string> erros = ValidadorParceiro(registro);
 
 			if (erros.Count() > 0)
+			{
+				contextoPersistencia.DesfazerAlteracoes();
 				return Result.Fail(erros); //cenário 2
-
+			}
 			try
 			{
-				RepositorioParceiro.Inserir(registro);
+				repositorioParceiro.Inserir(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Parceiro {ParceiroId} inserido com sucesso", registro.Id);
 
@@ -32,9 +38,11 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 			}
 			catch (Exception exc)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				string msgErro = "Falha ao tentar inserir parceiro.";
 
-				Log.Error(exc, msgErro + "{@c}", registro);
+				Log.Error(exc, msgErro + "{@p}", registro);
 
 				return Result.Fail(msgErro); //cenário 3
 			}
@@ -42,16 +50,20 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 
 		public Result Editar(Parceiro registro)
 		{
-			Log.Debug("Tentando editar parceiro...{@c}", registro);
+			Log.Debug("Tentando editar parceiro...{@p}", registro);
 
 			List<string> erros = ValidadorParceiro(registro);
 
 			if (erros.Count() > 0)
+			{
+				contextoPersistencia.DesfazerAlteracoes();
 				return Result.Fail(erros);
-
+			}
 			try
 			{
-				RepositorioParceiro.Editar(registro);
+				repositorioParceiro.Editar(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Parceiro {ParceiroId} editado com sucesso", registro.Id);
 
@@ -59,9 +71,11 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 			}
 			catch (Exception exc)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				string msgErro = "Falha ao tentar editar parceiro.";
 
-				Log.Error(exc, msgErro + "{@c}", registro);
+				Log.Error(exc, msgErro + "{@p}", registro);
 
 				return Result.Fail(msgErro);
 			}
@@ -69,27 +83,31 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 
 		public Result Excluir(Parceiro registro)
 		{
-			Log.Debug("Tentando excluir parceiro...{@c}", registro);
+			Log.Debug("Tentando excluir parceiro...{@p}", registro);
 
 			try
 			{
-				bool registroExiste = RepositorioParceiro.Existe(registro);
+				bool registroExiste = repositorioParceiro.Existe(registro);
 
 				if (registroExiste == false)
 				{
 					Log.Warning("Parceiro {ParceiroId} não encontrado para excluir", registro.Id);
 
-					return Result.Fail("Cliente não encontrada");
+					return Result.Fail("Parceiro não encontrada");
 				}
 
-				RepositorioParceiro.Excluir(registro);
+				repositorioParceiro.Excluir(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Parceiro {ParceiroId} excluído com sucesso", registro.Id);
 
 				return Result.Ok();
 			}
-			catch (SqlException ex)
+			catch (Exception ex)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				List<string> erros = new List<string>();
 
 				string msgErro;
@@ -112,7 +130,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 
 		private List<string> ValidadorParceiro(Parceiro registro)
 		{
-			var resultadoValidacao = Validador.Validate(registro);
+			var resultadoValidacao = validador.Validate(registro);
 
 			List<string> erros = new List<string>();
 
@@ -132,7 +150,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 
 		private bool NomeParceiroDuplicado(Parceiro registro)
 		{
-			Parceiro? possivelRegistroComMesmoNome = RepositorioParceiro.SelecionarPorNome(registro.Nome);
+			Parceiro? possivelRegistroComMesmoNome = repositorioParceiro.SelecionarPorNome(registro.Nome);
 
 			if (possivelRegistroComMesmoNome != null &&
 				possivelRegistroComMesmoNome.Id != registro.Id &&

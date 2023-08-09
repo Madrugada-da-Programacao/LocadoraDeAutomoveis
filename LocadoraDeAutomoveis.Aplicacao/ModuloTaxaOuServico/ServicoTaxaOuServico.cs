@@ -1,31 +1,36 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloCliente;
-using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 {
 	public class ServicoTaxaOuServico
 	{
-		private IRepositorioTaxaOuServico RepositorioTaxaOuServico{ get; set; }
-		private IValidadorTaxaOuServico Validador{ get; set; }
+		private readonly IRepositorioTaxaOuServico repositorioTaxaOuServico;
+		private readonly IValidadorTaxaOuServico validador;
+		private readonly IContextoPersistencia contextoPersistencia;
 
-		public ServicoTaxaOuServico(IRepositorioTaxaOuServico repositorioTaxaOuServico, IValidadorTaxaOuServico validadorTaxaOuServico)
+		public ServicoTaxaOuServico(IRepositorioTaxaOuServico repositorioTaxaOuServico, IValidadorTaxaOuServico validador, IContextoPersistencia contextoPersistencia)
 		{
-			RepositorioTaxaOuServico = repositorioTaxaOuServico;
-			Validador = validadorTaxaOuServico;
+			this.repositorioTaxaOuServico = repositorioTaxaOuServico;
+			this.validador = validador;
+			this.contextoPersistencia = contextoPersistencia;
 		}
 
-		public Result Inserir(Dominio.ModuloTaxaOuServico.TaxaOuServico registro)
+		public Result Inserir(TaxaOuServico registro)
 		{
 			Log.Debug("Tentando inserir taxa ou serviço...{@t}", registro);
 
 			List<string> erros = ValidadorTaxaOuServico(registro);
 
 			if (erros.Count() > 0)
+			{
+				contextoPersistencia.DesfazerAlteracoes();
 				return Result.Fail(erros); //cenário 2
-
+			}
 			try
 			{
-				RepositorioTaxaOuServico.Inserir(registro);
+				repositorioTaxaOuServico.Inserir(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Taxa ou Serviço {TaxaOuServicoId} inserida com sucesso", registro.Id);
 
@@ -33,6 +38,8 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 			}
 			catch (Exception exc)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				string msgErro = "Falha ao tentar inserir taxa ou serviço.";
 
 				Log.Error(exc, msgErro + "{@t}", registro);
@@ -41,18 +48,22 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 			}
 		}
 
-		public Result Editar(Dominio.ModuloTaxaOuServico.TaxaOuServico registro)
+		public Result Editar(TaxaOuServico registro)
 		{
 			Log.Debug("Tentando editar taxa ou serviço...{@t}", registro);
 
 			List<string> erros = ValidadorTaxaOuServico(registro);
 
 			if (erros.Count() > 0)
+			{
+				contextoPersistencia.DesfazerAlteracoes();
 				return Result.Fail(erros);
-
+			}
 			try
 			{
-				RepositorioTaxaOuServico.Editar(registro);
+				repositorioTaxaOuServico.Editar(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Taxa ou Serviço {TaxaOuServicoId} editada com sucesso", registro.Id);
 
@@ -60,6 +71,8 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 			}
 			catch (Exception exc)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				string msgErro = "Falha ao tentar editar taxa ou serviço.";
 
 				Log.Error(exc, msgErro + "{@t}", registro);
@@ -68,13 +81,13 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 			}
 		}
 
-		public Result Excluir(Dominio.ModuloTaxaOuServico.TaxaOuServico registro)
+		public Result Excluir(TaxaOuServico registro)
 		{
 			Log.Debug("Tentando excluir taxa ou serviço...{@t}", registro);
 
 			try
 			{
-				bool registroExiste = RepositorioTaxaOuServico.Existe(registro);
+				bool registroExiste = repositorioTaxaOuServico.Existe(registro);
 
 				if (registroExiste == false)
 				{
@@ -83,14 +96,18 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 					return Result.Fail("Taxa ou Serviço não encontrada");
 				}
 
-				RepositorioTaxaOuServico.Excluir(registro);
+				repositorioTaxaOuServico.Excluir(registro);
+
+				contextoPersistencia.GravarDados();
 
 				Log.Debug("Taxa ou Serviço {TaxaOuServicoId} excluída com sucesso", registro.Id);
 
 				return Result.Ok();
 			}
-			catch (SqlException ex)
+			catch (Exception ex)
 			{
+				contextoPersistencia.DesfazerAlteracoes();
+
 				List<string> erros = new List<string>();
 
 				string msgErro;
@@ -113,9 +130,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 
 
 
-		private List<string> ValidadorTaxaOuServico(Dominio.ModuloTaxaOuServico.TaxaOuServico registro)
+		private List<string> ValidadorTaxaOuServico(TaxaOuServico registro)
 		{
-			var resultadoValidacao = Validador.Validate(registro);
+			var resultadoValidacao = validador.Validate(registro);
 
 			List<string> erros = new List<string>();
 
@@ -133,9 +150,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico
 			return erros;
 		}
 
-		private bool NomeDuplicado(Dominio.ModuloTaxaOuServico.TaxaOuServico registro)
+		private bool NomeDuplicado(TaxaOuServico registro)
 		{
-			Dominio.ModuloTaxaOuServico.TaxaOuServico? possivelRegistroComMesmo = RepositorioTaxaOuServico.SelecionarPorNome(registro.Nome);
+			TaxaOuServico? possivelRegistroComMesmo = repositorioTaxaOuServico.SelecionarPorNome(registro.Nome);
 
 			if (possivelRegistroComMesmo != null &&
 				possivelRegistroComMesmo.Id != registro.Id &&

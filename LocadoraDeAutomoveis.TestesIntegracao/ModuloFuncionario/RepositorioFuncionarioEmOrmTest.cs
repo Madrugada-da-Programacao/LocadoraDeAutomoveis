@@ -15,9 +15,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloFuncionario
 
             //action
             RepositorioFuncionario.Inserir(funcionario);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioFuncionario.SelecionarPorId(funcionario.Id).Should().Be(funcionario);
+			//assert
+			RepositorioFuncionario.SelecionarPorId(funcionario.Id).Should().Be(funcionario);
         }
         
         [TestMethod]
@@ -27,15 +28,16 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloFuncionario
             var funcionarioId = Builder<Funcionario>.CreateNew().Persist().Id;
 
             var funcionario = RepositorioFuncionario.SelecionarPorId(funcionarioId);
-            funcionario.Nome = "João";
+            funcionario!.Nome = "João";
             funcionario.DataAdmissao = Convert.ToDateTime("10/02/2022");
             funcionario.Salario = 5;
 
             //action
             RepositorioFuncionario.Editar(funcionario);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioFuncionario.SelecionarPorId(funcionario.Id)
+			//assert
+			RepositorioFuncionario.SelecionarPorId(funcionario.Id)
                 .Should().Be(funcionario);
         }
         
@@ -47,9 +49,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloFuncionario
 
             //action
             RepositorioFuncionario.Excluir(funcionario);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioFuncionario.SelecionarPorId(funcionario.Id).Should().BeNull();
+			//assert
+			RepositorioFuncionario.SelecionarPorId(funcionario.Id).Should().BeNull();
         }
         
         [TestMethod]

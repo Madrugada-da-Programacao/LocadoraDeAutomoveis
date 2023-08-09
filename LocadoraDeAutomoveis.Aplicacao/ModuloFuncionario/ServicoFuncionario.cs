@@ -1,39 +1,46 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
-using LocadoraDeAutomoveis.Dominio;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
 {
     public class ServicoFuncionario
     {
-        private IRepositorioFuncionario RepositorioFuncionario { get; set; }
-        private IValidadorFuncionario ValidadorFuncionario { get; set; }
+        private readonly IRepositorioFuncionario repositorioFuncionario;
+        private readonly IValidadorFuncionario validadorFuncionario;
+		private readonly IContextoPersistencia contextoPersistencia;
 
-        public ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario, IValidadorFuncionario validadorFuncionario)
-        {
-            RepositorioFuncionario = repositorioFuncionario;
-            ValidadorFuncionario = validadorFuncionario;
-        }
+		public ServicoFuncionario(IRepositorioFuncionario repositorioFuncionario, IValidadorFuncionario validadorFuncionario, IContextoPersistencia contextoPersistencia)
+		{
+			this.repositorioFuncionario = repositorioFuncionario;
+			this.validadorFuncionario = validadorFuncionario;
+			this.contextoPersistencia = contextoPersistencia;
+		}
 
-        public Result Inserir(Funcionario registro)
+		public Result Inserir(Funcionario registro)
         {
             Log.Debug("Tentando inserir funcionario...{@f}", registro);
 
             List<string> erros = ValidarFuncionario(registro);
 
             if (erros.Count() > 0)
+            {
+				contextoPersistencia.DesfazerAlteracoes();
                 return Result.Fail(erros); //cenário 2
-
+			}
             try
             {
-                RepositorioFuncionario.Inserir(registro);
+                repositorioFuncionario.Inserir(registro);
 
-                Log.Debug("Funcionario {FuncionarioId} inserido com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Funcionario {FuncionarioId} inserido com sucesso", registro.Id);
 
                 return Result.Ok(); //cenário 1
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar inserir funcionario.";
+				contextoPersistencia.DesfazerAlteracoes();
+
+				string msgErro = "Falha ao tentar inserir funcionario.";
 
                 Log.Error(exc, msgErro + "{@f}", registro);
 
@@ -48,19 +55,25 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
             List<string> erros = ValidarFuncionario(registro);
 
             if (erros.Count() > 0)
+            {
+				contextoPersistencia.DesfazerAlteracoes();
                 return Result.Fail(erros);
-
+			}
             try
             {
-                RepositorioFuncionario.Editar(registro);
+                repositorioFuncionario.Editar(registro);
 
-                Log.Debug("Funcionario {FuncionarioId} editado com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Funcionario {FuncionarioId} editado com sucesso", registro.Id);
 
                 return Result.Ok();
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar editar funcionario.";
+				contextoPersistencia.DesfazerAlteracoes();
+
+				string msgErro = "Falha ao tentar editar funcionario.";
 
                 Log.Error(exc, msgErro + "{@f}", registro);
 
@@ -74,7 +87,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
 
             try
             {
-                bool funcionarioExiste = RepositorioFuncionario.Existe(registro);
+                bool funcionarioExiste = repositorioFuncionario.Existe(registro);
 
                 if (funcionarioExiste == false)
                 {
@@ -83,15 +96,19 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
                     return Result.Fail("Funcionario não encontrado");
                 }
 
-                RepositorioFuncionario.Excluir(registro);
+                repositorioFuncionario.Excluir(registro);
 
-                Log.Debug("Funcionario {FuncionarioId} excluído com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Funcionario {FuncionarioId} excluído com sucesso", registro.Id);
 
                 return Result.Ok();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                List<string> erros = new List<string>();
+				contextoPersistencia.DesfazerAlteracoes();
+
+				List<string> erros = new List<string>();
 
                 string msgErro;
 
@@ -115,7 +132,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
 
         private List<string> ValidarFuncionario(Funcionario registro)
         {
-            var resultadoValidacao = ValidadorFuncionario.Validate(registro);
+            var resultadoValidacao = validadorFuncionario.Validate(registro);
 
             List<string> erros = new List<string>();
 
@@ -146,7 +163,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario
 
         private bool NomeDuplicado(Funcionario funcionario)
         {
-            Funcionario funcionarioEncontrado = RepositorioFuncionario.SelecionarPorNome(funcionario.Nome);
+            Funcionario? funcionarioEncontrado = repositorioFuncionario.SelecionarPorNome(funcionario.Nome);
 
             if (funcionarioEncontrado != null &&
                 funcionarioEncontrado.Id != funcionario.Id &&

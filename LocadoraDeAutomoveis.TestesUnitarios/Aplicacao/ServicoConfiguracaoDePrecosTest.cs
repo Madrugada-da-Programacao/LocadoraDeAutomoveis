@@ -6,7 +6,7 @@ using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
 using Moq;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloConfiguracaoDePrecos
+namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 {
     [TestClass]
     public class ServicoConfiguracaoDePrecosTest

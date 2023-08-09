@@ -6,15 +6,16 @@ using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 using Moq;
 
-namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
+namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 {
     [TestClass]
     public class ServicoFuncionarioTest
-	{
+    {
         Mock<IRepositorioFuncionario> repositorioFuncionarioMoq;
         Mock<IValidadorFuncionario> validodorMoq;
+		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
 
-        private ServicoFuncionario servicoFuncionario;
+		private ServicoFuncionario servicoFuncionario;
 
         Funcionario funcionario;
 
@@ -22,7 +23,8 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
         {
             repositorioFuncionarioMoq = new Mock<IRepositorioFuncionario>();
             validodorMoq = new Mock<IValidadorFuncionario>();
-            servicoFuncionario = new ServicoFuncionario(repositorioFuncionarioMoq.Object, validodorMoq.Object);
+			ContextoPersistencia = new Mock<IContextoPersistencia>();
+			servicoFuncionario = new ServicoFuncionario(repositorioFuncionarioMoq.Object, validodorMoq.Object, ContextoPersistencia.Object);
             funcionario = new Funcionario("João", Convert.ToDateTime("20/02/2022"), 555);
         }
 
@@ -234,44 +236,44 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao.ModuloFuncionario
             resultado.Should().BeFailure();
             repositorioFuncionarioMoq.Verify(x => x.Excluir(funcionario), Times.Never());
         }
-/*TODO 
-        [TestMethod]
-        public void Nao_deve_excluir_funcionario_caso_ele_esteja_relacionada_com_materia() //cenário 3
-        {
-            var funcionario = new Funcionario(Guid.NewGuid(), "Matemática");
-
-            repositorioFuncionarioMoq.Setup(x => x.Existe(funcionario))
-               .Returns(() =>
-               {
-                   return true;
-               });
-
-            // como configurar um método para ele lançar uma sqlexception utilizando moq
-
-            repositorioFuncionarioMoq.Setup(x => x.Excluir(It.IsAny<Funcionario>()))
-                .Throws(() =>
+        /*TODO 
+                [TestMethod]
+                public void Nao_deve_excluir_funcionario_caso_ele_esteja_relacionada_com_materia() //cenário 3
                 {
-                    /** Solução utilizando Chat GPT
-                       *  var exception = (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
-                       *  
-                       *  FieldInfo messageField = typeof(SqlException).GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic);
-                       *  if (messageField != null)
-                       *  {
-                       *      messageField.SetValue(exception, "Esta é uma mensagem personalizada para a exceção SQL.");
-                       *  }
-                       *//*
+                    var funcionario = new Funcionario(Guid.NewGuid(), "Matemática");
 
-                    return SqlExceptionCreator.NewSqlException(errorMessage: "FK_TBMateria_TBFuncionario");
-                });
+                    repositorioFuncionarioMoq.Setup(x => x.Existe(funcionario))
+                       .Returns(() =>
+                       {
+                           return true;
+                       });
 
-            //action
-            Result resultado = servicoFuncionario.Excluir(funcionario);
+                    // como configurar um método para ele lançar uma sqlexception utilizando moq
 
-            //assert 
-            resultado.Should().BeFailure();
-            resultado.Reasons[0].Message.Should().Be("Esta funcionario está relacionada com uma matéria e não pode ser excluída");
-        }
-*/
+                    repositorioFuncionarioMoq.Setup(x => x.Excluir(It.IsAny<Funcionario>()))
+                        .Throws(() =>
+                        {
+                            /** Solução utilizando Chat GPT
+                               *  var exception = (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+                               *  
+                               *  FieldInfo messageField = typeof(SqlException).GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic);
+                               *  if (messageField != null)
+                               *  {
+                               *      messageField.SetValue(exception, "Esta é uma mensagem personalizada para a exceção SQL.");
+                               *  }
+                               *//*
+
+                            return SqlExceptionCreator.NewSqlException(errorMessage: "FK_TBMateria_TBFuncionario");
+                        });
+
+                    //action
+                    Result resultado = servicoFuncionario.Excluir(funcionario);
+
+                    //assert 
+                    resultado.Should().BeFailure();
+                    resultado.Reasons[0].Message.Should().Be("Esta funcionario está relacionada com uma matéria e não pode ser excluída");
+                }
+        */
         [TestMethod]
         public void Deve_tratar_erro_caso_ocorra_falha_ao_tentar_excluir_funcionario() //cenário 4
         {

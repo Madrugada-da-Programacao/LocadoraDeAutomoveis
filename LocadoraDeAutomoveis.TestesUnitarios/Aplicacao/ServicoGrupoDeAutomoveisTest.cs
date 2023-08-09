@@ -13,15 +13,17 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     {
         Mock<IRepositorioGrupoDeAutomoveis> RepositorioGrupoDeAutomoveisMock { get; set; }
         Mock<IValidadorGrupoDeAutomoveis> ValidadorGrupoDeAutomoveisMock { get; set; }
+		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
 
-        private ServicoGrupoDeAutomoveis ServicoGrupoDeAutomoveis { get; set; }
+		private ServicoGrupoDeAutomoveis ServicoGrupoDeAutomoveis { get; set; }
         GrupoDeAutomoveis GrupoDeAutomoveis { get; set; }
 
         public ServicoGrupoDeAutomoveisTest()
         {
             RepositorioGrupoDeAutomoveisMock = new Mock<IRepositorioGrupoDeAutomoveis>();
             ValidadorGrupoDeAutomoveisMock = new Mock<IValidadorGrupoDeAutomoveis>();
-            ServicoGrupoDeAutomoveis = new ServicoGrupoDeAutomoveis(RepositorioGrupoDeAutomoveisMock.Object, ValidadorGrupoDeAutomoveisMock.Object);
+			ContextoPersistencia = new Mock<IContextoPersistencia>();
+			ServicoGrupoDeAutomoveis = new ServicoGrupoDeAutomoveis(RepositorioGrupoDeAutomoveisMock.Object, ValidadorGrupoDeAutomoveisMock.Object, ContextoPersistencia.Object);
 
             GrupoDeAutomoveis = new GrupoDeAutomoveis("SUV");
         }

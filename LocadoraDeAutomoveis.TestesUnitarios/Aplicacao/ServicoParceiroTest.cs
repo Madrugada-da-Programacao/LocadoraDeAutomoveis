@@ -13,14 +13,16 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     {
         Mock<IRepositorioParceiro> RepositorioParceiroMoq { get; set; }
         Mock<IValidadorParceiro> ValidadorParceiroMoq { get; set; }
-        private ServicoParceiro ServicoParceiro { get; set; }
+		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
+		private ServicoParceiro ServicoParceiro { get; set; }
         private Parceiro Parceiro { get; set; }
 
         public ServicoParceiroTest()
         {
             RepositorioParceiroMoq = new Mock<IRepositorioParceiro>();
             ValidadorParceiroMoq = new Mock<IValidadorParceiro>();
-            ServicoParceiro = new ServicoParceiro(RepositorioParceiroMoq.Object, ValidadorParceiroMoq.Object);
+			ContextoPersistencia = new Mock<IContextoPersistencia>();
+			ServicoParceiro = new ServicoParceiro(RepositorioParceiroMoq.Object, ValidadorParceiroMoq.Object, ContextoPersistencia.Object);
             Parceiro = new Parceiro("Americanas");
         }
 

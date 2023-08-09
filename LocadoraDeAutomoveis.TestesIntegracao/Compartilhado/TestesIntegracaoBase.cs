@@ -7,7 +7,6 @@ using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
@@ -18,26 +17,32 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
+using LocadoraDeAutomoveis.Dominio.Compartilhado;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 {
     public class TestesIntegracaoBase
     {
-        protected IRepositorioCliente RepositorioCliente { get; set; }
-		protected IRepositorioTaxaOuServico RepositorioTaxaOuServico { get; set; }
-        protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
-		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
-        protected IRepositorioPlanoDeCobranca RepositorioPlanoDeCobranca { get; set; }
-		protected IRepositorioParceiro RepositorioParceiro { get; set; }
-		protected ContextoDados Contexto { get; set; }
-
+		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Aluguel
+		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Automovel
+		protected IRepositorioCliente RepositorioCliente { get; set; }
+		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Condutor
+		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Cupom
+		protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
 		protected IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
+		protected IRepositorioParceiro RepositorioParceiro { get; set; }
+        protected IRepositorioPlanoDeCobranca RepositorioPlanoDeCobranca { get; set; }
+		protected IRepositorioTaxaOuServico RepositorioTaxaOuServico { get; set; }
+		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
+		protected IContextoPersistencia ContextoPersistencia { get; set; }
+		protected ContextoDados ContextoDadosArquivo { get; set; }
+
 
         public TestesIntegracaoBase()
         {
 			LimparTabelas();
 
-            Contexto = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
+            ContextoDadosArquivo = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
 
 			LimparArquivo();
 
@@ -48,39 +53,91 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			optionsBuilder.UseSqlServer(connectionString);
 
 			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
+			ContextoPersistencia = dbContext;
 
+			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Aluguel
+			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Automovel
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
-			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
+			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Condutor
+			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Cupom
             RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
-			RepositorioPlanoDeCobranca = new RepositorioPlanoDeCobrancaEmOrm(dbContext);
-			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(Contexto);
             RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
 			RepositorioParceiro = new RepositorioParceiroEmOrm(dbContext);
+			RepositorioPlanoDeCobranca = new RepositorioPlanoDeCobrancaEmOrm(dbContext);
+			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
+			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(ContextoDadosArquivo);
 
-            BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(RepositorioTaxaOuServico.Inserir);
+			//TODO
+			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Aluguel
+			//{
+			//	RepositorioCliente.Inserir(cliente);
+			//	ContextoPersistencia.GravarDados();
+			//});
 
-            BuilderSetup.SetCreatePersistenceMethod<Cliente>(RepositorioCliente.Inserir);
+			//TODO
+			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Automovel
+			//{
+			//	RepositorioCliente.Inserir(cliente);
+			//	ContextoPersistencia.GravarDados();
+			//});
 
-            BuilderSetup.SetCreatePersistenceMethod<Funcionario>(RepositorioFuncionario.Inserir);
-            
-            BuilderSetup.SetCreatePersistenceMethod<GrupoDeAutomoveis>(RepositorioGrupoDeAutomoveis.Inserir);
 
-			BuilderSetup.SetCreatePersistenceMethod<Parceiro>(RepositorioParceiro.Inserir);
-            
-            
-            
-            
-            
-            
+			BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>
+			{
+				RepositorioCliente.Inserir(cliente);
+				ContextoPersistencia.GravarDados();
+			});
 
-            BuilderSetup.SetCreatePersistenceMethod<PlanoDeCobranca>(RepositorioPlanoDeCobranca.Inserir);
-        }
+			//TODO
+			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Condutor
+			//{
+			//	RepositorioCliente.Inserir(cliente);
+			//	ContextoPersistencia.GravarDados();
+			//});
+
+			//TODO
+			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Cupom
+			//{
+			//	RepositorioCliente.Inserir(cliente);
+			//	ContextoPersistencia.GravarDados();
+			//});
+
+			BuilderSetup.SetCreatePersistenceMethod<Funcionario>(funcionario =>
+			{
+				RepositorioFuncionario.Inserir(funcionario);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<GrupoDeAutomoveis>(grupoDeAutomoveis =>
+			{
+				RepositorioGrupoDeAutomoveis.Inserir(grupoDeAutomoveis);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<Parceiro>(parceiro =>
+			{
+				RepositorioParceiro.Inserir(parceiro);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<PlanoDeCobranca>(planoDeCobranca =>
+			{
+				RepositorioPlanoDeCobranca.Inserir(planoDeCobranca);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(taxaOuServico =>
+			{
+				RepositorioTaxaOuServico.Inserir(taxaOuServico);
+				ContextoPersistencia.GravarDados();
+			});
+		}
 
         private void LimparArquivo()
         {
-			Contexto.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(1,1,1,1);
+			ContextoDadosArquivo.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(1,1,1,1);
 
-			Contexto.GravarEmArquivoJson();
+			ContextoDadosArquivo.GravarEmArquivoJson();
         }
 
         protected static void LimparTabelas()
@@ -90,13 +147,16 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			SqlConnection sqlConnection = new SqlConnection(connectionString);
 
 			string sqlLimpezaTabela =
-				@"
-                DELETE FROM [DBO].[TBCliente];
-                DELETE FROM [DBO].[TBFUNCIONARIO];
-                DELETE FROM [DBO].[TBTaxaOuServico];
-				DELETE FROM [DBO].[TBPLANODECOBRANCA];
-				DELETE FROM [DBO].[TBPARCEIRO];
-                DELETE FROM [DBO].[TBGrupoDeAutomoveis];";
+				@"" //TODO Aluguel
+			   + "" //TODO Automovel
+			   + "DELETE FROM [DBO].[TBCLIENTE];"
+			   + "" //TODO Condutor
+			   + "" //TODO Cupom
+			   + "DELETE FROM [DBO].[TBFUNCIONARIO];"
+			   + "DELETE FROM [DBO].[TBGRUPODEAUTOMOVEIS];"
+			   + "DELETE FROM [DBO].[TBPARCEIRO];"
+			   + "DELETE FROM [DBO].[TBPLANODECOBRANCA];"
+			   + "DELETE FROM [DBO].[TBTAXAOUSERVICO];";
 				
 
             SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);

@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca
 {
@@ -29,6 +28,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca
                         .IsRequired(false)
                         .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel")
                         .OnDelete(DeleteBehavior.Cascade);
-        }
-    }
+			//TODO mudar o comportamento do onDelete porque acho que o rech não deixa ser do tipo Cascade, tentar controlar como deletar em outro lugar do codigo?
+		}
+	}
 }

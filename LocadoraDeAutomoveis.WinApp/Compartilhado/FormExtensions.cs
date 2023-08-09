@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace LocadoraDeAutomoveis.WinApp
+﻿namespace LocadoraDeAutomoveis.WinApp.Compartilhado
 {
     public static class FormExtensions
     {

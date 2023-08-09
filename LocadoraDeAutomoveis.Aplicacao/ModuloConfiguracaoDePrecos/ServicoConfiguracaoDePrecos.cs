@@ -1,21 +1,17 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos
 {
     public class ServicoConfiguracaoDePrecos
     {
-        private IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
-        private IValidadorConfiguracaoDePrecos Validador { get; set; }
+        private readonly IRepositorioConfiguracaoDePrecos repositorioConfiguracaoDePrecos;
+        private readonly IValidadorConfiguracaoDePrecos validador;
+
 
         public ServicoConfiguracaoDePrecos(IRepositorioConfiguracaoDePrecos repositorioConfiguracaoDePrecos, IValidadorConfiguracaoDePrecos validadorConfiguracaoDePrecos)
         {
-            RepositorioConfiguracaoDePrecos = repositorioConfiguracaoDePrecos;
-            Validador = validadorConfiguracaoDePrecos;
+            this.repositorioConfiguracaoDePrecos = repositorioConfiguracaoDePrecos;
+            validador = validadorConfiguracaoDePrecos;
         }
 
         public Result Editar(ConfiguracaoDePrecos registro)
@@ -29,7 +25,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos
 
             try
             {
-                RepositorioConfiguracaoDePrecos.Editar(registro);
+                repositorioConfiguracaoDePrecos.Editar(registro);
 
                 Log.Debug("Configuracao de Preços editada com sucesso!");
 
@@ -48,7 +44,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos
 
         private List<string> ValidadorConfiguracaoDePrecos(ConfiguracaoDePrecos registro)
         {
-            var resultadoValidacao = Validador.Validate(registro);
+            var resultadoValidacao = validador.Validate(registro);
 
             List<string> erros = new List<string>();
 

@@ -13,8 +13,9 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     {
         Mock<IRepositorioTaxaOuServico> RepositorioTaxaOuServicoMoq { get; set; }
         Mock<IValidadorTaxaOuServico> ValidadorTaxaOuServicoMoq { get; set; }
+		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
 
-        private ServicoTaxaOuServico ServicoTaxaOuServico { get; set; }
+		private ServicoTaxaOuServico ServicoTaxaOuServico { get; set; }
 
         TaxaOuServico TaxaOuServico { get; set; }
 
@@ -22,7 +23,8 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         {
             RepositorioTaxaOuServicoMoq = new Mock<IRepositorioTaxaOuServico>();
 			ValidadorTaxaOuServicoMoq = new Mock<IValidadorTaxaOuServico>();
-            ServicoTaxaOuServico = new ServicoTaxaOuServico(RepositorioTaxaOuServicoMoq.Object, ValidadorTaxaOuServicoMoq.Object);
+			ContextoPersistencia = new Mock<IContextoPersistencia>();
+			ServicoTaxaOuServico = new ServicoTaxaOuServico(RepositorioTaxaOuServicoMoq.Object, ValidadorTaxaOuServicoMoq.Object, ContextoPersistencia.Object);
 			TaxaOuServico = new TaxaOuServico("Lavar o carro"
                                              ,0.01m
                                              ,TaxaOuServico.TipoDeCobranca.PrecoFixo);

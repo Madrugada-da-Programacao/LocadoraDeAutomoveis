@@ -1,9 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using FluentAssertions;
-using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
-using static LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca.PlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloPlanoDeCobranca
 {
@@ -21,9 +19,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloPlanoDeCobranca
 
             //action
             RepositorioPlanoDeCobranca.Inserir(planoDeCobranca);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id).Should().Be(planoDeCobranca);
+			//assert
+			RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id).Should().Be(planoDeCobranca);
         }
 
         [TestMethod]
@@ -39,9 +38,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloPlanoDeCobranca
 
             //action
             RepositorioPlanoDeCobranca.Editar(planoDeCobranca);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id)
+			//assert
+			RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id)
                 .Should().Be(planoDeCobranca);
         }
 
@@ -56,9 +56,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloPlanoDeCobranca
 
             //action
             RepositorioPlanoDeCobranca.Excluir(planoDeCobranca);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id).Should().BeNull();
+			//assert
+			RepositorioPlanoDeCobranca.SelecionarPorId(planoDeCobranca.Id).Should().BeNull();
         }
 
         [TestMethod]

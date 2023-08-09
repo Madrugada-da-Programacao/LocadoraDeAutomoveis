@@ -1,5 +1,4 @@
-﻿using LocadoraDeAutomoveis.Dominio;
-using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloTaxaOuServico
 {

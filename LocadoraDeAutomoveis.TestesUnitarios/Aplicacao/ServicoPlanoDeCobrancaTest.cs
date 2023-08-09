@@ -9,12 +9,14 @@ using Moq;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
 {
-    public class ServicoPlanoDeCobrancaTest
+	[TestClass]
+	public class ServicoPlanoDeCobrancaTest
     {
         Mock<IRepositorioPlanoDeCobranca> RepositorioPlanoDeCobrancaMoq { get; set; }
         Mock<IValidadorPlanoDeCobranca> ValidadorPlanoDeCobrancaMoq { get; set; }
+		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
 
-        private ServicoPlanoDeCobranca ServicoPlanoDeCobranca { get; set; }
+		private ServicoPlanoDeCobranca ServicoPlanoDeCobranca { get; set; }
 
         PlanoDeCobranca PlanoDeCobranca { get; set; }
         GrupoDeAutomoveis Grupo { get; set; }
@@ -23,7 +25,8 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
         {
             RepositorioPlanoDeCobrancaMoq = new Mock<IRepositorioPlanoDeCobranca>();
             ValidadorPlanoDeCobrancaMoq = new Mock<IValidadorPlanoDeCobranca>();
-            ServicoPlanoDeCobranca = new ServicoPlanoDeCobranca(RepositorioPlanoDeCobrancaMoq.Object, ValidadorPlanoDeCobrancaMoq.Object);
+			ContextoPersistencia = new Mock<IContextoPersistencia>();
+			ServicoPlanoDeCobranca = new ServicoPlanoDeCobranca(RepositorioPlanoDeCobrancaMoq.Object, ValidadorPlanoDeCobrancaMoq.Object, ContextoPersistencia.Object);
             Grupo = new GrupoDeAutomoveis("Carros");
             PlanoDeCobranca = new PlanoDeCobranca(Grupo, 5, 5, 5, 5, 5, 5);
         }

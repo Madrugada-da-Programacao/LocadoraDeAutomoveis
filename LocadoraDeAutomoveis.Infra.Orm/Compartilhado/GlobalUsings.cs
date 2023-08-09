@@ -1,3 +1,4 @@
-﻿global using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
+﻿global using LocadoraDeAutomoveis.Dominio.Compartilhado;
+global using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
