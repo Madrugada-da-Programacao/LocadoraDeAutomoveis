@@ -1,4 +1,6 @@
-﻿using FluentValidation.TestHelper;
+﻿using FluentAssertions;
+using FluentValidation.TestHelper;
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
@@ -17,85 +19,104 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloPlanoDeCobranca
         }
 
         [TestMethod]
-        public void Tipo_do_plano_de_cobranca_deve_ser_tipo_valido()
+        public void Grupo_de_automoveis_nao_deve_ser_nulo()
         {
-            //arrange
-            PlanoDeCobranca.TipoDoPlano = PlanoDeCobranca.TipoDoPlanoEnum.PlanoDiario;
+            PlanoDeCobranca plano = new PlanoDeCobranca();
 
-            //action
-            var resultado = Validador.TestValidate(PlanoDeCobranca);
+            GrupoDeAutomoveis grupo = new GrupoDeAutomoveis();
 
-            //assert
-            resultado.ShouldNotHaveValidationErrorFor(x => x.TipoDoPlano);
+            plano.GrupoDeAutomoveis = grupo;
+
+            plano.GrupoDeAutomoveis.Should().NotBeNull();
         }
-
-        //[TestMethod]
-        //public void Preco_diaria_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        //{
-        //	//action
-        //	var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-        //	//assert
-        //	resultado.ShouldHaveValidationErrorFor(x => x.PrecoDiaria);
-        //}
 
         [TestMethod]
-        public void Preco_diaria_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        public void Preco_diaria_plano_diario_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
-            PlanoDeCobranca.PrecoDiaria = 1;
+            PlanoDeCobranca.PrecoDiariaPlanoDiario = 1;
 
             //action
             var resultado = Validador.TestValidate(PlanoDeCobranca);
 
             //assert
-            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoDiaria);
+            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoDiariaPlanoDiario);
         }
-
-        //[TestMethod]
-        //public void Preco_km_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        //{
-        //	//action
-        //	var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-        //	//assert
-        //	resultado.ShouldHaveValidationErrorFor(x => x.PrecoKm);
-        //}
 
         [TestMethod]
-        public void Preco_km_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        public void Preco_km_plano_diario_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
-            PlanoDeCobranca.PrecoKm = 1;
+            PlanoDeCobranca.PrecoKmPlanoDiario = 1;
 
             //action
             var resultado = Validador.TestValidate(PlanoDeCobranca);
 
             //assert
-            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoKm);
+            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoKmPlanoDiario);
         }
-
-        //[TestMethod]
-        //public void Km_disponiveis_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
-        //{
-        //	//action
-        //	var resultado = Validador.TestValidate(PlanoDeCobranca);
-
-        //	//assert
-        //	resultado.ShouldHaveValidationErrorFor(x => x.KmDisponiveis);
-        //}
 
         [TestMethod]
-        public void Km_disponiveis_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        public void Preco_diaria_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
-            PlanoDeCobranca.KmDisponiveis = 1;
+            PlanoDeCobranca.PrecoDiariaKmControlado = 1;
 
             //action
             var resultado = Validador.TestValidate(PlanoDeCobranca);
 
             //assert
-            resultado.ShouldNotHaveValidationErrorFor(x => x.KmDisponiveis);
+            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoDiariaKmControlado);
         }
+
+        [TestMethod]
+        public void Preco_km_extrapolado_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        {
+            //arrange
+            PlanoDeCobranca.PrecoKmExtrapoladoKmControlado = 1;
+
+            //action
+            var resultado = Validador.TestValidate(PlanoDeCobranca);
+
+            //assert
+            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoKmExtrapoladoKmControlado);
+        }
+
+        [TestMethod]
+        public void Km_disponiveis_km_controlado_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        {
+            //arrange
+            PlanoDeCobranca.KmDisponiveisKmControlado = 1;
+
+            //action
+            var resultado = Validador.TestValidate(PlanoDeCobranca);
+
+            //assert
+            resultado.ShouldNotHaveValidationErrorFor(x => x.KmDisponiveisKmControlado);
+        }
+
+        public void Preco_diaria_km_livre_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_erro()
+        {
+            //action
+            var resultado = Validador.TestValidate(PlanoDeCobranca);
+
+            //assert
+            resultado.ShouldHaveValidationErrorFor(x => x.PrecoDiariaKmLivre);
+        }
+
+        [TestMethod]
+        public void Preco_diaria_km_livre_plano_de_cobranca_nao_deve_ser_nulo_ou_vazio_ok()
+        {
+            //arrange
+            PlanoDeCobranca.PrecoDiariaKmLivre = 1;
+
+            //action
+            var resultado = Validador.TestValidate(PlanoDeCobranca);
+
+            //assert
+            resultado.ShouldNotHaveValidationErrorFor(x => x.PrecoDiariaKmLivre);
+        }
+
+        //TODO validador aluguel
     }
 }

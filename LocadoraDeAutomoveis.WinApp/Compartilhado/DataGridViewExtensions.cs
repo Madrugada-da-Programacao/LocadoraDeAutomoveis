@@ -1,6 +1,4 @@
-﻿using LocadoraDeAutomoveis.Dominio;
-
-namespace LocadoraDeAutomoveis.WinApp
+﻿namespace LocadoraDeAutomoveis.WinApp.Compartilhado
 {
     public static class DataGridViewExtensions
     {

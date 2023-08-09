@@ -1,6 +1,5 @@
 ﻿using FizzWare.NBuilder;
 using FluentAssertions;
-using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloTaxaOuServico
@@ -16,6 +15,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloTaxaOuServico
 
 			//action
 			RepositorioTaxaOuServico.Inserir(taxaOuServico);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioTaxaOuServico.SelecionarPorId(taxaOuServico.Id).Should().Be(taxaOuServico);
@@ -32,6 +32,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloTaxaOuServico
 
 			//action
 			RepositorioTaxaOuServico.Editar(taxaOuServico);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioTaxaOuServico.SelecionarPorId(taxaOuServico.Id)
@@ -46,6 +47,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloTaxaOuServico
 
 			//action
 			RepositorioTaxaOuServico.Excluir(taxaOuServico);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioTaxaOuServico.SelecionarPorId(taxaOuServico.Id).Should().BeNull();

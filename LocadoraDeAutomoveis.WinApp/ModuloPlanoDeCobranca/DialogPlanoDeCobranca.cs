@@ -1,3 +1,4 @@
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.WinApp.Compartilhado;
 using static LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca.PlanoDeCobranca;
@@ -9,12 +10,22 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
         private PlanoDeCobranca? planoDeCobranca;
 
         public event GravarRegistroDelegate<PlanoDeCobranca>? onGravarRegistro;
-        public DialogPlanoDeCobranca()
+        public DialogPlanoDeCobranca(List<GrupoDeAutomoveis> grupos)
         {
             InitializeComponent();
             this.ConfigurarDialog();
-            //CarregarGrupoDeAutomoveis();TODO
-            CarregarTiposDePlano();
+
+            CarregarGrupoDeAutomoveis(grupos);
+            
+            cmbGrupoAutomoveis.DisplayMember = "Nome";
+        }
+
+        private void CarregarGrupoDeAutomoveis(List<GrupoDeAutomoveis> grupos)
+        {
+            foreach (GrupoDeAutomoveis g in grupos)
+            {
+                cmbGrupoAutomoveis.Items.Add(g);
+            }
         }
 
         public PlanoDeCobranca PlanoDeCobranca
@@ -22,29 +33,26 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
             set
             {
                 planoDeCobranca = value;
-                cmbTipoDoPlano.SelectedItem = planoDeCobranca.TipoDoPlano;
-                txtPrecoDiaria.Value = planoDeCobranca.PrecoDiaria;
-                txtPrecoKm.Value = planoDeCobranca.PrecoKm;
-                txtKmDisponiveis.Value = planoDeCobranca.KmDisponiveis;
+
+                cmbGrupoAutomoveis.SelectedItem = planoDeCobranca.GrupoDeAutomoveis;
+                txtPrecoDiariaPlanoDiaria.Value = planoDeCobranca.PrecoDiariaPlanoDiario;
+                txtPrecoKmPlanoDiaria.Value = planoDeCobranca.PrecoKmPlanoDiario;
+                txtPrecoDiariaKmControlado.Value = planoDeCobranca.PrecoDiariaKmControlado;
+                txtPrecoKmKmControlado.Value = planoDeCobranca.PrecoKmExtrapoladoKmControlado;
+                txtKmDisponiveisKmControlado.Value = planoDeCobranca.KmDisponiveisKmControlado;
+                txtPrecoDiariaKmLivre.Value = planoDeCobranca.PrecoDiariaKmLivre;
             }
             get
             {
-                planoDeCobranca!.TipoDoPlano = (TipoDoPlanoEnum)cmbTipoDoPlano.SelectedItem;
-                planoDeCobranca.PrecoDiaria = txtPrecoDiaria.Value;
-                planoDeCobranca.PrecoKm = txtPrecoKm.Value;
-                planoDeCobranca.KmDisponiveis = Convert.ToInt32(txtKmDisponiveis.Value);
+                planoDeCobranca.GrupoDeAutomoveis = (GrupoDeAutomoveis)cmbGrupoAutomoveis.SelectedItem;
+                planoDeCobranca.PrecoDiariaPlanoDiario = txtPrecoDiariaPlanoDiaria.Value;
+                planoDeCobranca.PrecoKmPlanoDiario = txtPrecoKmPlanoDiaria.Value;
+                planoDeCobranca.PrecoDiariaKmControlado = txtPrecoDiariaKmControlado.Value;
+                planoDeCobranca.PrecoKmExtrapoladoKmControlado = txtPrecoKmKmControlado.Value;
+                planoDeCobranca.KmDisponiveisKmControlado = Convert.ToInt32(txtKmDisponiveisKmControlado.Value);
+                planoDeCobranca.PrecoDiariaKmLivre = txtPrecoDiariaKmLivre.Value;
 
                 return planoDeCobranca;
-            }
-        }
-
-        private void CarregarTiposDePlano()
-        {
-            TipoDoPlanoEnum[] TiposDePlano = Enum.GetValues<TipoDoPlanoEnum>();
-
-            foreach (TipoDoPlanoEnum t in TiposDePlano)
-            {
-                cmbTipoDoPlano.Items.Add(t);
             }
         }
 

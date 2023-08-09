@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LocadoraDeAutomoveis.Dominio
+namespace LocadoraDeAutomoveis.Dominio.Compartilhado
 {
     public static class IEnumerableExtensions
     {

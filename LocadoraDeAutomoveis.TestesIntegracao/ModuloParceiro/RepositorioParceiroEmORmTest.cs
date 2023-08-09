@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloParceiro
 {
+	[TestClass]
 	public class RepositorioParceiroEmORmTest : TestesIntegracaoBase
 	{
 		[TestMethod]
@@ -14,13 +15,14 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloParceiro
 
 			//action
 			RepositorioParceiro.Inserir(parceiro);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioParceiro.SelecionarPorId(parceiro.Id).Should().Be(parceiro);
 		}
 
 		[TestMethod]
-		public void Deve_editar_cliente()
+		public void Deve_editar_parceiro()
 		{
 			//arrange
 			var parceiroId = Builder<Parceiro>.CreateNew().Persist().Id;
@@ -30,6 +32,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloParceiro
 
 			//action
 			RepositorioParceiro.Editar(parceiro);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioParceiro.SelecionarPorId(parceiro.Id)
@@ -44,6 +47,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloParceiro
 
 			//action
 			RepositorioParceiro.Excluir(parceiro);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioParceiro.SelecionarPorId(parceiro.Id).Should().BeNull();

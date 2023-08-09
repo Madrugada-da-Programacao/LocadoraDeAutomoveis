@@ -10,21 +10,21 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloConfiguracaoDePrecos
         public void Deve_editar_configuracaoDePrecos()
         {
             //arrange
-            Contexto.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(5, 5, 5, 5);
+            ContextoDadosArquivo.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(5, 5, 5, 5);
 
             //action
             RepositorioConfiguracaoDePrecos.Editar();
 
             //assert
             RepositorioConfiguracaoDePrecos.SelecionarRegistro()
-                .Should().Be(Contexto.ConfiguracaoDePrecos);
+                .Should().Be(ContextoDadosArquivo.ConfiguracaoDePrecos);
         }
 
         [TestMethod]
         public void Deve_selecionar_configuracaoDePrecos()
         {
             //arrange
-            Contexto.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(5, 5, 5, 5);
+            ContextoDadosArquivo.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(5, 5, 5, 5);
 
             RepositorioConfiguracaoDePrecos.Editar();
 
@@ -32,7 +32,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloConfiguracaoDePrecos
             var configuracaoDePrecos = RepositorioConfiguracaoDePrecos.SelecionarRegistro();
 
             //assert
-            configuracaoDePrecos.Should().Be(Contexto.ConfiguracaoDePrecos);
+            configuracaoDePrecos.Should().Be(ContextoDadosArquivo.ConfiguracaoDePrecos);
         }
     }
 }

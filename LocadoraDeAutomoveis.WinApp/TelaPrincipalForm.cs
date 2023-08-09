@@ -1,299 +1,192 @@
-using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
-using LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
-using LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis;
-using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
-using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
-using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
-using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
-using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
-using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
 using LocadoraDeAutomoveis.WinApp.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using LocadoraDeAutomoveis.WinApp.ModuloConfiguracaoDePreco;
-using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
-using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
-using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
-using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
-using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
 using LocadoraDeAutomoveis.WinApp.ModuloParceiro;
-using LocadoraDeAutomoveis.Aplicacao.ModuloParceiro;
+using LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca;
+using LocadoraDeAutomoveis.WinApp.Compartilhado.IoC;
 
 namespace LocadoraDeAutomoveis.WinApp
 {
-	public partial class TelaPrincipalForm : Form
-	{
-		private Dictionary<string, ControladorBase> controladores { get; set; }
-
-		private ControladorBase? controlador { get; set; }
+    public partial class TelaPrincipalForm : Form
+    {
+        private ControladorBase? controlador { get; set; }
+		private IoC IoC { get; set; }
 
 		public TelaPrincipalForm()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
-			Instancia = this;
+            Instancia = this;
 
-			labelRodape.Text = string.Empty;
-			labelTipoCadastro.Text = string.Empty;
+            labelRodape.Text = string.Empty;
+            labelTipoCadastro.Text = string.Empty;
 
-			controladores = new Dictionary<string, ControladorBase>();
-
-			ConfigurarControladores();
+			IoC = new IoC_ComInjecaoDependencia();
 		}
 
-		private void ConfigurarControladores()
-		{
-			var configuracao = new ConfigurationBuilder()
-			   .SetBasePath(Directory.GetCurrentDirectory())
-			   .AddJsonFile("appsettings.json")
-			   .Build();
+        public static TelaPrincipalForm? Instancia
+        {
+            get;
+            private set;
+        }
 
-			var connectionString = configuracao.GetConnectionString("SqlServer");
+        public void AtualizarRodape()
+        {
+            if (controlador != null)
+            {
+                string mensagemRodape = controlador!.ObterMensagemRodape();
+                AtualizarRodape(mensagemRodape);
+            }
+        }
 
-			var optionsBuilder = new DbContextOptionsBuilder<LocadoraDeAutomoveisDbContext>();
+        public void AtualizarRodape(string mensagem)
+        {
+            labelRodape.Text = mensagem;
+        }
 
-			optionsBuilder.UseSqlServer(connectionString);
+        private void aluguelMenuItem_Click(object sender, EventArgs e)
+        {
+            //ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+        }
 
-			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
+        private void automovelMenuItem_Click(object sender, EventArgs e)
+        {
+            //ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+        }
 
-			var migracoesPendentes = dbContext.Database.GetPendingMigrations();
+        private void clienteMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorCliente>());
+        }
 
-			if (migracoesPendentes.Any())
-			{
-				dbContext.Database.Migrate();
-			}
+        private void condutorMenuItem_Click(object sender, EventArgs e)
+        {
+            //ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+        }
 
-			//IRepositorioDisciplina repositorioDisciplina = new RepositorioDisciplinaEmOrm(dbContext);
+        private void funcionarioMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorFuncionario>());
+        }
 
-			//ValidadorDisciplina validadorDisciplina = new ValidadorDisciplina();
+        private void grupoDeAutomoveisMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorGrupoDeAutomoveis>());
+        }
 
-			//ServicoDisciplina servicoDisciplina = new ServicoDisciplina(repositorioDisciplina, validadorDisciplina);
+        private void taxasOuServicosMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorTaxaOuServico>());
+        }
 
-			//controladores.Add("ControladorDisciplina", new ControladorDisciplina(repositorioDisciplina, servicoDisciplina));
+        private void parceiroToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorParceiro>());
+        }
 
-			//IRepositorioMateria repositorioMateria = new RepositorioMateriaEmOrm(dbContext);
+        private void planoDeCobrancaMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorPlanoDeCobranca>());
+        }
 
-			//ValidadorMateria validadorMateria = new ValidadorMateria();
-			//ServicoMateria servicoMateria = new ServicoMateria(repositorioMateria, validadorMateria);
+        private void configurarPrecosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //TODO tentar passar isso para o IoC
+            ContextoDados contexto = new ContextoDados(carregarDados: true);
+            IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);
+            ValidadorConfiguracaoDePrecos ValidadorConfiguracaoDePrecos = new ValidadorConfiguracaoDePrecos();
+            ServicoConfiguracaoDePrecos ServicoConfiguracaoDePrecos = new ServicoConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos);
 
-			//controladores.Add("ControladorMateria", new ControladorMateria(repositorioMateria, repositorioDisciplina, servicoMateria));
-
-			//IRepositorioQuestao repositorioQuestao = new RepositorioQuestaoEmOrm(dbContext);
-
-			//ValidadorQuestao validadorQuestao = new ValidadorQuestao();
-			//ServicoQuestao servicoQuestao = new ServicoQuestao(repositorioQuestao, validadorQuestao);
-			//controladores.Add("ControladorQuestao", new ControladorQuestao(repositorioQuestao, repositorioDisciplina, servicoQuestao));
-
-			//IRepositorioTeste repositorioTeste = new RepositorioTesteEmOrm(dbContext);
-
-			//IGeradorArquivo geradorRelatorio = new GeradorTesteEmPdf();
-
-			//ValidadorTeste validadorTeste = new ValidadorTeste();
-			//ServicoTeste servicoTeste = new ServicoTeste(repositorioTeste, repositorioQuestao, validadorTeste, geradorRelatorio);
-
-			//controladores.Add("ControladorTeste", new ControladorTeste(repositorioTeste, repositorioDisciplina, servicoTeste));
-
-
-
-
-
-
-
-			// Usar os modelos de cima como base e inserir o codigo correto abaixo -----------------------------------
-
-			IRepositorioCliente RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
-			ValidadorCliente ValidadorCliente = new ValidadorCliente();
-			ServicoCliente ServicoCliente = new ServicoCliente(RepositorioCliente, ValidadorCliente);
-			controladores.Add("ControladorCliente", new ControladorCliente(RepositorioCliente, ServicoCliente));
-
-			IRepositorioFuncionario RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
-			ValidadorFuncionario ValidadorFuncionario = new ValidadorFuncionario();
-			ServicoFuncionario ServicoFuncionario = new ServicoFuncionario(RepositorioFuncionario, ValidadorFuncionario);
-			controladores.Add("ControladorFuncionario", new ControladorFuncionario(RepositorioFuncionario, ServicoFuncionario));
-
-			IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
-			ValidadorGrupoDeAutomoveis ValidadorGrupoDeAutomoveis = new ValidadorGrupoDeAutomoveis();
-			ServicoGrupoDeAutomoveis ServicoGrupoDeAutomoveis = new ServicoGrupoDeAutomoveis(RepositorioGrupoDeAutomoveis, ValidadorGrupoDeAutomoveis);
-			controladores.Add("ControladorGrupoDeAutomoveis", new ControladorGrupoDeAutomoveis(RepositorioGrupoDeAutomoveis, ServicoGrupoDeAutomoveis));
-
-			IRepositorioTaxaOuServico RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
-			ValidadorTaxaOuServico ValidadorTaxaOuServico = new ValidadorTaxaOuServico();
-			ServicoTaxaOuServico ServicoTaxaOuServico = new ServicoTaxaOuServico(RepositorioTaxaOuServico, ValidadorTaxaOuServico);
-			controladores.Add("ControladorTaxaOuServico", new ControladorTaxaOuServico(RepositorioTaxaOuServico, ServicoTaxaOuServico));
-
-
-
-
-
-
-			IRepositorioParceiro RepositorioParceiro = new RepositorioParceiroEmOrm(dbContext);
-			ValidadorParceiro ValidadorParceiro = new ValidadorParceiro();
-			ServicoParceiro ServicoParceiro = new ServicoParceiro(RepositorioParceiro, ValidadorParceiro);
-			controladores.Add("ControladorParceiro", new ControladorParceiro(RepositorioParceiro, ServicoParceiro));
-
-
-
-
-
-
-		}
-
-		public static TelaPrincipalForm? Instancia
-		{
-			get;
-			private set;
-		}
-
-		public void AtualizarRodape()
-		{
-			if (controlador != null)
-			{
-				string mensagemRodape = controlador!.ObterMensagemRodape();
-				AtualizarRodape(mensagemRodape);
-			}
-		}
-
-		public void AtualizarRodape(string mensagem)
-		{
-			labelRodape.Text = mensagem;
-		}
-
-		private void aluguelMenuItem_Click(object sender, EventArgs e)
-		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
-		}
-
-		private void automovelMenuItem_Click(object sender, EventArgs e)
-		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
-		}
-
-		private void clienteMenuItem_Click(object sender, EventArgs e)
-		{
-			ConfigurarTelaPrincipal(controladores["ControladorCliente"]);
-		}
-
-		private void condutorMenuItem_Click(object sender, EventArgs e)
-		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
-		}
-
-		private void funcionarioMenuItem_Click(object sender, EventArgs e)
-		{
-			ConfigurarTelaPrincipal(controladores["ControladorFuncionario"]);
-		}
-
-		private void grupoDeAutomoveisMenuItem_Click(object sender, EventArgs e)
-		{
-			ConfigurarTelaPrincipal(controladores["ControladorGrupoDeAutomoveis"]);
-		}
-
-		private void taxasOuServicosMenuItem_Click(object sender, EventArgs e)
-		{
-			ConfigurarTelaPrincipal(controladores["ControladorTaxaOuServico"]);
-		}
-
-		private void parceiroToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			ConfigurarTelaPrincipal(controladores["ControladorParceiro"]);
-		}
-
-
-		private void configurarPrecosToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			ContextoDados contexto = new ContextoDados(carregarDados: true);
-			IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);
-			ValidadorConfiguracaoDePrecos ValidadorConfiguracaoDePrecos = new ValidadorConfiguracaoDePrecos();
-			ServicoConfiguracaoDePrecos ServicoConfiguracaoDePrecos = new ServicoConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos);
-
+			//TODO tentar passar isso para o IoC
+			//ConfiguracaoDePrecos registro = IoC.Get<RepositorioConfiguracaoDePrecosEmArquivo>()!.SelecionarRegistro();
 			ConfiguracaoDePrecos registro = RepositorioConfiguracaoDePrecos.SelecionarRegistro();
 
 			DialogConfiguracaoDePrecos dialog = new DialogConfiguracaoDePrecos();
 
+			//TODO tentar passar isso para o IoC
+			//dialog.onGravarRegistro += IoC.Get<ServicoConfiguracaoDePrecos>()!.Editar;
 			dialog.onGravarRegistro += ServicoConfiguracaoDePrecos.Editar;
 
 			dialog.ConfiguracaoDePrecos = registro;
 
-			DialogResult resultado = dialog.ShowDialog();
-		}
+            DialogResult resultado = dialog.ShowDialog();
+        }
 
-		private void btnInserir_Click(object sender, EventArgs e)
-		{
-			controlador!.Inserir();
-		}
+        private void btnInserir_Click(object sender, EventArgs e)
+        {
+            controlador!.Inserir();
+        }
 
-		private void btnEditar_Click(object sender, EventArgs e)
-		{
-			controlador!.Editar();
-		}
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            controlador!.Editar();
+        }
 
-		private void btnExcluir_Click(object sender, EventArgs e)
-		{
-			controlador!.Excluir();
-		}
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            controlador!.Excluir();
+        }
 
-		private void ConfigurarBotoes(ConfiguracaoToolboxBase configuracao)
-		{
-			btnInserir.Enabled = configuracao.InserirHabilitado;
-			btnEditar.Enabled = configuracao.EditarHabilitado;
-			btnExcluir.Enabled = configuracao.ExcluirHabilitado;
-		}
+        private void ConfigurarBotoes(ConfiguracaoToolboxBase configuracao)
+        {
+            btnInserir.Enabled = configuracao.InserirHabilitado;
+            btnEditar.Enabled = configuracao.EditarHabilitado;
+            btnExcluir.Enabled = configuracao.ExcluirHabilitado;
+        }
 
-		private void ConfigurarTooltips(ConfiguracaoToolboxBase configuracao)
-		{
-			btnInserir.ToolTipText = configuracao.TooltipInserir;
-			btnEditar.ToolTipText = configuracao.TooltipEditar;
-			btnExcluir.ToolTipText = configuracao.TooltipExcluir;
-		}
+        private void ConfigurarTooltips(ConfiguracaoToolboxBase configuracao)
+        {
+            btnInserir.ToolTipText = configuracao.TooltipInserir;
+            btnEditar.ToolTipText = configuracao.TooltipEditar;
+            btnExcluir.ToolTipText = configuracao.TooltipExcluir;
+        }
 
-		private void ConfigurarTelaPrincipal(ControladorBase controlador)
-		{
-			this.controlador = controlador;
+        private void ConfigurarTelaPrincipal(ControladorBase? controlador)
+        {
+            this.controlador = controlador;
 
-			ConfigurarToolbox();
+            ConfigurarToolbox();
 
-			ConfigurarListagem();
+            ConfigurarListagem();
 
-			string mensagemRodape = controlador.ObterMensagemRodape();
+            string mensagemRodape = controlador!.ObterMensagemRodape();
 
-			AtualizarRodape(mensagemRodape);
-		}
+            AtualizarRodape(mensagemRodape);
+        }
 
-		private void ConfigurarToolbox()
-		{
-			ConfiguracaoToolboxBase configuracao = controlador!.ObtemConfiguracaoToolbox();
+        private void ConfigurarToolbox()
+        {
+            ConfiguracaoToolboxBase configuracao = controlador!.ObtemConfiguracaoToolbox();
 
-			if (configuracao != null)
-			{
-				toolbox.Enabled = true;
+            if (configuracao != null)
+            {
+                toolbox.Enabled = true;
 
-				labelTipoCadastro.Text = configuracao.TipoCadastro;
+                labelTipoCadastro.Text = configuracao.TipoCadastro;
 
-				ConfigurarTooltips(configuracao);
+                ConfigurarTooltips(configuracao);
 
-				ConfigurarBotoes(configuracao);
-			}
-		}
+                ConfigurarBotoes(configuracao);
+            }
+        }
 
-		private void ConfigurarListagem()
-		{
-			AtualizarRodape("");
+        private void ConfigurarListagem()
+        {
+            AtualizarRodape("");
 
-			var listagemControl = controlador!.ObtemListagem();
+            var listagemControl = controlador!.ObtemListagem();
 
-			panelRegistros.Controls.Clear();
+            panelRegistros.Controls.Clear();
 
-			listagemControl.Dock = DockStyle.Fill;
+            listagemControl.Dock = DockStyle.Fill;
 
-			panelRegistros.Controls.Add(listagemControl);
-		}
-	}
+            panelRegistros.Controls.Add(listagemControl);
+        }
+    }
 }

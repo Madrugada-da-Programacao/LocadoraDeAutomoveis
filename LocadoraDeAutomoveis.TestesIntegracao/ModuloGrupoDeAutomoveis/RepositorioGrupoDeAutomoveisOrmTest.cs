@@ -1,12 +1,6 @@
 ﻿using FizzWare.NBuilder;
 using FluentAssertions;
-using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloGrupoDeAutomoveis
 {
@@ -14,57 +8,75 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloGrupoDeAutomoveis
     public class RepositorioGrupoDeAutomoveisOrmTest : TestesIntegracaoBase
     {
         [TestMethod]
-        public void Inserir_Grupo_OK()
+        public void Inserir_Grupo()
         {
-            var grupo = Builder<GrupoDeAutomoveis>.CreateNew().Build();
+			//arrange
+			var grupo = Builder<GrupoDeAutomoveis>.CreateNew().Build();
 
-            RepositorioGrupoDeAutomoveis.Inserir(grupo);
+			//action
+			RepositorioGrupoDeAutomoveis.Inserir(grupo);
+			ContextoPersistencia.GravarDados();
 
-            RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().Be(grupo);
+			//assert
+			RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().Be(grupo);
         }
 
         [TestMethod]
         public void Editar_Grupo_OK()
         {
-            var grupoId = Builder<GrupoDeAutomoveis>.CreateNew().Persist().Id;
+			//arrange
+			var grupoId = Builder<GrupoDeAutomoveis>.CreateNew().Persist().Id;
             var grupo = RepositorioGrupoDeAutomoveis.SelecionarPorId(grupoId);
-            grupo.Nome = "SUV";
+            grupo!.Nome = "SUV";
 
-            RepositorioGrupoDeAutomoveis.Editar(grupo);
+			//action
+			RepositorioGrupoDeAutomoveis.Editar(grupo);
+			ContextoPersistencia.GravarDados();
 
-            RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().Be(grupo);
+			//assert
+			RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().Be(grupo);
         }
 
         [TestMethod]
         public void Excluir_Grupo_OK()
         {
-            var grupo = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
+			//arrange
+			var grupo = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
 
-            RepositorioGrupoDeAutomoveis.Excluir(grupo);
+			//action
+			RepositorioGrupoDeAutomoveis.Excluir(grupo);
+			ContextoPersistencia.GravarDados();
 
-            RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().BeNull();
+			//assert
+			RepositorioGrupoDeAutomoveis.SelecionarPorId(grupo.Id).Should().BeNull();
         }
 
         [TestMethod]
         public void Selecionar_Todos_OK()
         {
-            var PCD = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
+			//arrange
+			var PCD = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
             var OffRoad = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
 
-            var Grupos = RepositorioGrupoDeAutomoveis.SelecionarTodos();
+			//action
+			var Grupos = RepositorioGrupoDeAutomoveis.SelecionarTodos();
 
-            Grupos.Should().ContainInOrder(PCD, OffRoad);
-
+			//assert
+			Grupos.Should().ContainInOrder(PCD, OffRoad);
             Grupos.Should().HaveCount(2);
         }
 
         [TestMethod]
         public void Selecionar_Por_Nome_OK()
         {
-            var Esportivo = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
+			//arrange
+			var Esportivo = Builder<GrupoDeAutomoveis>.CreateNew().Persist();
 
-            var grupoEncontrado = RepositorioGrupoDeAutomoveis.SelecionarPorNome(Esportivo.Nome);
-            grupoEncontrado.Should().Be(Esportivo);
+			//action
+			var grupoEncontrado = RepositorioGrupoDeAutomoveis.SelecionarPorNome(Esportivo.Nome);
+
+			//assert
+			grupoEncontrado.Should().Be(Esportivo);
         }
 
         [TestMethod]

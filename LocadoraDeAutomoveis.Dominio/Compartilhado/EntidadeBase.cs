@@ -1,6 +1,6 @@
 ﻿using SequentialGuid;
 
-namespace LocadoraDeAutomoveis.Dominio
+namespace LocadoraDeAutomoveis.Dominio.Compartilhado
 {
     public abstract class EntidadeBase<T>
     {

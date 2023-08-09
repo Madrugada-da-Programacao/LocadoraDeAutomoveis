@@ -8,7 +8,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario
         {
         }
 
-        public Funcionario SelecionarPorNome(string nome)
+        public Funcionario? SelecionarPorNome(string nome)
         {
             return registros.FirstOrDefault(x => x.Nome == nome);
         }

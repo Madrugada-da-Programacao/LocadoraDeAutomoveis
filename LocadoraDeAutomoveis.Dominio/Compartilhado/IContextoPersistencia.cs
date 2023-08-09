@@ -1,7 +1,7 @@
-﻿namespace LocadoraDeAutomoveis.Dominio
+﻿namespace LocadoraDeAutomoveis.Dominio.Compartilhado
 {
-    public interface IContextoPersistencia
-    {
+    public interface IContextoPersistencia // Unit of Work - UoW
+	{
         void DesfazerAlteracoes();
 
         void GravarDados();

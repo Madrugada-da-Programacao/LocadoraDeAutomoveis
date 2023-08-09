@@ -15,6 +15,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloCliente
 
             //action
             RepositorioCliente.Inserir(cliente);
+			ContextoPersistencia.GravarDados();
 
 			//assert
 			RepositorioCliente.SelecionarPorId(cliente.Id).Should().Be(cliente);
@@ -31,9 +32,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloCliente
 
             //action
             RepositorioCliente.Editar(cliente);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioCliente.SelecionarPorId(cliente.Id)
+			//assert
+			RepositorioCliente.SelecionarPorId(cliente.Id)
                 .Should().Be(cliente);
         }
 
@@ -45,9 +47,10 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloCliente
 
             //action
             RepositorioCliente.Excluir(cliente);
+			ContextoPersistencia.GravarDados();
 
-            //assert
-            RepositorioCliente.SelecionarPorId(cliente.Id).Should().BeNull();
+			//assert
+			RepositorioCliente.SelecionarPorId(cliente.Id).Should().BeNull();
         }
 
         [TestMethod]

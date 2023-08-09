@@ -5,18 +5,30 @@
         public ValidadorPlanoDeCobranca()
         {
 
-            RuleFor(x => x.TipoDoPlano)
-                .IsInEnum();
+            RuleFor(x => x.GrupoDeAutomoveis)
+                .NotNull();
 
-            RuleFor(x => x.PrecoDiaria)
+            RuleFor(x => x.PrecoDiariaPlanoDiario)
                 .NotEmpty()
                 .NotNull();
 
-            RuleFor(x => x.PrecoKm)
+            RuleFor(x => x.PrecoKmPlanoDiario)
                 .NotEmpty()
                 .NotNull();
 
-            RuleFor(x => x.KmDisponiveis)
+            RuleFor(x => x.PrecoDiariaKmControlado)
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(x => x.PrecoKmExtrapoladoKmControlado)
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(x => x.KmDisponiveisKmControlado)
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(x => x.PrecoDiariaKmLivre)
                 .NotEmpty()
                 .NotNull();
         }

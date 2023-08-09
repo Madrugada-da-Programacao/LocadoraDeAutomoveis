@@ -1,43 +1,46 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
 {
     public class ServicoGrupoDeAutomoveis
     {
-        private IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
-        private IValidadorGrupoDeAutomoveis ValidadorGrupoDeAutomoveis { get; set; }
+        private readonly IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis;
+        private readonly IValidadorGrupoDeAutomoveis validadorGrupoDeAutomoveis;
+		private readonly IContextoPersistencia contextoPersistencia;
 
-        public ServicoGrupoDeAutomoveis(IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis, IValidadorGrupoDeAutomoveis validadorGrupoDeAutomoveis)
-        {
-            RepositorioGrupoDeAutomoveis = repositorioGrupoDeAutomoveis;
-            ValidadorGrupoDeAutomoveis = validadorGrupoDeAutomoveis;
-        }
+		public ServicoGrupoDeAutomoveis(IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis, IValidadorGrupoDeAutomoveis validadorGrupoDeAutomoveis, IContextoPersistencia contextoPersistencia)
+		{
+			this.repositorioGrupoDeAutomoveis = repositorioGrupoDeAutomoveis;
+			this.validadorGrupoDeAutomoveis = validadorGrupoDeAutomoveis;
+			this.contextoPersistencia = contextoPersistencia;
+		}
 
-        public Result Inserir(GrupoDeAutomoveis registro)
+		public Result Inserir(GrupoDeAutomoveis registro)
         {
             List<string> erros = ValidarGrupoDeAutomoveis(registro);
 
             if (erros.Count() > 0)
+            {
+				contextoPersistencia.DesfazerAlteracoes();
                 return Result.Fail(erros);
-
+			}
             try
             {
-                RepositorioGrupoDeAutomoveis.Inserir(registro);
+                repositorioGrupoDeAutomoveis.Inserir(registro);
 
-                Log.Debug("Grupo de Automoveis {GrupoID} inserido com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Grupo de Automoveis {GrupoID} inserido com sucesso", registro.Id);
 
                 return Result.Ok();
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar inserir grupo de automoveis.";
+				contextoPersistencia.DesfazerAlteracoes();
 
-                Log.Error(exc, msgErro + "{@c}", registro);
+				string msgErro = "Falha ao tentar inserir grupo de automoveis.";
+
+                Log.Error(exc, msgErro + "{@g}", registro);
 
                 return Result.Fail(msgErro);
             }
@@ -45,7 +48,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
 
         private List<string> ValidarGrupoDeAutomoveis(GrupoDeAutomoveis registro)
         {
-            var resultado = ValidadorGrupoDeAutomoveis.Validate(registro);
+            var resultado = validadorGrupoDeAutomoveis.Validate(registro);
 
             List<string> erros = new List<string>();
 
@@ -65,7 +68,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
 
         private bool NomeDuplicado(GrupoDeAutomoveis registro)
         {
-            GrupoDeAutomoveis? RegistroComMesmoNome = RepositorioGrupoDeAutomoveis.SelecionarPorNome(registro.Nome);
+            GrupoDeAutomoveis? RegistroComMesmoNome = repositorioGrupoDeAutomoveis.SelecionarPorNome(registro.Nome);
 
             if (RegistroComMesmoNome != null &&
                 RegistroComMesmoNome.Id != registro.Id &&
@@ -84,19 +87,25 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
             List<string> erros = ValidarGrupoDeAutomoveis(registro);
 
             if (erros.Count() > 0)
+            {
+				contextoPersistencia.DesfazerAlteracoes();
                 return Result.Fail(erros);
-
+			}
             try
             {
-                RepositorioGrupoDeAutomoveis.Editar(registro);
+                repositorioGrupoDeAutomoveis.Editar(registro);
 
-                Log.Debug("Grupo de Automoveis {GrupoID} editado com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Grupo de Automoveis {GrupoID} editado com sucesso", registro.Id);
 
                 return Result.Ok();
             }
             catch (Exception exc)
             {
-                string msgErro = "Falha ao tentar editar Grupo de Automoveis.";
+				contextoPersistencia.DesfazerAlteracoes();
+
+				string msgErro = "Falha ao tentar editar Grupo de Automoveis.";
 
                 Log.Error(exc, msgErro + "{@ga}", registro);
 
@@ -110,24 +119,28 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
 
             try
             {
-                bool disciplinaExiste = RepositorioGrupoDeAutomoveis.Existe(registro);
+                bool grupoExiste = repositorioGrupoDeAutomoveis.Existe(registro);
 
-                if (disciplinaExiste == false)
+                if (grupoExiste == false)
                 {
                     Log.Warning("Grupo de Automoveis {GrupoID} não encontrado para excluir", registro.Id);
 
                     return Result.Fail("Grupo de Automoveis não encontrado");
                 }
 
-                RepositorioGrupoDeAutomoveis.Excluir(registro);
+                repositorioGrupoDeAutomoveis.Excluir(registro);
 
-                Log.Debug("Grupo de Automoveis {GrupoID} excluído com sucesso", registro.Id);
+				contextoPersistencia.GravarDados();
+
+				Log.Debug("Grupo de Automoveis {GrupoID} excluído com sucesso", registro.Id);
 
                 return Result.Ok();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                List<string> erros = new List<string>();
+				contextoPersistencia.DesfazerAlteracoes();
+
+				List<string> erros = new List<string>();
 
                 string msgErro;
 
@@ -148,7 +161,14 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
                 //    erros.Add(erro);
                 //}
 
-                msgErro = "Falha ao tentar excluir Grupo de Automoveis";
+
+
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel"))
+                    msgErro = "Este Grupo de Automoveis está relacionada com um Plano de Cobrança e não pode ser excluído";
+                else
+                    msgErro = "Falha ao tentar excluir Grupo de Automoveis";
+
+                //msgErro = "Falha ao tentar excluir Grupo de Automoveis";
 
                 erros.Add(msgErro);
 
