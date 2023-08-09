@@ -1,18 +1,21 @@
 ﻿using LocadoraDeAutomoveis.Aplicacao.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 {
 	public class ControladorAutomovel : ControladorBase
 	{
 		private IRepositorioAutomovel RepositorioAutomovel { get; set; }
+		private IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
 		private ServicoAutomovel ServicoAutomovel { get; set; }
 		private TabelaAutomovel? TabelaAutomovel { get; set; }
 
-		public ControladorAutomovel(IRepositorioAutomovel repositorioAutomovel, ServicoAutomovel servicoAutomovel)
+		public ControladorAutomovel(IRepositorioAutomovel repositorioAutomovel, ServicoAutomovel servicoAutomovel, IRepositorioGrupoDeAutomoveis repositorioGrupoDeAutomoveis)
 		{
 			RepositorioAutomovel = repositorioAutomovel;
 			ServicoAutomovel = servicoAutomovel;
+			RepositorioGrupoDeAutomoveis = repositorioGrupoDeAutomoveis;
 		}
 
 		public override void Inserir()
