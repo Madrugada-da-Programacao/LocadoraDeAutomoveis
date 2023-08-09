@@ -23,12 +23,10 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca
             builder.Property(p => p.PrecoDiariaKmLivre).HasColumnType("decimal(18, 2)").IsRequired();
 
             builder.HasOne(p => p.GrupoDeAutomoveis)
-                        .WithOne()
-                        .HasForeignKey<PlanoDeCobranca>(p => p.GrupoDeAutomoveisId)
+                        .WithOne(p => p.PlanoDeCobranca)
                         .IsRequired(false)
                         .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel")
-                        .OnDelete(DeleteBehavior.Cascade);
-			//TODO mudar o comportamento do onDelete porque acho que o rech não deixa ser do tipo Cascade, tentar controlar como deletar em outro lugar do codigo?
+                        .OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }

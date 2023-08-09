@@ -153,9 +153,9 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			   + "" //TODO Condutor
 			   + "" //TODO Cupom
 			   + "DELETE FROM [DBO].[TBFUNCIONARIO];"
+			   + "DELETE FROM [DBO].[TBPLANODECOBRANCA];"
 			   + "DELETE FROM [DBO].[TBGRUPODEAUTOMOVEIS];"
 			   + "DELETE FROM [DBO].[TBPARCEIRO];"
-			   + "DELETE FROM [DBO].[TBPLANODECOBRANCA];"
 			   + "DELETE FROM [DBO].[TBTAXAOUSERVICO];";
 				
 

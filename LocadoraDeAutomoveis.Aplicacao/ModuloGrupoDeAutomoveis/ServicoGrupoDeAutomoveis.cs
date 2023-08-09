@@ -161,7 +161,14 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis
                 //    erros.Add(erro);
                 //}
 
-                msgErro = "Falha ao tentar excluir Grupo de Automoveis";
+
+
+                if (ex.InnerException != null && ex.InnerException.Message.Contains("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel"))
+                    msgErro = "Este Grupo de Automoveis está relacionada com um Plano de Cobrança e não pode ser excluído";
+                else
+                    msgErro = "Falha ao tentar excluir Grupo de Automoveis";
+
+                //msgErro = "Falha ao tentar excluir Grupo de Automoveis";
 
                 erros.Add(msgErro);
 
