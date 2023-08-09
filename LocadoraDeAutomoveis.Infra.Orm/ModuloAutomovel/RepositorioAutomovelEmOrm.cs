@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
 {
-    public class RepositorioAutomovelOrm : RepositorioBaseEmOrm<Automovel> , IRepositorioAutomovel
+    public class RepositorioAutomovelEmOrm : RepositorioBaseEmOrm<Automovel> , IRepositorioAutomovel
     {
-        public RepositorioAutomovelOrm(LocadoraDeAutomoveisDbContext dbContext) : base(dbContext) { }
+        public RepositorioAutomovelEmOrm(LocadoraDeAutomoveisDbContext dbContext) : base(dbContext) { }
 
         public Automovel? SelecionarPorPlaca(string placa)
         {

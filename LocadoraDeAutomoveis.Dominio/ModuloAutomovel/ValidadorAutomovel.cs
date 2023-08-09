@@ -14,12 +14,12 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
             RuleFor(x => x.Ano)
                 .NotEmpty()
                 .NotNull()
-                .Matches(@"^\\d{4}$")
+                .Matches(@"^\d{4}$")
                 .WithMessage("Ano Invalido por favor use o formato: AAAA");
             RuleFor(x => x.Placa)
                 .NotEmpty()
                 .NotNull()
-                .Matches(@"^([A-Z]{3}-\\d{4})|([A-Z]{3}\\d{1}[A-Z]{1}\\d{2})$")
+                .Matches(@"^([A-Z]{3}-\d{4})|([A-Z]{3}\d{1}[A-Z]{1}\d{2})$")
                 .WithMessage("Placa Invalida por favor utilize um dos formatos padrões Brasileiros: AAA-0000 ou AAA0A00");
             RuleFor(x => x.Marca)
                 .NotEmpty()

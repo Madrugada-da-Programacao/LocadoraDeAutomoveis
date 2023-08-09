@@ -20,9 +20,10 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 		public override void Inserir()
 		{
-			DialogAutomovel dialog = new DialogAutomovel();
+			List<GrupoDeAutomoveis> grupo = SelecionarGruposDeAutomoveis();
+			DialogAutomovel dialog = new DialogAutomovel(grupo);
 
-			dialog.onGravarRegistro += ServicoAutomovel.Inserir;
+			dialog.onGravarRegistro += ServicoAutomovel!.Inserir;
 
 			dialog.Automovel = new Automovel();
 
@@ -48,10 +49,10 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 				return;
 			}
+            List<GrupoDeAutomoveis> grupo = SelecionarGruposDeAutomoveis();
+            DialogAutomovel dialog = new DialogAutomovel(grupo);
 
-			DialogAutomovel dialog = new DialogAutomovel();
-
-			dialog.onGravarRegistro += ServicoAutomovel.Editar;
+			dialog.onGravarRegistro += ServicoAutomovel!.Editar;
 
 			dialog.Automovel = registro;
 
@@ -66,7 +67,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 		public override void Excluir()
 		{
 			Guid idRegistro = TabelaAutomovel!.ObtemIdSelecionado();
-			Automovel? registro = RepositorioAutomovel.SelecionarPorId(idRegistro);
+			Automovel? registro = RepositorioAutomovel!.SelecionarPorId(idRegistro);
 
 			if (registro == null)
 			{
@@ -85,7 +86,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 			if (opcao == DialogResult.OK)
 			{
-				Result resultado = ServicoAutomovel.Excluir(registro);
+				Result resultado = ServicoAutomovel!.Excluir(registro);
 
 				if (resultado.IsFailed)
 				{
@@ -123,5 +124,13 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 			TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
 		}
-	}
+        private List<GrupoDeAutomoveis> SelecionarGruposDeAutomoveis()
+        {
+            List<GrupoDeAutomoveis> grupo = new List<GrupoDeAutomoveis>();
+
+            grupo = RepositorioGrupoDeAutomoveis.SelecionarTodos();
+
+            return grupo;
+        }
+    }
 }

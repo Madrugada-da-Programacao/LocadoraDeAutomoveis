@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 {
     [DbContext(typeof(LocadoraDeAutomoveisDbContext))]
-    [Migration("20230809204310_TBAutomovel")]
-    partial class TBAutomovel
+    [Migration("20230809221713_ModuloAutomovel")]
+    partial class ModuloAutomovel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,19 +175,31 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("KmDisponiveis")
+                    b.Property<Guid>("GrupoDeAutomoveisId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("KmDisponiveisKmControlado")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("PrecoDiaria")
+                    b.Property<decimal>("PrecoDiariaKmControlado")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("PrecoKm")
+                    b.Property<decimal>("PrecoDiariaKmLivre")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int>("TipoDoPlano")
-                        .HasColumnType("int");
+                    b.Property<decimal>("PrecoDiariaPlanoDiario")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("PrecoKmExtrapoladoKmControlado")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("PrecoKmPlanoDiario")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GrupoDeAutomoveisId")
+                        .IsUnique();
 
                     b.ToTable("TBPlanoDeCobranca", (string)null);
                 });
@@ -221,6 +233,23 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                         .IsRequired();
 
                     b.Navigation("GrupoDeAutomovel");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca.PlanoDeCobranca", b =>
+                {
+                    b.HasOne("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", "GrupoDeAutomoveis")
+                        .WithOne("PlanoDeCobranca")
+                        .HasForeignKey("LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca.PlanoDeCobranca", "GrupoDeAutomoveisId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel");
+
+                    b.Navigation("GrupoDeAutomoveis");
+                });
+
+            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", b =>
+                {
+                    b.Navigation("PlanoDeCobranca")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

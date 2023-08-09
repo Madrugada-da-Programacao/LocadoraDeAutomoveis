@@ -47,8 +47,13 @@
             cbTipoCombustivel = new ComboBox();
             label4 = new Label();
             label5 = new Label();
+            label6 = new Label();
+            txtAno = new TextBox();
+            label10 = new Label();
+            nudKM = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)pbImagem).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudLitros).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nudKM).BeginInit();
             SuspendLayout();
             // 
             // txtModelo
@@ -105,7 +110,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(44, 451);
+            label9.Location = new Point(44, 566);
             label9.Name = "label9";
             label9.Size = new Size(156, 20);
             label9.TabIndex = 17;
@@ -114,7 +119,7 @@
             // btnGravar
             // 
             btnGravar.DialogResult = DialogResult.OK;
-            btnGravar.Location = new Point(299, 505);
+            btnGravar.Location = new Point(288, 623);
             btnGravar.Margin = new Padding(3, 4, 3, 4);
             btnGravar.Name = "btnGravar";
             btnGravar.Size = new Size(86, 60);
@@ -126,7 +131,7 @@
             // btnCancelar
             // 
             btnCancelar.DialogResult = DialogResult.Cancel;
-            btnCancelar.Location = new Point(403, 505);
+            btnCancelar.Location = new Point(401, 623);
             btnCancelar.Margin = new Padding(3, 4, 3, 4);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(86, 60);
@@ -176,14 +181,13 @@
             // 
             // nudLitros
             // 
-            nudLitros.Location = new Point(206, 444);
+            nudLitros.Location = new Point(206, 566);
             nudLitros.Maximum = new decimal(new int[] { 1600, 0, 0, 0 });
             nudLitros.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             nudLitros.Name = "nudLitros";
             nudLitros.Size = new Size(150, 27);
             nudLitros.TabIndex = 105;
             nudLitros.Value = new decimal(new int[] { 5, 0, 0, 0 });
-            nudLitros.ValueChanged += numericUpDown1_ValueChanged;
             // 
             // cbGrupo
             // 
@@ -196,21 +200,21 @@
             // cbTipoCombustivel
             // 
             cbTipoCombustivel.FormattingEnabled = true;
-            cbTipoCombustivel.Items.AddRange(new object[] { "Gasolina ", "Etanol", "Diesel", "Etanol & GNV", "Gasolina & GNV", "Total Flex" });
-            cbTipoCombustivel.Location = new Point(206, 398);
+            cbTipoCombustivel.Items.AddRange(new object[] { "Gasolina", "Etanol", "Diesel", "Etanol & GNV", "Gasolina & GNV", "Total Flex" });
+            cbTipoCombustivel.Location = new Point(196, 524);
             cbTipoCombustivel.Name = "cbTipoCombustivel";
             cbTipoCombustivel.Size = new Size(151, 28);
             cbTipoCombustivel.TabIndex = 107;
-            cbTipoCombustivel.SelectedIndexChanged += cbTipoCombustivel_SelectedIndexChanged;
+            cbTipoCombustivel.Text = "Gasolina";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(44, 401);
+            label4.Location = new Point(44, 532);
             label4.Name = "label4";
-            label4.Size = new Size(146, 20);
+            label4.Size = new Size(149, 20);
             label4.TabIndex = 108;
-            label4.Text = "Tipo de Combustivel";
+            label4.Text = "Tipo de Combustivel:";
             // 
             // label5
             // 
@@ -221,11 +225,49 @@
             label5.TabIndex = 109;
             label5.Text = "Grupo de Automoveis";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(63, 402);
+            label6.Name = "label6";
+            label6.Size = new Size(39, 20);
+            label6.TabIndex = 110;
+            label6.Text = "Ano:";
+            // 
+            // txtAno
+            // 
+            txtAno.Location = new Point(136, 395);
+            txtAno.Name = "txtAno";
+            txtAno.Size = new Size(125, 27);
+            txtAno.TabIndex = 111;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(63, 475);
+            label10.Name = "label10";
+            label10.Size = new Size(117, 20);
+            label10.TabIndex = 113;
+            label10.Text = "Quilometragem:";
+            // 
+            // nudKM
+            // 
+            nudKM.DecimalPlaces = 1;
+            nudKM.Location = new Point(186, 473);
+            nudKM.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            nudKM.Name = "nudKM";
+            nudKM.Size = new Size(150, 27);
+            nudKM.TabIndex = 114;
+            // 
             // DialogAutomovel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(517, 578);
+            ClientSize = new Size(517, 696);
+            Controls.Add(nudKM);
+            Controls.Add(label10);
+            Controls.Add(txtAno);
+            Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(cbTipoCombustivel);
@@ -249,6 +291,7 @@
             Text = "DialogAutomovel";
             ((System.ComponentModel.ISupportInitialize)pbImagem).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudLitros).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nudKM).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -273,5 +316,9 @@
         private ComboBox cbTipoCombustivel;
         private Label label4;
         private Label label5;
+        private Label label6;
+        private TextBox txtAno;
+        private Label label10;
+        private NumericUpDown nudKM;
     }
 }

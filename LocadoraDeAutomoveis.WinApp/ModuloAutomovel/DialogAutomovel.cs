@@ -1,6 +1,7 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.WinApp.Compartilhado;
+using Microsoft.IdentityModel.Tokens;
 using System.Windows.Forms;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
@@ -10,12 +11,17 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
         private Automovel? automovel;
 
         public event GravarRegistroDelegate<Automovel>? onGravarRegistro;
-        public DialogAutomovel()
+        private byte[] Imagem { get; set; }
+        public DialogAutomovel(List<GrupoDeAutomoveis> gruposDeAutomoveis)
         {
             InitializeComponent();
             this.ConfigurarDialog();
-            //TODO adicionar Lista de grupos
-            //foreach(GrupoDeAutomoveis grupo in TelaPrincipalForm.Repositorio)
+            CarregaGrupoDeAutomoveis(gruposDeAutomoveis);
+
+            cbGrupo.DisplayMember = "Nome";
+            cbGrupo.SelectedIndex = 0;
+            cbTipoCombustivel.SelectedIndex = 0;
+            pbImagem.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         public Automovel Automovel
@@ -27,9 +33,20 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
                 txtMarca.Text = automovel.Marca;
                 txtModelo.Text = automovel.Modelo;
                 txtPlaca.Text = automovel.Placa;
-                //cbGrupo.SelectedItem = automovel.GrupoDeAutomovel.Nome;
+                txtAno.Text = automovel.Ano;
+                cbGrupo.SelectedItem = automovel.GrupoDeAutomovel;
                 cbTipoCombustivel.SelectedIndex = (int)automovel.TipoCombustivel;
-                nudLitros.Value = (int) automovel.CapacidadeCombustivel;
+                if (automovel.CapacidadeCombustivel < 5) automovel.CapacidadeCombustivel = 5;
+                nudLitros.Value = (int)automovel.CapacidadeCombustivel;
+                nudKM.Value = (decimal) automovel.KM;
+                Imagem = automovel.Imagem;
+                if (!Imagem.IsNullOrEmpty())
+                {
+                    using (MemoryStream ms = new MemoryStream(Imagem))
+                    {
+                        pbImagem.Image = Image.FromStream(ms);
+                    }
+                }
             }
             get
             {
@@ -37,9 +54,12 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
                 automovel.Marca = txtMarca.Text;
                 automovel.Modelo = txtModelo.Text;
                 automovel.Placa = txtPlaca.Text;
-                automovel.TipoCombustivel = (Automovel.TiposDeCombustivel) cbTipoCombustivel.SelectedIndex;
-                automovel.CapacidadeCombustivel = (float) nudLitros.Value;
-                //automovel.GrupoDeAutomovel = cbGrupo
+                automovel.TipoCombustivel = (Automovel.TiposDeCombustivel)cbTipoCombustivel.SelectedIndex;
+                automovel.CapacidadeCombustivel = (float)nudLitros.Value;
+                automovel.GrupoDeAutomovel = (GrupoDeAutomoveis)cbGrupo.SelectedItem;
+                automovel.Imagem = Imagem;
+                automovel.Ano = txtAno.Text;
+                automovel.KM = (float) nudKM.Value;
                 return automovel;
             }
         }
@@ -67,6 +87,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
                 byte[] ImagemArray = File.ReadAllBytes(LocalDaImagem);
                 if (ImagemArray.Length <= 2 * 1024 * 1024)
                 {
+                    Imagem = ImagemArray;
                     using (MemoryStream ms = new MemoryStream(ImagemArray))
                     {
                         pbImagem.Image = Image.FromStream(ms);
@@ -80,14 +101,12 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
             }
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void CarregaGrupoDeAutomoveis(List<GrupoDeAutomoveis> gruposDeAutomoveis)
         {
-
-        }
-
-        private void cbTipoCombustivel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            foreach (GrupoDeAutomoveis g in gruposDeAutomoveis)
+            {
+                cbGrupo.Items.Add(g);
+            }
         }
     }
 }

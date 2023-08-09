@@ -1,10 +1,13 @@
-﻿using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
+﻿using LocadoraDeAutomoveis.Aplicacao.ModuloAutomovel;
+using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
 using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
 using LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Aplicacao.ModuloParceiro;
 using LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.Dominio;
+using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
@@ -15,12 +18,14 @@ using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.WinApp.ModuloAutomovel;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
 using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
@@ -59,13 +64,12 @@ namespace LocadoraDeAutomoveis.WinApp.Compartilhado.IoC
 			//servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
 			//servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
 
-			////TODO
-			//servicos.AddTransient<ControladorCliente>();--------------------> Automovel
-			//servicos.AddTransient<ServicoCliente>();
-			//servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
-			//servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
+			servicos.AddTransient<ControladorAutomovel>();
+			servicos.AddTransient<ServicoAutomovel>();
+			servicos.AddTransient<IValidadorAutomovel, ValidadorAutomovel>();
+            servicos.AddTransient<IRepositorioAutomovel, RepositorioAutomovelEmOrm>();
 
-			servicos.AddTransient<ControladorCliente>();
+            servicos.AddTransient<ControladorCliente>();
 			servicos.AddTransient<ServicoCliente>();
 			servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
 			servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
