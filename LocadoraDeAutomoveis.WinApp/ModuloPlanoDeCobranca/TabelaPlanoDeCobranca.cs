@@ -31,7 +31,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
                 new DataGridViewTextBoxColumn { Name = "KmDisponiveisKmControlado", HeaderText = "Km Disponíveis Plano Km Controlado"},
 
-                new DataGridViewTextBoxColumn { Name = "PrecoDiariaKmLivre", HeaderText = "Preço DiariaPlano Km Livre"}
+                new DataGridViewTextBoxColumn { Name = "PrecoDiariaKmLivre", HeaderText = "Preço Diaria Plano Km Livre"}
             };
 
             return colunas;
