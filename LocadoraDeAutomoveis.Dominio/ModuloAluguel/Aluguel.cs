@@ -34,6 +34,8 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
         public List<TaxaOuServico> TaxasAdicionais { get; set; }
         public decimal ValorTotal { get; set; }
 
+        public bool Aberto { get; set; }
+
         public Aluguel(Funcionario funcionario, Cliente cliente, GrupoDeAutomoveis grupoDeAutomoveis, PlanoDeCobranca planoDeCobranca, Condutor condutor, Automovel automovel, DateTime dataLocacao, DateTime dataDevolucaoPrevista, int kmAutomovel, List<Cupom> cupoms, List<TaxaOuServico> taxas, List<TaxaOuServico> taxasAdicionais, decimal valorTotal)
         {
             Funcionario = funcionario;

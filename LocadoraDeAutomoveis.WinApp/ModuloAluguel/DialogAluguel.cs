@@ -2,6 +2,7 @@
 using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
+using LocadoraDeAutomoveis.Dominio.ModuloCupom;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
@@ -24,6 +25,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
         private Aluguel? aluguel;
         public event GravarRegistroDelegate<Aluguel>? onGravarRegistro;
         private List<TaxaOuServico> Taxas { get; set; }
+        private List<Cupom> Cupoms { get; set; }
         public DialogAluguel(List<Funcionario> funcionarios, List<Cliente> clientes, List<GrupoDeAutomoveis> grupos, List<PlanoDeCobranca> planos, List<Condutor> condutores, List<Automovel> automoveis, List<TaxaOuServico> taxas)
         {
             InitializeComponent();
@@ -85,11 +87,13 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
                 txtDataDevolucaoPrevista.Value = aluguel.DataDevolucaoPrevista;
                 txtKmAutomovel.Value = Convert.ToDecimal(aluguel.Automovel.KM);
 
-                for(int i = 0; i < Taxas.Count; i++)
+                for (int i = 0; i < Taxas.Count; i++)
                 {
                     if (aluguel.Taxas.Any(x => x.Id == Taxas[i].Id))
                         listTaxas.SetItemChecked(i, true);
                 }
+
+                Cupoms.AddRange(aluguel.Cupoms);
             }
             //funcionario cliente grupoauto planocobr condutor automovel
             // data locação devolucaoprevista kmdoautomovel cupomlist taxas taxasAdicionais valortotal
@@ -104,7 +108,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
                 aluguel.DataLocacao = txtDataLocacao.Value;
                 aluguel.DataDevolucaoPrevista = txtDataDevolucaoPrevista.Value;
                 aluguel.Automovel.KM = (float)txtKmAutomovel.Value;
-                //aluguel.Taxas = listTaxas.SelectedItems.ToList();
+                aluguel.Taxas = listTaxas.SelectedItems.Cast<TaxaOuServico>().ToList();
 
                 return aluguel;
             }

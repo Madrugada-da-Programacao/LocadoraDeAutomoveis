@@ -133,11 +133,19 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
         private List<GrupoDeAutomoveis> SelecionarGruposDeAutomoveis()
         {
-            List<GrupoDeAutomoveis> grupo = new List<GrupoDeAutomoveis>();
+            List<GrupoDeAutomoveis> grupos = RepositorioGrupoDeAutomoveis.SelecionarTodos();
 
-            grupo = RepositorioGrupoDeAutomoveis.SelecionarTodos();
+            List<GrupoDeAutomoveis> gruposSemPlano = new List<GrupoDeAutomoveis>();
 
-            return grupo;
+            foreach (GrupoDeAutomoveis g in grupos)
+            {
+                if (g.PlanoDeCobranca == null)
+                {
+                    gruposSemPlano.Add(g);
+                }
+            }
+
+            return gruposSemPlano;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using System.ComponentModel;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
@@ -12,12 +13,10 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
 		public TiposDeCombustivel TipoCombustivel { get; set; }
         public float CapacidadeCombustivel { get; set; } = 1;
         public DateTime Ano { get; set; } = DateTime.Now.AddDays(-1);
-
         public float KM { get; set; }
-
         public byte[] Imagem { get; set; } = new byte[] { 1, 2};
-
 		public GrupoDeAutomoveis GrupoDeAutomovel { get; set; }
+        public Aluguel Aluguel { get; set; }
 
         public Automovel() { }
         public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, DateTime ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel)
