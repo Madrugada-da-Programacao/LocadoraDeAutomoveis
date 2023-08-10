@@ -65,7 +65,9 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.ModuloCondutor
         public void Deve_selecionar_todos_condutores()
         {
             //arrange
+            //var cliente = Builder<Cliente>.CreateNew().Build();
             var cliente = Builder<Cliente>.CreateNew().Build();
+
             var cristian = Builder<Condutor>.CreateNew().With(c => c.Cliente, cliente).Persist();
             var maria = Builder<Condutor>.CreateNew().With(c => c.Cliente, cliente).Persist();
 

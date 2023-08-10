@@ -1,24 +1,28 @@
 ﻿using LocadoraDeAutomoveis.Aplicacao.ModuloCondutor;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
-using LocadoraDeAutomoveis.WinApp.ModuloCondutor;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 {
-    public class ControladorCondutor //: ControladorBase
-	{/*
+    public class ControladorCondutor : ControladorBase
+	{
 		private IRepositorioCondutor RepositorioCondutor { get; set; }
+        private IRepositorioCliente RepositorioCliente { get; set; }
         private ServicoCondutor ServicoCondutor { get; set; }
         private TabelaCondutor? TabelaCondutor { get; set; }
 
-        public ControladorCondutor(IRepositorioCondutor repositorioCondutor, ServicoCondutor servicoCondutor)
+        public ControladorCondutor(IRepositorioCondutor repositorioCondutor, ServicoCondutor servicoCondutor, IRepositorioCliente repositorioCliente)
         {
             RepositorioCondutor = repositorioCondutor;
             ServicoCondutor = servicoCondutor;
+            RepositorioCliente = repositorioCliente;
         }
 
         public override void Inserir()
         {
-            DialogCondutor dialog = new DialogCondutor();
+            List<Cliente> clientes = RepositorioCliente.SelecionarTodos();
+
+            DialogCondutor dialog = new DialogCondutor(clientes);
 
             dialog.onGravarRegistro += ServicoCondutor.Inserir;
 
@@ -39,15 +43,17 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
             if (registro == null)
             {
-                MessageBox.Show($"Selecione uma {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
-                                $"Edição de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
+                                $"Edição de {ObtemConfiguracaoToolbox().TipoEntidade}es",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
 
                 return;
             }
 
-            DialogCondutor dialog = new DialogCondutor();
+            List<Cliente> clientes = RepositorioCliente.SelecionarTodos();
+
+            DialogCondutor dialog = new DialogCondutor(clientes);
 
             dialog.onGravarRegistro += ServicoCondutor.Editar;
 
@@ -69,15 +75,15 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
             if (registro == null)
             {
                 MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
-                                $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                                $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}es",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
 
                 return;
             }
 
-            DialogResult opcao = MessageBox.Show($"Deseja excluir a {ObtemConfiguracaoToolbox().TipoEntidade}?",
-                                                          $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+            DialogResult opcao = MessageBox.Show($"Deseja excluir o {ObtemConfiguracaoToolbox().TipoEntidade}?",
+                                                          $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}es",
                                                           MessageBoxButtons.OKCancel,
                                                           MessageBoxIcon.Question);
 
@@ -117,10 +123,9 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
             TabelaCondutor!.AtualizarRegistros(registros);
 
-            mensagemRodape = string.Format("Visualizando {0} condutor{1}", registros.Count, registros.Count == 1 ? "" : "s");
+            mensagemRodape = string.Format("Visualizando {0} condutor{1}", registros.Count, registros.Count == 1 ? "" : "es");
 
             TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
         }
-        */
     }
 }

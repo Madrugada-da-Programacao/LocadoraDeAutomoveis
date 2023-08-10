@@ -16,14 +16,14 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClienteEhCondutor = table.Column<bool>(type: "bit", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(20)", nullable: false),
                     Cpf = table.Column<string>(type: "varchar(20)", nullable: false),
                     Cnh = table.Column<string>(type: "varchar(20)", nullable: false),
-                    Validade = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Validade = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,8 +39,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TBCondutor_ClienteId",
                 table: "TBCondutor",
-                column: "ClienteId",
-                unique: true);
+                column: "ClienteId");
         }
 
         /// <inheritdoc />

@@ -25,8 +25,8 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
 
             builder.Property(f => f.Validade).HasColumnType("datetime").IsRequired();
 
-            builder.HasOne(p => p.Cliente)
-                        .WithOne(p => p.Condutor)
+            builder.HasOne(c => c.Cliente)
+                        .WithMany(c => c.Condutores)
                         .IsRequired(false)
                         .HasConstraintName("FK_TBCondutor_TBCliente")
                         .OnDelete(DeleteBehavior.Restrict);

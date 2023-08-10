@@ -24,7 +24,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 		public string Bairro { get; set; } = "";
 		public string Rua { get; set; } = "";
 		public int Numero { get; set; } = 1;
-		public Condutor Condutor { get; set; }
+		public List<Condutor> Condutores { get; set; }
 
 		public Cliente()
 		{

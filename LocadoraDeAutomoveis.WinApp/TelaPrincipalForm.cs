@@ -10,6 +10,7 @@ using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloParceiro;
 using LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.WinApp.Compartilhado.IoC;
+using LocadoraDeAutomoveis.WinApp.ModuloCondutor;
 
 namespace LocadoraDeAutomoveis.WinApp
 {
@@ -67,7 +68,7 @@ namespace LocadoraDeAutomoveis.WinApp
 
         private void condutorMenuItem_Click(object sender, EventArgs e)
         {
-            //ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+            ConfigurarTelaPrincipal(IoC.Get<ControladorCondutor>());
         }
 
         private void funcionarioMenuItem_Click(object sender, EventArgs e)

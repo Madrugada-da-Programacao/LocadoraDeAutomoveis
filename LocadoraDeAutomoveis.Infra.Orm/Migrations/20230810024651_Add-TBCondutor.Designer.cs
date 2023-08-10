@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 {
     [DbContext(typeof(LocadoraDeAutomoveisDbContext))]
-    [Migration("20230809225119_Add-TBCondutor")]
+    [Migration("20230810024651_Add-TBCondutor")]
     partial class AddTBCondutor
     {
         /// <inheritdoc />
@@ -109,8 +109,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("TBCondutor", (string)null);
                 });
@@ -220,8 +219,8 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCondutor.Condutor", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Dominio.ModuloCliente.Cliente", "Cliente")
-                        .WithOne("Condutor")
-                        .HasForeignKey("LocadoraDeAutomoveis.Dominio.ModuloCondutor.Condutor", "ClienteId")
+                        .WithMany("Condutores")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_TBCondutor_TBCliente");
 
@@ -241,8 +240,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCliente.Cliente", b =>
                 {
-                    b.Navigation("Condutor")
-                        .IsRequired();
+                    b.Navigation("Condutores");
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", b =>

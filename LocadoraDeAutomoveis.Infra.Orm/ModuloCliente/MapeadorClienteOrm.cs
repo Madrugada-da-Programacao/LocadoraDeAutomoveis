@@ -30,7 +30,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCliente
 
 			builder.Property(c => c.Numero).HasConversion<int>().IsRequired();
 
-            builder.HasOne(c => c.Condutor)
+            builder.HasMany(c => c.Condutores)
                         .WithOne(c => c.Cliente)
                         .IsRequired(false)
                         .HasConstraintName("FK_TBCliente_TBCondutor")

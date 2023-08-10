@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 {
     public partial class TabelaCondutor : UserControl
-    {/*
+    {
         public TabelaCondutor()
         {
             InitializeComponent();
@@ -16,26 +16,18 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
         public DataGridViewColumn[] ObterColunas()
         {
             var colunas = new DataGridViewColumn[]
-            {
+            {//Id, Nome do Condutor, Nome do Cliente, CPF, CNH e Validade
                 new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "Id"},
 
-                new DataGridViewTextBoxColumn { Name = "Nome", HeaderText = "Nome"},
+                new DataGridViewTextBoxColumn { Name = "Nome", HeaderText = "Nome do Condutor"},
 
-                new DataGridViewTextBoxColumn { Name = "NumeroDoDocumento", HeaderText = "Numero do Documento"},
+                new DataGridViewTextBoxColumn { Name = "NomeDoCliente", HeaderText = "Nome do Cliente"},
 
-                new DataGridViewTextBoxColumn { Name = "Email", HeaderText = "Email"},
+                new DataGridViewTextBoxColumn { Name = "CPF", HeaderText = "CPF"},
 
-                new DataGridViewTextBoxColumn { Name = "Telefone", HeaderText = "Telefone"},
+                new DataGridViewTextBoxColumn { Name = "CNH", HeaderText = "CNH"},
 
-                new DataGridViewTextBoxColumn { Name = "Estado", HeaderText = "Estado"},
-
-                new DataGridViewTextBoxColumn { Name = "Cidade", HeaderText = "Cidade"},
-
-                new DataGridViewTextBoxColumn { Name = "Bairro", HeaderText = "Bairro"},
-
-                new DataGridViewTextBoxColumn { Name = "Rua", HeaderText = "Rua"},
-
-                new DataGridViewTextBoxColumn { Name = "Numero", HeaderText = "Numero"},
+                new DataGridViewTextBoxColumn { Name = "Validade", HeaderText = "Validade"}
             };
 
             return colunas;
@@ -47,21 +39,15 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
             registros.ForEach(r => grid.Rows.Add(r.Id
                                                 , r.Nome
-                                                , r.TipoCondutor.GetDescription()
-                                                , r.NumeroDoDocumento
-                                                , r.Email
-                                                , r.Telefone
-                                                , r.Estado
-                                                , r.Cidade
-                                                , r.Bairro
-                                                , r.Rua
-                                                , r.Numero));
+                                                , r.Cliente.Nome
+                                                , r.Cpf
+                                                , r.Cnh
+                                                , r.Validade.ToShortDateString));
         }
 
         public Guid ObtemIdSelecionado()
         {
             return grid.SelecionarId();
         }
-        */
     }
 }

@@ -11,21 +11,28 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCondutor
 {
     public class Condutor : EntidadeBase<Condutor>
     {
-        [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
         public bool ClienteEhCondutor { get; set; }
         public string Nome { get; set; } = "";
         public string Email { get; set; } = "";
         public string Telefone { get; set; } = "";
         public string Cpf { get; set; } = "";
-        public string Cnh { get; set; } = "";
+        public string Cnh { get; set; } = "1";
         public DateTime Validade { get; set; }
-        public Guid ClienteId { get; set; }
         public Condutor()
         {
+            DateTime agora = DateTime.Now;
+            DateTime amanhã = agora.AddDays(1);
+
+            Validade = amanhã;
         }
         public Condutor(Cliente cliente, bool clienteEhCondutor, string nome, string email, string telefone, string cpf, string cnh, DateTime validade)
         {
+            DateTime agora = DateTime.Now;
+            DateTime amanhã = agora.AddDays(1);
+
+            Validade = amanhã;
+
             Cliente = cliente;
             ClienteEhCondutor = clienteEhCondutor;
             Nome = nome;

@@ -46,7 +46,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
             if (registro == null)
             {
-                MessageBox.Show($"Selecione uma {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
+                MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
                                 $"Edição de Planos de Cobrança",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
@@ -85,7 +85,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
                 return;
             }
 
-            DialogResult opcao = MessageBox.Show($"Deseja excluir a {ObtemConfiguracaoToolbox().TipoEntidade}?",
+            DialogResult opcao = MessageBox.Show($"Deseja excluir o {ObtemConfiguracaoToolbox().TipoEntidade}?",
                                                           $"Exclusão de Planos de Cobrança",
                                                           MessageBoxButtons.OKCancel,
                                                           MessageBoxIcon.Question);
@@ -126,7 +126,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca
 
             TabelaPlanoDeCobranca!.AtualizarRegistros(registros);
 
-            mensagemRodape = string.Format("Visualizando {0} PlanoDeCobranca{1}", registros.Count, registros.Count == 1 ? "" : "s");
+            mensagemRodape = string.Format("Visualizando {0} Plano{1} de Cobranca", registros.Count, registros.Count == 1 ? "" : "s");
 
             TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
         }
