@@ -6,7 +6,19 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca
 {
     public class PlanoDeCobranca : EntidadeBase<PlanoDeCobranca>
     {
-        [ForeignKey("GrupoDeAutomoveisId")]
+        public enum TipoDoPlanoEnum 
+        {
+            [Description("Plano Diário")]
+            PlanoDiario = 0,
+
+            [Description("Km Controlado")]
+            KmControlado = 1,
+
+            [Description("Km Livre")]
+            KmLivre = 2,
+        }
+
+        public TipoDoPlanoEnum TipoDoPlano { get; set; }
         public GrupoDeAutomoveis GrupoDeAutomoveis { get; set; }
         public decimal PrecoDiariaPlanoDiario { get; set; } = 1m;
         public decimal PrecoKmPlanoDiario { get; set; } = 1m;

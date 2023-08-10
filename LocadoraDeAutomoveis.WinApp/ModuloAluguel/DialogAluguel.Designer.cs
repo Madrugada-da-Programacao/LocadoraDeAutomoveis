@@ -261,6 +261,7 @@
             btnCupom.TabIndex = 125;
             btnCupom.Text = "Aplicar Cupom";
             btnCupom.UseVisualStyleBackColor = true;
+            btnCupom.Click += btnCupom_Click;
             // 
             // label11
             // 

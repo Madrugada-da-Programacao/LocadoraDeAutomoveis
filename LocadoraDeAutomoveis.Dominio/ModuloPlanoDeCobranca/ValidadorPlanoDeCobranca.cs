@@ -8,6 +8,9 @@
             RuleFor(x => x.GrupoDeAutomoveis)
                 .NotNull();
 
+            RuleFor(x => x.TipoDoPlano)
+                .IsInEnum();
+
             RuleFor(x => x.PrecoDiariaPlanoDiario)
                 .NotEmpty()
                 .NotNull();

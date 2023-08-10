@@ -42,7 +42,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             List<Automovel> automoveis = SelecionarAutomoveisSemAluguel();
             List<Funcionario> funcionarios = RepositorioFuncionario.SelecionarTodos();
             List<Cliente> clientes = RepositorioCliente.SelecionarTodos();
-            List<GrupoDeAutomoveis> grupos = RepositorioGrupo.SelecionarTodos();
+            List<GrupoDeAutomoveis> grupos = SelecionarGruposComPlano();
             List<PlanoDeCobranca> planos = RepositorioPlano.SelecionarTodos();
             List<Condutor> condutores = RepositorioCondutor.SelecionarTodos();
             List<TaxaOuServico> taxas = RepositorioTaxa.SelecionarTodos();
@@ -69,7 +69,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             if (registro == null)
             {
                 MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
-                                $"Edição de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                                $"Edição de Alugueis",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
 
@@ -106,15 +106,24 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             if (registro == null)
             {
                 MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
-                                $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                                $"Exclusão de Alugueis",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
 
                 return;
             }
 
+            if (registro.Aberto == true)
+            {
+                MessageBox.Show($"O Aluguel precisa estar fechado para poder excluir!",
+                                $"Exclusão de Alugueis",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             DialogResult opcao = MessageBox.Show($"Deseja excluir o {ObtemConfiguracaoToolbox().TipoEntidade}?",
-                                                          $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                                                          $"Exclusão de Alugueis",
                                                           MessageBoxButtons.OKCancel,
                                                           MessageBoxIcon.Question);
 
@@ -124,7 +133,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
 
                 if (resultado.IsFailed)
                 {
-                    MessageBox.Show(resultado.Errors[0].Message, $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                    MessageBox.Show(resultado.Errors[0].Message, $"Exclusão de Alugueis",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     return;
@@ -154,7 +163,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
 
             TabelaAluguel!.AtualizarRegistros(registros);
 
-            mensagemRodape = string.Format("Visualizando {0} cliente{1}", registros.Count, registros.Count == 1 ? "" : "s");
+            mensagemRodape = string.Format("Visualizando {0} alugue{1}", registros.Count, registros.Count == 1 ? "l" : "is");
 
             TelaPrincipalForm.Instancia!.AtualizarRodape(mensagemRodape);
         }
@@ -174,6 +183,23 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             }
 
             return automoveisSemAluguel;
+        }
+
+        private List<GrupoDeAutomoveis> SelecionarGruposComPlano()
+        {
+            List<GrupoDeAutomoveis> grupos = RepositorioGrupo.SelecionarTodos();
+
+            List<GrupoDeAutomoveis> gruposComPlano = new List<GrupoDeAutomoveis>();
+
+            foreach (GrupoDeAutomoveis g in grupos)
+            {
+                if (g.PlanoDeCobranca != null)
+                {
+                    gruposComPlano.Add(g);
+                }
+            }
+
+            return gruposComPlano;
         }
     }
 }

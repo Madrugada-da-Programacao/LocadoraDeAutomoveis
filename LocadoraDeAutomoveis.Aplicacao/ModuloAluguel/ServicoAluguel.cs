@@ -17,7 +17,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
         public Result Inserir(Aluguel registro)
         {
-            Log.Debug("Tentando inserir cliente...{@c}", registro);
+            Log.Debug("Tentando inserir aluguel...{@a}", registro);
 
             List<string> erros = ValidadorAluguel(registro);
 
@@ -40,9 +40,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
             {
                 contextoPersistencia.DesfazerAlteracoes();
 
-                string msgErro = "Falha ao tentar inserir cliente.";
+                string msgErro = "Falha ao tentar inserir aluguel.";
 
-                Log.Error(exc, msgErro + "{@c}", registro);
+                Log.Error(exc, msgErro + "{@a}", registro);
 
                 return Result.Fail(msgErro); //cenário 3
             }
@@ -50,7 +50,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
         public Result Editar(Aluguel registro)
         {
-            Log.Debug("Tentando editar cliente...{@c}", registro);
+            Log.Debug("Tentando editar aluguel...{@a}", registro);
 
             List<string> erros = ValidadorAluguel(registro);
 
@@ -73,9 +73,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
             {
                 contextoPersistencia.DesfazerAlteracoes();
 
-                string msgErro = "Falha ao tentar editar cliente.";
+                string msgErro = "Falha ao tentar editar aluguel.";
 
-                Log.Error(exc, msgErro + "{@c}", registro);
+                Log.Error(exc, msgErro + "{@a}", registro);
 
                 return Result.Fail(msgErro);
             }
@@ -83,7 +83,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
         public Result Excluir(Aluguel registro)
         {
-            Log.Debug("Tentando excluir cliente...{@c}", registro);
+            Log.Debug("Tentando excluir aluguel...{@a}", registro);
 
             try
             {
@@ -91,9 +91,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
                 if (registroExiste == false)
                 {
-                    Log.Warning("Aluguel {AluguelId} não encontrada para excluir", registro.Id);
+                    Log.Warning("Aluguel {AluguelId} não encontrado para excluir", registro.Id);
 
-                    return Result.Fail("Aluguel não encontrada");
+                    return Result.Fail("Aluguel não encontrado");
                 }
 
                 repositorioAluguel.Excluir(registro);
@@ -112,13 +112,7 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
                 string msgErro;
 
-                //TODO adicionar a parte que cliente é dependente para gerar os errors quando tentar excluir
-                //if (ex.Message.Contains("FK_TBMateria_TBDisciplina"))
-                //	msgErro = "Esta disciplina está relacionada com uma matéria e não pode ser excluída";
-                //else
-                //	msgErro = "Falha ao tentar excluir disciplina";
-
-                msgErro = "Falha ao tentar excluir cliente";
+                msgErro = "Falha ao tentar excluir aluguel";
 
                 erros.Add(msgErro);
 
@@ -139,29 +133,12 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
             if (resultadoValidacao != null)
                 erros.AddRange(resultadoValidacao.Errors.Select(x => x.ErrorMessage));
 
-            if (NomeETipoDeAluguelDuplicado(registro))
-                erros.Add($"Este nome '{registro.Nome}' com este tipo de cliente {registro.TipoAluguel}já está sendo utilizado");
-
             foreach (string erro in erros)
             {
                 Log.Warning(erro);
             }
 
             return erros;
-        }
-        private bool NomeETipoDeAluguelDuplicado(Aluguel registro)
-        {
-            Aluguel? possivelRegistroComMesmoNomeETipoDeAluguel = repositorioAluguel.SelecionarPorNomeETipoDeAluguel(registro.Nome, registro.TipoAluguel);
-
-            if (possivelRegistroComMesmoNomeETipoDeAluguel != null &&
-                possivelRegistroComMesmoNomeETipoDeAluguel.Id != registro.Id &&
-                possivelRegistroComMesmoNomeETipoDeAluguel.Nome == registro.Nome &&
-                possivelRegistroComMesmoNomeETipoDeAluguel.TipoAluguel == registro.TipoAluguel)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }
