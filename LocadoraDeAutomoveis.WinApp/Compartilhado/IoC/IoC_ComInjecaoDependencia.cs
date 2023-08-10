@@ -1,5 +1,6 @@
 ﻿using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
 using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.Aplicacao.ModuloCupom;
 using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
 using LocadoraDeAutomoveis.Aplicacao.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Aplicacao.ModuloParceiro;
@@ -7,6 +8,7 @@ using LocadoraDeAutomoveis.Aplicacao.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.Dominio.ModuloCupom;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
@@ -16,12 +18,14 @@ using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCupom;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
+using LocadoraDeAutomoveis.WinApp.ModuloCupom;
 using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.WinApp.ModuloParceiro;
@@ -76,11 +80,10 @@ namespace LocadoraDeAutomoveis.WinApp.Compartilhado.IoC
 			//servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
 			//servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
 
-			////TODO
-			//servicos.AddTransient<ControladorCliente>();--------------------> Cupom
-			//servicos.AddTransient<ServicoCliente>();
-			//servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
-			//servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
+			servicos.AddTransient<ControladorCupom>();
+			servicos.AddTransient<ServicoCupom>();
+			servicos.AddTransient<IValidadorCupom, ValidadorCupom>();
+			servicos.AddTransient<IRepositorioCupom, RepositorioCupomEmOrm>();
 
 			servicos.AddTransient<ControladorFuncionario>();
 			servicos.AddTransient<ServicoFuncionario>();
@@ -115,7 +118,7 @@ namespace LocadoraDeAutomoveis.WinApp.Compartilhado.IoC
 			});
 			servicos.AddTransient<ControladorTaxaOuServico>();
 			servicos.AddTransient<ServicoConfiguracaoDePrecos>();
-			servicos.AddTransient<ValidadorConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos>();
+			servicos.AddTransient<IValidadorConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos>();
 			servicos.AddTransient<IRepositorioConfiguracaoDePrecos, RepositorioConfiguracaoDePrecosEmArquivo>();
 
 			container = servicos.BuildServiceProvider();

@@ -3,6 +3,7 @@ using FluentResults;
 using FluentResults.Extensions.FluentAssertions;
 using FluentValidation.Results;
 using LocadoraDeAutomoveis.Aplicacao.ModuloParceiro;
+using LocadoraDeAutomoveis.Dominio.ModuloCupom;
 using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 using Moq;
 
@@ -11,18 +12,20 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Aplicacao
     [TestClass]
     public class ServicoParceiroTest
     {
-        Mock<IRepositorioParceiro> RepositorioParceiroMoq { get; set; }
-        Mock<IValidadorParceiro> ValidadorParceiroMoq { get; set; }
+        Mock<IRepositorioCupom> RepositorioCupomMoq { get; set; }
+		Mock<IRepositorioParceiro> RepositorioParceiroMoq { get; set; }
+		Mock<IValidadorParceiro> ValidadorParceiroMoq { get; set; }
 		Mock<IContextoPersistencia> ContextoPersistencia { get; set; }
 		private ServicoParceiro ServicoParceiro { get; set; }
         private Parceiro Parceiro { get; set; }
 
         public ServicoParceiroTest()
         {
-            RepositorioParceiroMoq = new Mock<IRepositorioParceiro>();
+			RepositorioCupomMoq = new Mock<IRepositorioCupom>();
+			RepositorioParceiroMoq = new Mock<IRepositorioParceiro>();
             ValidadorParceiroMoq = new Mock<IValidadorParceiro>();
 			ContextoPersistencia = new Mock<IContextoPersistencia>();
-			ServicoParceiro = new ServicoParceiro(RepositorioParceiroMoq.Object, ValidadorParceiroMoq.Object, ContextoPersistencia.Object);
+			ServicoParceiro = new ServicoParceiro(RepositorioCupomMoq.Object, RepositorioParceiroMoq.Object, ValidadorParceiroMoq.Object, ContextoPersistencia.Object);
             Parceiro = new Parceiro("Americanas");
         }
 

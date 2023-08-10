@@ -19,7 +19,9 @@ namespace LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos
 
         public void Editar(ConfiguracaoDePrecos registro)
         {
-            contextoDados.GravarEmArquivoJson();
+            contextoDados.ConfiguracaoDePrecos = registro;
+
+			contextoDados.GravarEmArquivoJson();
         }
 
         public void Excluir(ConfiguracaoDePrecos registro)
