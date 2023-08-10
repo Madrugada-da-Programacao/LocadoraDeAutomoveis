@@ -56,20 +56,20 @@ namespace LocadoraDeAutomoveis.WinApp
 			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
 		}
 
-        private void automovelMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigurarTelaPrincipal(IoC.Get<ControladorAutomovel>());
-        }
+		private void automovelMenuItem_Click(object sender, EventArgs e)
+		{
+			ConfigurarTelaPrincipal(IoC.Get<ControladorAutomovel>());
+		}
 
 		private void clienteMenuItem_Click(object sender, EventArgs e)
 		{
 			ConfigurarTelaPrincipal(IoC.Get<ControladorCliente>());
 		}
 
-        private void condutorMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigurarTelaPrincipal(IoC.Get<ControladorCondutor>());
-        }
+		private void condutorMenuItem_Click(object sender, EventArgs e)
+		{
+			ConfigurarTelaPrincipal(IoC.Get<ControladorCondutor>());
+		}
 
 		private void cupomToolStripMenuItem_Click(object sender, EventArgs e)
 		{
