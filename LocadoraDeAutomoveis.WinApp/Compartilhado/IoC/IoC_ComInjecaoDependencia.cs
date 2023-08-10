@@ -1,5 +1,6 @@
-﻿using LocadoraDeAutomoveis.Aplicacao.ModuloAutomovel;
+using LocadoraDeAutomoveis.Aplicacao.ModuloAutomovel;
 using LocadoraDeAutomoveis.Aplicacao.ModuloCliente;
+using LocadoraDeAutomoveis.Aplicacao.ModuloCondutor;
 using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Aplicacao.ModuloCupom;
 using LocadoraDeAutomoveis.Aplicacao.ModuloFuncionario;
@@ -10,6 +11,7 @@ using LocadoraDeAutomoveis.Aplicacao.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.Dominio;
 using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
 using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Dominio.ModuloCupom;
 using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
@@ -22,6 +24,7 @@ using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
 using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCupom;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
@@ -30,6 +33,7 @@ using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
 using LocadoraDeAutomoveis.WinApp.ModuloAutomovel;
 using LocadoraDeAutomoveis.WinApp.ModuloCliente;
+using LocadoraDeAutomoveis.WinApp.ModuloCondutor;
 using LocadoraDeAutomoveis.WinApp.ModuloCupom;
 using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
 using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
@@ -78,11 +82,10 @@ namespace LocadoraDeAutomoveis.WinApp.Compartilhado.IoC
 			servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
 			servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
 
-			////TODO
-			//servicos.AddTransient<ControladorCliente>();--------------------> Condutor
-			//servicos.AddTransient<ServicoCliente>();
-			//servicos.AddTransient<IValidadorCliente, ValidadorCliente>();
-			//servicos.AddTransient<IRepositorioCliente, RepositorioClienteEmOrm>();
+			servicos.AddTransient<ControladorCondutor>();
+			servicos.AddTransient<ServicoCondutor>();
+			servicos.AddTransient<IValidadorCondutor, ValidadorCondutor>();
+			servicos.AddTransient<IRepositorioCondutor, RepositorioCondutorEmOrm>();
 
 			servicos.AddTransient<ControladorCupom>();
 			servicos.AddTransient<ServicoCupom>();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
+using System.ComponentModel;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 {
@@ -23,6 +24,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCliente
 		public string Bairro { get; set; } = "";
 		public string Rua { get; set; } = "";
 		public int Numero { get; set; } = 1;
+		public List<Condutor> Condutores { get; set; }
 
 		public Cliente()
 		{

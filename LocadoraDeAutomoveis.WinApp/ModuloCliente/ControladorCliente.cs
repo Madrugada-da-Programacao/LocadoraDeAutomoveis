@@ -38,7 +38,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 
 			if (registro == null)
 			{
-				MessageBox.Show($"Selecione uma {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
+				MessageBox.Show($"Selecione um {ObtemConfiguracaoToolbox().TipoEntidade} primeiro!",
 								$"Edição de {ObtemConfiguracaoToolbox().TipoEntidade}s",
 								MessageBoxButtons.OK,
 								MessageBoxIcon.Exclamation);
@@ -75,7 +75,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 				return;
 			}
 
-			DialogResult opcao = MessageBox.Show($"Deseja excluir a {ObtemConfiguracaoToolbox().TipoEntidade}?",
+			DialogResult opcao = MessageBox.Show($"Deseja excluir o {ObtemConfiguracaoToolbox().TipoEntidade}?",
 														  $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
 														  MessageBoxButtons.OKCancel,
 														  MessageBoxIcon.Question);
