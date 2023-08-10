@@ -158,9 +158,22 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             //      As taxas selecionadas, caso necessário
             //      Aplicar valor do cupom, caso necessário
 
-            ValorTotal = 0m;
-            ValorTotal = 
-
+           /* ValorTotal = 0m;
+            if ((TipoDoPlanoEnum)cmbPlanoCobranca.SelectedItem == TipoDoPlanoEnum.PlanoDiario)
+            {
+                GrupoDeAutomoveis grupo = (GrupoDeAutomoveis)cmbGrupoAutomoveis.SelectedItem;
+                ValorTotal += Convert.ToDecimal(txtDataDevolucaoPrevista.Value - txtDataLocacao.Value) * grupo.PlanoDeCobranca.PrecoDiariaPlanoDiario + txtKmAutomovel.Value * grupo.PlanoDeCobranca.PrecoKmPlanoDiario;
+            }
+            if ((TipoDoPlanoEnum)cmbPlanoCobranca.SelectedItem == TipoDoPlanoEnum.KmControlado)
+            {
+                GrupoDeAutomoveis grupo = (GrupoDeAutomoveis)cmbGrupoAutomoveis.SelectedItem;
+                if (txtKmAutomovel.Value / Convert.ToDecimal(txtDataDevolucaoPrevista.Value - txtDataLocacao.Value) > grupo.PlanoDeCobranca.KmDisponiveisKmControlado)
+                ValorTotal += txtKmAutomovel.Value / Convert.ToDecimal(txtDataDevolucaoPrevista.Value - txtDataLocacao.Value) * grupo.PlanoDeCobranca.PrecoDiariaPlanoDiario + * grupo.PlanoDeCobranca.PrecoKmExtrapoladoKmControlado
+            }
+            if ((TipoDoPlanoEnum)cmbPlanoCobranca.SelectedItem == TipoDoPlanoEnum.KmControlado)
+            { }
+            
+            */
 
         }
     }
