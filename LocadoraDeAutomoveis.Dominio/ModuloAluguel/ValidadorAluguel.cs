@@ -12,7 +12,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
         {
             RuleFor(x => x.Funcionario)
                     .NotNull();
-            //funcionario cliente grupoauto planocobr condutor automovel
+
             RuleFor(x => x.Cliente)
                     .NotNull();
 
@@ -27,6 +27,28 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
 
             RuleFor(x => x.Automovel)
                     .NotNull();
+
+            RuleFor(x => x.DataLocacao)
+                .NotEmpty()
+                .NotNull()
+                .LessThan(p => DateTime.Now)
+                .WithMessage("'Data de Locação' deve estar no passado");
+
+            RuleFor(x => x.DataDevolucaoPrevista)
+                .NotEmpty()
+                .NotNull()
+                .GreaterThan(p => DateTime.Now)
+                .WithMessage("'Data de Devolução Prevista' deve estar no futuro");
+
+            RuleFor(x => x.Taxas)
+                .NotNull();
+
+            RuleFor(x => x.ValorTotal)
+                .NotEmpty()
+                .NotNull();
+
+            RuleFor(x => x.Aberto)
+                .NotNull();
         }
     }
 }

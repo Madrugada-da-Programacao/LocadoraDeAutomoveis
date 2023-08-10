@@ -3,7 +3,7 @@
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 {
     public class ServicoAluguel
-    {/*
+    {
         private readonly IRepositorioAluguel repositorioAluguel;
         private readonly IValidadorAluguel validador;
         private readonly IContextoPersistencia contextoPersistencia;
@@ -163,6 +163,5 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloAluguel
 
             return false;
         }
-        */
     }
 }
