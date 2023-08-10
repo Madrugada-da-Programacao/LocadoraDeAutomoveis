@@ -18,20 +18,12 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCondutor
         public string Telefone { get; set; } = "";
         public string Cpf { get; set; } = "";
         public string Cnh { get; set; } = "1";
-        public DateTime Validade { get; set; }
+        public DateTime Validade { get; set; } = DateTime.Now.AddDays(1);
         public Condutor()
         {
-            DateTime agora = DateTime.Now;
-            DateTime amanhã = agora.AddDays(1);
-
-            Validade = amanhã;
         }
         public Condutor(Cliente cliente, bool clienteEhCondutor, string nome, string email, string telefone, string cpf, string cnh, DateTime validade)
         {
-            DateTime agora = DateTime.Now;
-            DateTime amanhã = agora.AddDays(1);
-
-            Validade = amanhã;
 
             Cliente = cliente;
             ClienteEhCondutor = clienteEhCondutor;

@@ -16,7 +16,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
         public DataGridViewColumn[] ObterColunas()
         {
             var colunas = new DataGridViewColumn[]
-            {//Id, Nome do Condutor, Nome do Cliente, CPF, CNH e Validade
+            {
                 new DataGridViewTextBoxColumn { Name = "Id", HeaderText = "Id"},
 
                 new DataGridViewTextBoxColumn { Name = "Nome", HeaderText = "Nome do Condutor"},
@@ -39,10 +39,10 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
             registros.ForEach(r => grid.Rows.Add(r.Id
                                                 , r.Nome
-                                                , r.Cliente.Nome
+                                           //     , r.Cliente.Nome
                                                 , r.Cpf
                                                 , r.Cnh
-                                                , r.Validade.ToShortDateString));
+                                                , r.Validade.ToShortDateString()));
         }
 
         public Guid ObtemIdSelecionado()

@@ -33,7 +33,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
             set
             {
                 condutor = value;
-                if (Condutor.Cliente != null)
+                if (condutor.Cliente != null)
                     cmbCliente.SelectedItem = condutor.Cliente;
 
                 txtNome.Text = condutor.Nome;
@@ -42,6 +42,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
                 txtTelefone.Text = condutor.Telefone;
                 txtCpf.Text = condutor.Cpf;
                 txtCnh.Value = Convert.ToDecimal(condutor.Cnh);
+                txtValidade.Value = condutor.Validade;
             }
             get
             {
@@ -52,6 +53,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
                 condutor.Telefone = txtTelefone.Text;
                 condutor.Cpf = txtCpf.Text;
                 condutor.Cnh = Convert.ToString(txtCnh.Value);
+                condutor.Validade = txtValidade.Value;
 
                 return condutor;
             }
