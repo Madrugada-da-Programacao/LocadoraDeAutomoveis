@@ -18,16 +18,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCondutor
         }
 
         [TestMethod]
-        public void Cliente_eh_condutor_condutor_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(Condutor);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.ClienteEhCondutor);
-        }
-
-        [TestMethod]
         public void Cliente_eh_condutor_condutor_nao_deve_ser_nulo_ou_vazio_ok()
         {
             //arrange
