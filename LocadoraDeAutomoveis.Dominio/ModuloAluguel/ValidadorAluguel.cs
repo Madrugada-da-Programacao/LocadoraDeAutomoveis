@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
+﻿namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
 {
     public class ValidadorAluguel : AbstractValidator<Aluguel>, IValidadorAluguel
     {
@@ -19,10 +13,10 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAluguel
             RuleFor(x => x.GrupoDeAutomoveis)
                     .NotNull();
 
-            RuleFor(x => x.PlanoDeCobranca)
-                    .NotNull();
+            RuleFor(x => x.TipoDeCobranca)
+					.IsInEnum();
 
-            RuleFor(x => x.Condutor)
+			RuleFor(x => x.Condutor)
                     .NotNull();
 
             RuleFor(x => x.Automovel)

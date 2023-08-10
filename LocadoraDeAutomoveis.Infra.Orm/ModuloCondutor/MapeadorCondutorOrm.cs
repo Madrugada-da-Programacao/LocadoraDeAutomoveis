@@ -1,5 +1,4 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
-using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
 {
@@ -31,6 +30,10 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
                         .HasConstraintName("FK_TBCondutor_TBCliente")
                         .OnDelete(DeleteBehavior.Restrict);
 
-        }
+			builder.HasMany(condutor => condutor.Alugueis)
+							.WithOne(aluguel => aluguel.Condutor)
+							.IsRequired(false)
+							.OnDelete(DeleteBehavior.NoAction);
+		}
     }
 }

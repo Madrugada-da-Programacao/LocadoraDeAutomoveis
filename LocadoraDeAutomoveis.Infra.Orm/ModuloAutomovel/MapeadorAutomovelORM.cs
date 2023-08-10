@@ -18,6 +18,13 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
 			builder.Property(A => A.KM).HasColumnType("float").IsRequired();
             builder.Property(A => A.Imagem).HasColumnType("varbinary(max)").HasMaxLength(2 * 1024 * 1024).IsRequired();
             builder.HasOne(A => A.GrupoDeAutomovel).WithMany().HasForeignKey("FK_Automovel_GrupoDeAutomoveis");
-        }
+
+			builder.HasMany(automovel => automovel.Alugueis)
+							.WithOne(aluguel => aluguel.Automovel)
+							.IsRequired(false)
+							.OnDelete(DeleteBehavior.NoAction);
+
+			builder.Property(A => A.Disponivel).HasColumnType("bit").IsRequired();
+		}
     }
 }

@@ -15,6 +15,11 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario
             funcionarioBuilder.Property(f => f.DataAdmissao).HasColumnType("datetime").IsRequired();
 
             funcionarioBuilder.Property(f => f.Salario).HasColumnType("int").IsRequired();
-        }
+
+			funcionarioBuilder.HasMany(funcionario => funcionario.Alugueis)
+					                .WithOne(aluguel => aluguel.Funcionario)
+					                .IsRequired(false)
+					                .OnDelete(DeleteBehavior.NoAction);
+		}
     }
 }

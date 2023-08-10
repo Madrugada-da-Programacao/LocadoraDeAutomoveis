@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,8 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCondutor
         public string Cpf { get; set; } = "";
         public string Cnh { get; set; } = "1";
         public DateTime Validade { get; set; } = DateTime.Now.AddDays(1);
-        public Condutor()
+		public List<Aluguel> Alugueis { get; set; }
+		public Condutor()
         {
         }
         public Condutor(Cliente cliente, bool clienteEhCondutor, string nome, string email, string telefone, string cpf, string cnh, DateTime validade)

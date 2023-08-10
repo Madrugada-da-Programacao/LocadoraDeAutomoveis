@@ -1,4 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloCupom
 {
@@ -8,6 +9,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloCupom
 		public decimal Preco { get; set; } = 0.01m;
 		public DateTime DataValidade { get; set; } = DateTime.Now;
 		public Parceiro? Parceiro { get; set; }
+		public Aluguel Aluguel { get; set; }
 
 		public Cupom()
 		{

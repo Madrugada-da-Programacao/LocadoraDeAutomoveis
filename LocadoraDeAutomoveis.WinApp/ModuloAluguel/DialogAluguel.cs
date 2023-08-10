@@ -80,7 +80,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
                 cmbFuncionario.SelectedItem = aluguel.Funcionario;
                 cmbCliente.SelectedItem = aluguel.Cliente;
                 cmbGrupoAutomoveis.SelectedItem = aluguel.GrupoDeAutomoveis;
-                cmbPlanoCobranca.SelectedItem = aluguel.PlanoDeCobranca;
+                //cmbPlanoCobranca.SelectedItem = aluguel.PlanoDeCobranca; //TODO
                 cmbCondutor.SelectedItem = aluguel.Condutor;
                 cmbAutomovel.SelectedItem = aluguel.Automovel;
                 txtDataLocacao.Value = aluguel.DataLocacao;
@@ -93,7 +93,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
                         listTaxas.SetItemChecked(i, true);
                 }
 
-                Cupoms.AddRange(aluguel.Cupoms);
+                //Cupoms.AddRange(aluguel.Cupom); TODO
             }
             //funcionario cliente grupoauto planocobr condutor automovel
             // data locação devolucaoprevista kmdoautomovel cupomlist taxas taxasAdicionais valortotal
@@ -102,7 +102,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
                 aluguel.Funcionario = (Funcionario)cmbFuncionario.SelectedItem;
                 aluguel.Cliente = (Cliente)cmbCliente.SelectedItem;
                 aluguel.GrupoDeAutomoveis = (GrupoDeAutomoveis)cmbGrupoAutomoveis.SelectedItem;
-                aluguel.PlanoDeCobranca = (PlanoDeCobranca)cmbPlanoCobranca.SelectedItem;
+                //aluguel.PlanoDeCobranca = (PlanoDeCobranca)cmbPlanoCobranca.SelectedItem; //TODO
                 aluguel.Condutor = (Condutor)cmbCondutor.SelectedItem;
                 aluguel.Automovel = (Automovel)cmbAutomovel.SelectedItem;
                 aluguel.DataLocacao = txtDataLocacao.Value;

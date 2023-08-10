@@ -44,7 +44,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
             registros.ForEach(r => grid.Rows.Add(r.Id
                                                 , r.Condutor.Nome
                                                 , r.Automovel.Placa
-                                                , r.PlanoDeCobranca.GrupoDeAutomoveis.Nome
+                                                //, r.PlanoDeCobranca.GrupoDeAutomoveis.Nome TODO
                                                 , r.DataLocacao.ToShortDateString()
                                                 , r.DataDevolucaoPrevista.ToShortDateString()
                                                 , r.DataDevolucao.ToShortDateString()

@@ -1,9 +1,5 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis
 {
@@ -12,8 +8,9 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis
         public string Nome { get; set; } = "";
 
         public PlanoDeCobranca PlanoDeCobranca { get; set; }
+		public List<Aluguel> Alugueis { get; set; }
 
-        public GrupoDeAutomoveis() { }
+		public GrupoDeAutomoveis() { }
         public GrupoDeAutomoveis(string nome)
         {
             this.Nome = nome;

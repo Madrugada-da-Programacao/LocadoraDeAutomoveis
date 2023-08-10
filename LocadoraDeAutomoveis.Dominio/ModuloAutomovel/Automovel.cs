@@ -16,9 +16,10 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
         public float KM { get; set; }
         public byte[] Imagem { get; set; } = new byte[] { 1, 2};
 		public GrupoDeAutomoveis GrupoDeAutomovel { get; set; }
-        public Aluguel Aluguel { get; set; }
+		public List<Aluguel> Alugueis { get; set; }
+        public bool Disponivel { get; set; }
 
-        public Automovel() { }
+		public Automovel() { }
         public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, DateTime ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel)
         {
             Placa = placa;
