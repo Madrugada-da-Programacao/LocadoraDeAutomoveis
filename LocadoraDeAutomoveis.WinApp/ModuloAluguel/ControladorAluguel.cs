@@ -49,7 +49,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
 
             DialogAluguel dialog = new DialogAluguel(funcionarios, clientes, grupos, planos, condutores, automoveis, taxas);
 
-            dialog.onGravarRegistro += ServicoAluguel.Inserir;
+            //dialog.onGravarRegistro += ServicoAluguel.Inserir; TODO
 
             dialog.Aluguel = new Aluguel();
 
@@ -129,17 +129,17 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
 
             if (opcao == DialogResult.OK)
             {
-                Result resultado = ServicoAluguel.Excluir(registro);
+                //Result resultado = ServicoAluguel.Excluir(registro); TODO
 
-                if (resultado.IsFailed)
-                {
-                    MessageBox.Show(resultado.Errors[0].Message, $"Exclusão de Alugueis",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //if (resultado.IsFailed)
+                //{
+                //    MessageBox.Show(resultado.Errors[0].Message, $"Exclusão de {ObtemConfiguracaoToolbox().TipoEntidade}s",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    return;
-                }
+                //    return;
+                //}
 
-                CarregarEntidades();
+                //CarregarEntidades();
             }
         }
 
@@ -176,10 +176,11 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAluguel
 
             foreach (Automovel g in automoveis)
             {
-                if (g.Aluguel == null)
-                {
-                    automoveisSemAluguel.Add(g);
-                }
+                // TODO
+                //if (g.Aluguel == null)
+                //{
+                //    automoveisSemAluguel.Add(g);
+                //}
             }
 
             return automoveisSemAluguel;

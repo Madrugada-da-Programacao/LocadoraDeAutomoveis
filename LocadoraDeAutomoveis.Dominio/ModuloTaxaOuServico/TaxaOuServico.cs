@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using System.ComponentModel;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico
 {
@@ -18,6 +19,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico
 		public decimal Preco { get; set; } = 0.01m;
 
 		public TipoDeCobranca TipoCobranca { get; set; }
+		public List<Aluguel> Alugueis { get; set; }
 
 		public TaxaOuServico()
 		{

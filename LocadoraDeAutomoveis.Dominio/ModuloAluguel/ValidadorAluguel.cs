@@ -13,10 +13,10 @@
             RuleFor(x => x.GrupoDeAutomoveis)
                     .NotNull();
 
-            RuleFor(x => x.TipoDoPlano)
-                .IsInEnum();
+            RuleFor(x => x.TipoDeCobranca)
+					.IsInEnum();
 
-            RuleFor(x => x.Condutor)
+			RuleFor(x => x.Condutor)
                     .NotNull();
 
             RuleFor(x => x.Automovel)

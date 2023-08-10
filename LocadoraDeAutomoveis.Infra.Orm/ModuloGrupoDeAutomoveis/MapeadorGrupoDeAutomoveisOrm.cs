@@ -1,5 +1,4 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis
 {
@@ -16,6 +15,11 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis
 						.IsRequired(false)
 						.HasConstraintName("FK_TBGrupoDeAutomovel_TBPlanoDeCobranca")
 						.OnDelete(DeleteBehavior.Restrict);
+
+			builder.HasMany(grupoDeAutomoveis => grupoDeAutomoveis.Alugueis)
+							.WithOne(aluguel => aluguel.GrupoDeAutomoveis)
+							.IsRequired(false)
+							.OnDelete(DeleteBehavior.NoAction);
 		}
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace LocadoraDeAutomoveis.Dominio.ModuloFuncionario
+﻿using LocadoraDeAutomoveis.Dominio.ModuloAluguel;
+using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
+
+namespace LocadoraDeAutomoveis.Dominio.ModuloFuncionario
 {
     public class Funcionario : EntidadeBase<Funcionario>
     {
@@ -6,6 +9,7 @@
         public string Nome { get; set; }
         public DateTime DataAdmissao { get; set; } = DateTime.Now;
         public decimal Salario { get; set; } = 0.01m;
+		public List<Aluguel> Alugueis { get; set; }
 
 		public Funcionario(string nome, DateTime dataAdmissao, decimal salario)
         {

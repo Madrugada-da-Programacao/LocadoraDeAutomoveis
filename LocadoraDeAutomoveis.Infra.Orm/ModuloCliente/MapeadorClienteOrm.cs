@@ -35,6 +35,11 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCliente
                         .IsRequired(false)
                         .HasConstraintName("FK_TBCliente_TBCondutor")
                         .OnDelete(DeleteBehavior.Restrict);
-        }
+
+			builder.HasMany(cliente => cliente.Alugueis)
+							.WithOne(aluguel => aluguel.Cliente)
+							.IsRequired(false)
+							.OnDelete(DeleteBehavior.NoAction);
+		}
 	}
 }
