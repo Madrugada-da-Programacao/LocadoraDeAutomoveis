@@ -1,64 +1,185 @@
-﻿using Microsoft.Data.SqlClient;
+using FizzWare.NBuilder;
+using LocadoraDeAutomoveis.Dominio.ModuloCliente;
+using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.Dominio.ModuloFuncionario;
+using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
+using LocadoraDeAutomoveis.Dominio.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.Infra.Dados.Arquivo.Compartilhado;
+using LocadoraDeAutomoveis.Infra.Dados.Arquivo.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCliente;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloFuncionario;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloPlanoDeCobranca;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloGrupoDeAutomoveis;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
+using LocadoraDeAutomoveis.Dominio.Compartilhado;
+using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor;
+using LocadoraDeAutomoveis.Dominio.ModuloCupom;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCupom;
+using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 {
     public class TestesIntegracaoBase
     {
-        //protected IRepositorioDisciplina repositorioDisciplina;
-        //protected IRepositorioMateria repositorioMateria;
-        //protected IRepositorioQuestao repositorioQuestao;
+		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Aluguel
+		protected IRepositorioAutomovel RepositorioAutomovel { get; set; }
+		protected IRepositorioCliente RepositorioCliente { get; set; }
+		protected IRepositorioCondutor RepositorioCondutor { get; set; }
+		protected IRepositorioCupom RepositorioCupom { get; set; }
+		protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
+		protected IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
+		protected IRepositorioParceiro RepositorioParceiro { get; set; }
+        protected IRepositorioPlanoDeCobranca RepositorioPlanoDeCobranca { get; set; }
+		protected IRepositorioTaxaOuServico RepositorioTaxaOuServico { get; set; }
+		protected IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos { get; set; }
+		protected IContextoPersistencia ContextoPersistencia { get; set; }
+		protected ContextoDados ContextoDadosArquivo { get; set; }
+
 
         public TestesIntegracaoBase()
         {
-            LimparTabelas();
+			LimparTabelas();
 
-            string connectionString = ObterConnectionString();
+            ContextoDadosArquivo = new ContextoDados("Compartilhado\\LocadoraDeAutomoveisTest.json");
 
-            //repositorioDisciplina = new RepositorioDisciplinaEmSql(connectionString);
-            //repositorioMateria = new RepositorioMateriaEmSql(connectionString);
-            //repositorioQuestao = new RepositorioQuestaoEmSql(connectionString);
+			LimparArquivo();
 
-            //BuilderSetup.SetCreatePersistenceMethod<Disciplina>(repositorioDisciplina.Inserir);
-            //BuilderSetup.SetCreatePersistenceMethod<Materia>(repositorioMateria.Inserir);
-            //BuilderSetup.SetCreatePersistenceMethod<Questao>(repositorioQuestao.Inserir);
+			string? connectionString = ObterConnectionString();
+
+			var optionsBuilder = new DbContextOptionsBuilder<LocadoraDeAutomoveisDbContext>();
+
+			optionsBuilder.UseSqlServer(connectionString);
+
+			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
+			ContextoPersistencia = dbContext;
+
+			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Aluguel
+			RepositorioAutomovel = new RepositorioAutomovelEmOrm(dbContext);
+			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
+			RepositorioCondutor = new RepositorioCondutorEmOrm(dbContext);
+			RepositorioCupom= new RepositorioCupomEmOrm(dbContext);
+            RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
+            RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
+			RepositorioParceiro = new RepositorioParceiroEmOrm(dbContext);
+			RepositorioPlanoDeCobranca = new RepositorioPlanoDeCobrancaEmOrm(dbContext);
+			RepositorioTaxaOuServico = new RepositorioTaxaOuServicoEmOrm(dbContext);
+			RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(ContextoDadosArquivo);
+
+			//TODO
+			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Aluguel
+			//{
+			//	RepositorioCliente.Inserir(cliente);
+			//	ContextoPersistencia.GravarDados();
+			//});
+
+			BuilderSetup.SetCreatePersistenceMethod<Automovel>(automovel =>
+			{
+				RepositorioAutomovel.Inserir(automovel);
+				ContextoPersistencia.GravarDados();
+			});
+
+
+			BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>
+			{
+				RepositorioCliente.Inserir(cliente);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<Condutor>(condutor =>
+			{
+				RepositorioCondutor.Inserir(condutor);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<Cupom>(cupom =>
+			{
+				RepositorioCupom.Inserir(cupom);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<Funcionario>(funcionario =>
+			{
+				RepositorioFuncionario.Inserir(funcionario);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<GrupoDeAutomoveis>(grupoDeAutomoveis =>
+			{
+				RepositorioGrupoDeAutomoveis.Inserir(grupoDeAutomoveis);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<Parceiro>(parceiro =>
+			{
+				RepositorioParceiro.Inserir(parceiro);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<PlanoDeCobranca>(planoDeCobranca =>
+			{
+				RepositorioPlanoDeCobranca.Inserir(planoDeCobranca);
+				ContextoPersistencia.GravarDados();
+			});
+
+			BuilderSetup.SetCreatePersistenceMethod<TaxaOuServico>(taxaOuServico =>
+			{
+				RepositorioTaxaOuServico.Inserir(taxaOuServico);
+				ContextoPersistencia.GravarDados();
+			});
+		}
+
+        private void LimparArquivo()
+        {
+			ContextoDadosArquivo.ConfiguracaoDePrecos = new ConfiguracaoDePrecos(1,1,1,1);
+
+			ContextoDadosArquivo.GravarEmArquivoJson();
         }
 
         protected static void LimparTabelas()
-        {
-            string? connectionString = ObterConnectionString();
+		{
+			string? connectionString = ObterConnectionString();
 
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
+			SqlConnection sqlConnection = new SqlConnection(connectionString);
 
 			string sqlLimpezaTabela =
-				@"
-                DELETE FROM [DBO].[TBEXEMPLO]
-                DBCC CHECKIDENT ('[TBEXEMPLO]', RESEED, 0);
+				@"" //TODO Aluguel
+			   + "DELETE FROM [DBO].[TBAutomovel];"
+			   + "DELETE FROM [DBO].[TBCONDUTOR];"
+               + "DELETE FROM [DBO].[TBCLIENTE];" 
+			   + "DELETE FROM [DBO].[TBCUPOM];"
+			   + "DELETE FROM [DBO].[TBFUNCIONARIO];"
+			   + "DELETE FROM [DBO].[TBPLANODECOBRANCA];"
+			   + "DELETE FROM [DBO].[TBGRUPODEAUTOMOVEIS];"
+			   + "DELETE FROM [DBO].[TBPARCEIRO];"
+			   + "DELETE FROM [DBO].[TBTAXAOUSERVICO];";
 
-                DELETE FROM [DBO].[TBEXEMPLO]
-                DBCC CHECKIDENT ('[TBEXEMPLO]', RESEED, 0);
-
-                DELETE FROM [DBO].[TBEXEMPLO]
-                DBCC CHECKIDENT ('[TBEXEMPLO]', RESEED, 0);";
-
+			
 			SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
 
-            sqlConnection.Open();
+			sqlConnection.Open();
 
-            comando.ExecuteNonQuery();
+			comando.ExecuteNonQuery();
 
-            sqlConnection.Close();
-        }
+			sqlConnection.Close();
+		}
 
-        protected static string ObterConnectionString()
-        {
-            var configuracao = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+		protected static string? ObterConnectionString()
+		{
+			var configuracao = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json")
+				.Build();
 
-            var connectionString = configuracao.GetConnectionString("SqlServer");
-            return connectionString;
-        }
-    }
+			var connectionString = configuracao.GetConnectionString("SqlServer");
+			return connectionString;
+		}
+	}
 }

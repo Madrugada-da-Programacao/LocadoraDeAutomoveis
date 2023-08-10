@@ -1,6 +1,4 @@
-﻿using LocadoraDeAutomoveis.Dominio;
-
-namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
+﻿namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
 {
     public class RepositorioBaseEmOrm<T> : IRepositorio<T>
         where T : EntidadeBase<T>
@@ -17,22 +15,16 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
         public void Inserir(T novoRegistro)
         {
             registros.Add(novoRegistro);
-
-            dbContext.SaveChanges();
         }
 
-        public void Editar(T registro)
+        public virtual void Editar(T registro)
         {
             registros.Update(registro);
-
-            dbContext.SaveChanges();
         }
 
         public void Excluir(T registro)
         {
             registros.Remove(registro);
-
-            dbContext.SaveChanges();
         }
 
         public bool Existe(T registro)
@@ -40,7 +32,7 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
             return registros.Contains(registro);
         }
       
-        public T? SelecionarPorId(int id)
+        public T? SelecionarPorId(Guid id)
         {
             return registros.Find(id);
         }

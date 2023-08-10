@@ -38,6 +38,8 @@
 			grupoDeAutomoveisMenuItem = new ToolStripMenuItem();
 			planoDeCobrancaMenuItem = new ToolStripMenuItem();
 			taxasEServicosMenuItem = new ToolStripMenuItem();
+			parceiroToolStripMenuItem = new ToolStripMenuItem();
+			configurarPrecosToolStripMenuItem = new ToolStripMenuItem();
 			toolbox = new ToolStrip();
 			btnInserir = new ToolStripButton();
 			btnEditar = new ToolStripButton();
@@ -47,6 +49,7 @@
 			statusStrip1 = new StatusStrip();
 			labelRodape = new ToolStripStatusLabel();
 			panelRegistros = new Panel();
+			cupomToolStripMenuItem = new ToolStripMenuItem();
 			menu.SuspendLayout();
 			toolbox.SuspendLayout();
 			statusStrip1.SuspendLayout();
@@ -55,7 +58,7 @@
 			// menu
 			// 
 			menu.ImageScalingSize = new Size(20, 20);
-			menu.Items.AddRange(new ToolStripItem[] { cadastrosToolStripMenuItem });
+			menu.Items.AddRange(new ToolStripItem[] { cadastrosToolStripMenuItem, configurarPrecosToolStripMenuItem });
 			menu.Location = new Point(0, 0);
 			menu.Name = "menu";
 			menu.Size = new Size(686, 24);
@@ -64,7 +67,7 @@
 			// 
 			// cadastrosToolStripMenuItem
 			// 
-			cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aluguelMenuItem, automovelMenuItem, clienteMenuItem, condutorMenuItem, funcionarioMenuItem, grupoDeAutomoveisMenuItem, planoDeCobrancaMenuItem, taxasEServicosMenuItem });
+			cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aluguelMenuItem, automovelMenuItem, clienteMenuItem, condutorMenuItem, funcionarioMenuItem, grupoDeAutomoveisMenuItem, planoDeCobrancaMenuItem, taxasEServicosMenuItem, parceiroToolStripMenuItem, cupomToolStripMenuItem });
 			cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
 			cadastrosToolStripMenuItem.Size = new Size(71, 20);
 			cadastrosToolStripMenuItem.Text = "Cadastros";
@@ -130,8 +133,22 @@
 			taxasEServicosMenuItem.Name = "taxasEServicosMenuItem";
 			taxasEServicosMenuItem.ShortcutKeys = Keys.F8;
 			taxasEServicosMenuItem.Size = new Size(209, 22);
-			taxasEServicosMenuItem.Text = "Taxas e Servicos";
-			taxasEServicosMenuItem.Click += taxasEServicosMenuItem_Click;
+			taxasEServicosMenuItem.Text = "Taxas ou Servicos";
+			taxasEServicosMenuItem.Click += taxasOuServicosMenuItem_Click;
+			// 
+			// parceiroToolStripMenuItem
+			// 
+			parceiroToolStripMenuItem.Name = "parceiroToolStripMenuItem";
+			parceiroToolStripMenuItem.Size = new Size(209, 22);
+			parceiroToolStripMenuItem.Text = "Parceiro";
+			parceiroToolStripMenuItem.Click += parceiroToolStripMenuItem_Click;
+			// 
+			// configurarPrecosToolStripMenuItem
+			// 
+			configurarPrecosToolStripMenuItem.Name = "configurarPrecosToolStripMenuItem";
+			configurarPrecosToolStripMenuItem.Size = new Size(114, 20);
+			configurarPrecosToolStripMenuItem.Text = "Configurar Preços";
+			configurarPrecosToolStripMenuItem.Click += configurarPrecosToolStripMenuItem_Click;
 			// 
 			// toolbox
 			// 
@@ -213,6 +230,13 @@
 			panelRegistros.Size = new Size(686, 343);
 			panelRegistros.TabIndex = 3;
 			// 
+			// cupomToolStripMenuItem
+			// 
+			cupomToolStripMenuItem.Name = "cupomToolStripMenuItem";
+			cupomToolStripMenuItem.Size = new Size(209, 22);
+			cupomToolStripMenuItem.Text = "Cupom";
+			cupomToolStripMenuItem.Click += cupomToolStripMenuItem_Click;
+			// 
 			// TelaPrincipalForm
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
@@ -260,5 +284,8 @@
 		private ToolStripMenuItem grupoDeAutomoveisMenuItem;
 		private ToolStripMenuItem planoDeCobrancaMenuItem;
 		private ToolStripMenuItem taxasEServicosMenuItem;
+		private ToolStripMenuItem configurarPrecosToolStripMenuItem;
+		private ToolStripMenuItem parceiroToolStripMenuItem;
+		private ToolStripMenuItem cupomToolStripMenuItem;
 	}
 }

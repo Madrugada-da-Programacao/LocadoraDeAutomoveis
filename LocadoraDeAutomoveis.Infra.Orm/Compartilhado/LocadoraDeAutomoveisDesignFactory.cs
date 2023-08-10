@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.Compartilhado
 {
-    internal class LocadoraDeAutomoveisDesignFactory : IDesignTimeDbContextFactory<LocadoraDeAutomoveisDbContext>
+    public class LocadoraDeAutomoveisDesignFactory : IDesignTimeDbContextFactory<LocadoraDeAutomoveisDbContext>
     {
         public LocadoraDeAutomoveisDbContext CreateDbContext(string[] args)
         {            

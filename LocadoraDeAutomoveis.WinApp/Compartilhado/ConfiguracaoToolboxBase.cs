@@ -1,13 +1,15 @@
-﻿namespace LocadoraDeAutomoveis.WinApp
+﻿namespace LocadoraDeAutomoveis.WinApp.Compartilhado
 {
     public abstract class ConfiguracaoToolboxBase
     {
-        #region tooltips dos botões
-        public abstract string TipoCadastro { get; }
+		public abstract string TipoEntidade { get; }
 
-        public abstract string TooltipInserir { get; }
-        public abstract string TooltipEditar { get; }
-        public abstract string TooltipExcluir { get; }
+		#region tooltips dos botões
+		public string TipoCadastro => $"Cadastro de {TipoEntidade}";
+
+		public string TooltipInserir => $"Inserir novo {TipoEntidade}";
+		public string TooltipEditar => $"Editar {TipoEntidade} existente";
+		public string TooltipExcluir => $"Excluir {TipoEntidade} existente";
 
 		#endregion
 

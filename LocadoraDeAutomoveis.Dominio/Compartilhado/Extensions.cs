@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 
-namespace LocadoraDeAutomoveis.Dominio
+namespace LocadoraDeAutomoveis.Dominio.Compartilhado
 {
     public static class IEnumerableExtensions
     {
@@ -37,7 +34,7 @@ namespace LocadoraDeAutomoveis.Dominio
         {
             var field = enumValue.GetType().GetField(enumValue.ToString());
 
-            if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+            if (Attribute.GetCustomAttribute(field!, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
                 return attribute.Description;
 
             return "Anotação não informada";

@@ -1,14 +1,23 @@
-using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using LocadoraDeAutomoveis.Aplicacao.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.Dominio.ModuloConfiguracaoDePrecos;
+using LocadoraDeAutomoveis.WinApp.ModuloCliente;
+using LocadoraDeAutomoveis.WinApp.ModuloTaxaOuServico;
+using LocadoraDeAutomoveis.WinApp.ModuloGrupoDeAutomoveis;
+using LocadoraDeAutomoveis.WinApp.ModuloConfiguracaoDePreco;
+using LocadoraDeAutomoveis.WinApp.ModuloFuncionario;
+using LocadoraDeAutomoveis.WinApp.ModuloParceiro;
+using LocadoraDeAutomoveis.WinApp.ModuloPlanoDeCobranca;
+using LocadoraDeAutomoveis.WinApp.Compartilhado.IoC;
+using LocadoraDeAutomoveis.WinApp.ModuloAutomovel;
+using LocadoraDeAutomoveis.WinApp.ModuloCupom;
+using LocadoraDeAutomoveis.WinApp.ModuloCondutor;
 
 namespace LocadoraDeAutomoveis.WinApp
 {
 	public partial class TelaPrincipalForm : Form
 	{
-		private Dictionary<string, ControladorBase> controladores;
-
-		private ControladorBase controlador;
+		private ControladorBase? controlador { get; set; }
+		private IoC IoC { get; set; }
 
 		public TelaPrincipalForm()
 		{
@@ -19,78 +28,10 @@ namespace LocadoraDeAutomoveis.WinApp
 			labelRodape.Text = string.Empty;
 			labelTipoCadastro.Text = string.Empty;
 
-			controladores = new Dictionary<string, ControladorBase>();
-
-			ConfigurarControladores();
+			IoC = new IoC_ComInjecaoDependencia();
 		}
 
-		private void ConfigurarControladores()
-		{
-			var configuracao = new ConfigurationBuilder()
-			   .SetBasePath(Directory.GetCurrentDirectory())
-			   .AddJsonFile("appsettings.json")
-			   .Build();
-
-			var connectionString = configuracao.GetConnectionString("SqlServer");
-
-			var optionsBuilder = new DbContextOptionsBuilder<LocadoraDeAutomoveisDbContext>();
-
-			optionsBuilder.UseSqlServer(connectionString);
-
-			var dbContext = new LocadoraDeAutomoveisDbContext(optionsBuilder.Options);
-
-			var migracoesPendentes = dbContext.Database.GetPendingMigrations();
-
-			if (migracoesPendentes.Count() > 0)
-			{
-				dbContext.Database.Migrate();
-			}
-
-			//IRepositorioDisciplina repositorioDisciplina = new RepositorioDisciplinaEmOrm(dbContext);
-
-			//ValidadorDisciplina validadorDisciplina = new ValidadorDisciplina();
-
-			//ServicoDisciplina servicoDisciplina = new ServicoDisciplina(repositorioDisciplina, validadorDisciplina);
-
-			//controladores.Add("ControladorDisciplina", new ControladorDisciplina(repositorioDisciplina, servicoDisciplina));
-
-			//IRepositorioMateria repositorioMateria = new RepositorioMateriaEmOrm(dbContext);
-
-			//ValidadorMateria validadorMateria = new ValidadorMateria();
-			//ServicoMateria servicoMateria = new ServicoMateria(repositorioMateria, validadorMateria);
-
-			//controladores.Add("ControladorMateria", new ControladorMateria(repositorioMateria, repositorioDisciplina, servicoMateria));
-
-			//IRepositorioQuestao repositorioQuestao = new RepositorioQuestaoEmOrm(dbContext);
-
-			//ValidadorQuestao validadorQuestao = new ValidadorQuestao();
-			//ServicoQuestao servicoQuestao = new ServicoQuestao(repositorioQuestao, validadorQuestao);
-			//controladores.Add("ControladorQuestao", new ControladorQuestao(repositorioQuestao, repositorioDisciplina, servicoQuestao));
-
-			//IRepositorioTeste repositorioTeste = new RepositorioTesteEmOrm(dbContext);
-
-			//IGeradorArquivo geradorRelatorio = new GeradorTesteEmPdf();
-
-			//ValidadorTeste validadorTeste = new ValidadorTeste();
-			//ServicoTeste servicoTeste = new ServicoTeste(repositorioTeste, repositorioQuestao, validadorTeste, geradorRelatorio);
-
-			//controladores.Add("ControladorTeste", new ControladorTeste(repositorioTeste, repositorioDisciplina, servicoTeste));
-
-
-
-
-
-
-
-			// Usar os modelos de cima como base e inserir o codigo correto abaixo -----------------------------------
-
-
-
-
-
-		}
-
-		public static TelaPrincipalForm Instancia
+		public static TelaPrincipalForm? Instancia
 		{
 			get;
 			private set;
@@ -98,9 +39,11 @@ namespace LocadoraDeAutomoveis.WinApp
 
 		public void AtualizarRodape()
 		{
-			string mensagemRodape = controlador.ObterMensagemRodape();
-
-			AtualizarRodape(mensagemRodape);
+			if (controlador != null)
+			{
+				string mensagemRodape = controlador!.ObterMensagemRodape();
+				AtualizarRodape(mensagemRodape);
+			}
 		}
 
 		public void AtualizarRodape(string mensagem)
@@ -113,54 +56,90 @@ namespace LocadoraDeAutomoveis.WinApp
 			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
 		}
 
-		private void automovelMenuItem_Click(object sender, EventArgs e)
-		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
-		}
+        private void automovelMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorAutomovel>());
+        }
 
 		private void clienteMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(IoC.Get<ControladorCliente>());
 		}
 
-		private void condutorMenuItem_Click(object sender, EventArgs e)
+        private void condutorMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigurarTelaPrincipal(IoC.Get<ControladorCondutor>());
+        }
+
+		private void cupomToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(IoC.Get<ControladorCupom>());
 		}
 
 		private void funcionarioMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(IoC.Get<ControladorFuncionario>());
 		}
 
 		private void grupoDeAutomoveisMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(IoC.Get<ControladorGrupoDeAutomoveis>());
+		}
+
+		private void taxasOuServicosMenuItem_Click(object sender, EventArgs e)
+		{
+			ConfigurarTelaPrincipal(IoC.Get<ControladorTaxaOuServico>());
+		}
+
+		private void parceiroToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ConfigurarTelaPrincipal(IoC.Get<ControladorParceiro>());
 		}
 
 		private void planoDeCobrancaMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			ConfigurarTelaPrincipal(IoC.Get<ControladorPlanoDeCobranca>());
 		}
 
-		private void taxasEServicosMenuItem_Click(object sender, EventArgs e)
+		private void configurarPrecosToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//ConfigurarTelaPrincipal(controladores["ControladorDisciplina"]);
+			//TODO tentar passar isso para o IoC
+			//ContextoDados contexto = new ContextoDados(carregarDados: true);
+			//IRepositorioConfiguracaoDePrecos RepositorioConfiguracaoDePrecos = new RepositorioConfiguracaoDePrecosEmArquivo(contexto);
+			//ValidadorConfiguracaoDePrecos ValidadorConfiguracaoDePrecos = new ValidadorConfiguracaoDePrecos();
+			//ServicoConfiguracaoDePrecos ServicoConfiguracaoDePrecos = new ServicoConfiguracaoDePrecos(RepositorioConfiguracaoDePrecos, ValidadorConfiguracaoDePrecos);
+
+			//TODO tentar passar isso para o IoC
+			IRepositorioConfiguracaoDePrecos? repositorioConfiguracaoDePrecos = IoC.Get<IRepositorioConfiguracaoDePrecos>();
+			ConfiguracaoDePrecos registro = repositorioConfiguracaoDePrecos!.SelecionarRegistro();
+			//ConfiguracaoDePrecos registro = IoC.Get<RepositorioConfiguracaoDePrecosEmArquivo>()!.SelecionarRegistro();
+			//ConfiguracaoDePrecos registro = RepositorioConfiguracaoDePrecos.SelecionarRegistro();
+
+			DialogConfiguracaoDePrecos dialog = new DialogConfiguracaoDePrecos();
+
+			//TODO tentar passar isso para o IoC
+			ServicoConfiguracaoDePrecos? test = IoC.Get<ServicoConfiguracaoDePrecos>();
+			dialog.onGravarRegistro += test!.Editar;
+			//dialog.onGravarRegistro += ServicoConfiguracaoDePrecos.Editar;
+
+			dialog.ConfiguracaoDePrecos = registro;
+
+			DialogResult resultado = dialog.ShowDialog();
 		}
 
 		private void btnInserir_Click(object sender, EventArgs e)
 		{
-			controlador.Inserir();
+			controlador!.Inserir();
 		}
 
 		private void btnEditar_Click(object sender, EventArgs e)
 		{
-			controlador.Editar();
+			controlador!.Editar();
 		}
 
 		private void btnExcluir_Click(object sender, EventArgs e)
 		{
-			controlador.Excluir();
+			controlador!.Excluir();
 		}
 
 		private void ConfigurarBotoes(ConfiguracaoToolboxBase configuracao)
@@ -177,7 +156,7 @@ namespace LocadoraDeAutomoveis.WinApp
 			btnExcluir.ToolTipText = configuracao.TooltipExcluir;
 		}
 
-		private void ConfigurarTelaPrincipal(ControladorBase controlador)
+		private void ConfigurarTelaPrincipal(ControladorBase? controlador)
 		{
 			this.controlador = controlador;
 
@@ -185,14 +164,14 @@ namespace LocadoraDeAutomoveis.WinApp
 
 			ConfigurarListagem();
 
-			string mensagemRodape = controlador.ObterMensagemRodape();
+			string mensagemRodape = controlador!.ObterMensagemRodape();
 
 			AtualizarRodape(mensagemRodape);
 		}
 
 		private void ConfigurarToolbox()
 		{
-			ConfiguracaoToolboxBase configuracao = controlador.ObtemConfiguracaoToolbox();
+			ConfiguracaoToolboxBase configuracao = controlador!.ObtemConfiguracaoToolbox();
 
 			if (configuracao != null)
 			{
@@ -210,7 +189,7 @@ namespace LocadoraDeAutomoveis.WinApp
 		{
 			AtualizarRodape("");
 
-			var listagemControl = controlador.ObtemListagem();
+			var listagemControl = controlador!.ObtemListagem();
 
 			panelRegistros.Controls.Clear();
 
@@ -218,7 +197,5 @@ namespace LocadoraDeAutomoveis.WinApp
 
 			panelRegistros.Controls.Add(listagemControl);
 		}
-
-
 	}
 }

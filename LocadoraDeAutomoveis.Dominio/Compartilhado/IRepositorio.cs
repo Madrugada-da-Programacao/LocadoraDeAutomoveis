@@ -1,4 +1,4 @@
-﻿namespace LocadoraDeAutomoveis.Dominio
+﻿namespace LocadoraDeAutomoveis.Dominio.Compartilhado
 {
     public interface IRepositorio<T> where T : EntidadeBase<T>
     {
@@ -12,7 +12,7 @@
 
         List<T> SelecionarTodos();
 
-        T SelecionarPorId(int id);
+        T? SelecionarPorId(Guid id);
 
     }
 }
