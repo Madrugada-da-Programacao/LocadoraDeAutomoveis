@@ -11,6 +11,11 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro
 			builder.Property(p => p.Id).IsRequired().ValueGeneratedNever();
 
 			builder.Property(p => p.Nome).HasColumnType("varchar(100)").IsRequired();
+
+				builder.HasMany(p => p.Cupons)
+					   .WithOne(c => c.Parceiro)
+					   .IsRequired(false)
+					   .OnDelete(DeleteBehavior.NoAction);
 		}
 	}
 }

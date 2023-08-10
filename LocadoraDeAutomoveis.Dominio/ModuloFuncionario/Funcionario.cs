@@ -4,17 +4,17 @@
     {
 
         public string Nome { get; set; }
-        public DateTime DataAdmissao { get; set; }
-        public int Salario { get; set; }
+        public DateTime DataAdmissao { get; set; } = DateTime.Now;
+        public decimal Salario { get; set; } = 0.01m;
 
-        public Funcionario(string nome, DateTime dataAdmissao, int salario)
+		public Funcionario(string nome, DateTime dataAdmissao, decimal salario)
         {
             Nome = nome;
             DataAdmissao = dataAdmissao;
             Salario = salario;
         }
 
-        public Funcionario(Guid id, string nome, DateTime dataAdmissao, int salario) : this(nome, dataAdmissao, salario)
+        public Funcionario(Guid id, string nome, DateTime dataAdmissao, decimal salario) : this(nome, dataAdmissao, salario)
         {
             Id = id;
         }

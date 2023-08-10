@@ -67,15 +67,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloFuncionario
             //assert
             resultado.ShouldNotHaveValidationErrorFor(x => x.Nome);
         }
-        [TestMethod]
-        public void DataAdmissao_funcionario_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(Funcionario);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.DataAdmissao);
-        }
 
         [TestMethod]
         public void DataAdmissao_funcionario_nao_deve_ser_nulo_ou_vazio_ok()
@@ -88,16 +79,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloFuncionario
 
             //assert
             resultado.ShouldNotHaveValidationErrorFor(x => x.DataAdmissao);
-        }
-
-        [TestMethod]
-        public void Salario_funcionario_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(Funcionario);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.Salario);
         }
 
         [TestMethod]

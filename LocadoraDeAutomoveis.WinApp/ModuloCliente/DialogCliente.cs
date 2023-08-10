@@ -1,5 +1,4 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloCliente;
-using LocadoraDeAutomoveis.WinApp.Compartilhado;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 {
@@ -8,6 +7,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCliente
 		private Cliente? cliente;
 
 		public event GravarRegistroDelegate<Cliente>? onGravarRegistro;
+
 		public DialogCliente()
 		{
 			InitializeComponent();

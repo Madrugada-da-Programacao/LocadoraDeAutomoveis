@@ -18,6 +18,8 @@ using Microsoft.Extensions.Configuration;
 using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloParceiro;
 using LocadoraDeAutomoveis.Dominio.Compartilhado;
+using LocadoraDeAutomoveis.Dominio.ModuloCupom;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloCupom;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 {
@@ -27,7 +29,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Automovel
 		protected IRepositorioCliente RepositorioCliente { get; set; }
 		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Condutor
-		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Cupom
+		protected IRepositorioCupom RepositorioCupom { get; set; }
 		protected IRepositorioFuncionario RepositorioFuncionario { get; set; }
 		protected IRepositorioGrupoDeAutomoveis RepositorioGrupoDeAutomoveis { get; set; }
 		protected IRepositorioParceiro RepositorioParceiro { get; set; }
@@ -59,7 +61,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Automovel
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Condutor
-			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Cupom
+			RepositorioCupom= new RepositorioCupomEmOrm(dbContext);
             RepositorioFuncionario = new RepositorioFuncionarioEmOrm(dbContext);
             RepositorioGrupoDeAutomoveis = new RepositorioGrupoDeAutomoveisOrm(dbContext);
 			RepositorioParceiro = new RepositorioParceiroEmOrm(dbContext);
@@ -95,12 +97,11 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			//	ContextoPersistencia.GravarDados();
 			//});
 
-			//TODO
-			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Cupom
-			//{
-			//	RepositorioCliente.Inserir(cliente);
-			//	ContextoPersistencia.GravarDados();
-			//});
+			BuilderSetup.SetCreatePersistenceMethod<Cupom>(cupom =>
+			{
+				RepositorioCupom.Inserir(cupom);
+				ContextoPersistencia.GravarDados();
+			});
 
 			BuilderSetup.SetCreatePersistenceMethod<Funcionario>(funcionario =>
 			{
@@ -151,7 +152,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			   + "" //TODO Automovel
 			   + "DELETE FROM [DBO].[TBCLIENTE];"
 			   + "" //TODO Condutor
-			   + "" //TODO Cupom
+			   + "DELETE FROM [DBO].[TBCUPOM];"
 			   + "DELETE FROM [DBO].[TBFUNCIONARIO];"
 			   + "DELETE FROM [DBO].[TBPLANODECOBRANCA];"
 			   + "DELETE FROM [DBO].[TBGRUPODEAUTOMOVEIS];"

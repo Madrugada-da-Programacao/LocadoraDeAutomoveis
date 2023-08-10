@@ -1,15 +1,18 @@
-﻿using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
+﻿using LocadoraDeAutomoveis.Dominio.ModuloCupom;
+using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
 
 namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 {
 	public class ServicoParceiro
 	{
+		private readonly IRepositorioCupom repositorioCupom;
 		private readonly IRepositorioParceiro repositorioParceiro;
 		private readonly IValidadorParceiro validador;
 		private readonly IContextoPersistencia contextoPersistencia;
 
-		public ServicoParceiro(IRepositorioParceiro repositorioParceiro, IValidadorParceiro validador, IContextoPersistencia contextoPersistencia)
+		public ServicoParceiro(IRepositorioCupom repositorioCupom, IRepositorioParceiro repositorioParceiro, IValidadorParceiro validador, IContextoPersistencia contextoPersistencia)
 		{
+			this.repositorioCupom = repositorioCupom;
 			this.repositorioParceiro = repositorioParceiro;
 			this.validador = validador;
 			this.contextoPersistencia = contextoPersistencia;
@@ -94,6 +97,15 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloParceiro
 					Log.Warning("Parceiro {ParceiroId} não encontrado para excluir", registro.Id);
 
 					return Result.Fail("Parceiro não encontrada");
+				}
+
+				var cupons = repositorioCupom.SelecionarTodos();
+
+				if (cupons != null && cupons.Any(c => c.Parceiro != null && c.Parceiro.Id == registro.Id))
+				{
+					Log.Warning("Parceiro {ParceiroId} não pode ser excluido porque ele está relacionado a um Cupom");
+
+					return Result.Fail("Parceiro não pode ser excluido porque ele está relacionado a um Cupom");
 				}
 
 				repositorioParceiro.Excluir(registro);
