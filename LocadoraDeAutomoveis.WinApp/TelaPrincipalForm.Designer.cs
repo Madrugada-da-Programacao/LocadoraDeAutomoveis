@@ -39,6 +39,7 @@
 			planoDeCobrancaMenuItem = new ToolStripMenuItem();
 			taxasEServicosMenuItem = new ToolStripMenuItem();
 			parceiroToolStripMenuItem = new ToolStripMenuItem();
+			cupomToolStripMenuItem = new ToolStripMenuItem();
 			configurarPrecosToolStripMenuItem = new ToolStripMenuItem();
 			toolbox = new ToolStrip();
 			btnInserir = new ToolStripButton();
@@ -49,7 +50,6 @@
 			statusStrip1 = new StatusStrip();
 			labelRodape = new ToolStripStatusLabel();
 			panelRegistros = new Panel();
-			cupomToolStripMenuItem = new ToolStripMenuItem();
 			menu.SuspendLayout();
 			toolbox.SuspendLayout();
 			statusStrip1.SuspendLayout();
@@ -67,7 +67,7 @@
 			// 
 			// cadastrosToolStripMenuItem
 			// 
-			cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aluguelMenuItem, automovelMenuItem, clienteMenuItem, condutorMenuItem, funcionarioMenuItem, grupoDeAutomoveisMenuItem, planoDeCobrancaMenuItem, taxasEServicosMenuItem, parceiroToolStripMenuItem, cupomToolStripMenuItem });
+			cadastrosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aluguelMenuItem, automovelMenuItem, clienteMenuItem, condutorMenuItem, cupomToolStripMenuItem, funcionarioMenuItem, grupoDeAutomoveisMenuItem, parceiroToolStripMenuItem, planoDeCobrancaMenuItem, taxasEServicosMenuItem });
 			cadastrosToolStripMenuItem.Name = "cadastrosToolStripMenuItem";
 			cadastrosToolStripMenuItem.Size = new Size(71, 20);
 			cadastrosToolStripMenuItem.Text = "Cadastros";
@@ -107,7 +107,7 @@
 			// funcionarioMenuItem
 			// 
 			funcionarioMenuItem.Name = "funcionarioMenuItem";
-			funcionarioMenuItem.ShortcutKeys = Keys.F5;
+			funcionarioMenuItem.ShortcutKeys = Keys.F6;
 			funcionarioMenuItem.Size = new Size(209, 22);
 			funcionarioMenuItem.Text = "Funcionario";
 			funcionarioMenuItem.Click += funcionarioMenuItem_Click;
@@ -115,7 +115,7 @@
 			// grupoDeAutomoveisMenuItem
 			// 
 			grupoDeAutomoveisMenuItem.Name = "grupoDeAutomoveisMenuItem";
-			grupoDeAutomoveisMenuItem.ShortcutKeys = Keys.F6;
+			grupoDeAutomoveisMenuItem.ShortcutKeys = Keys.F7;
 			grupoDeAutomoveisMenuItem.Size = new Size(209, 22);
 			grupoDeAutomoveisMenuItem.Text = "Grupo de Automoveis";
 			grupoDeAutomoveisMenuItem.Click += grupoDeAutomoveisMenuItem_Click;
@@ -123,7 +123,7 @@
 			// planoDeCobrancaMenuItem
 			// 
 			planoDeCobrancaMenuItem.Name = "planoDeCobrancaMenuItem";
-			planoDeCobrancaMenuItem.ShortcutKeys = Keys.F7;
+			planoDeCobrancaMenuItem.ShortcutKeys = Keys.F9;
 			planoDeCobrancaMenuItem.Size = new Size(209, 22);
 			planoDeCobrancaMenuItem.Text = "Plano de Cobranca";
 			planoDeCobrancaMenuItem.Click += planoDeCobrancaMenuItem_Click;
@@ -131,7 +131,7 @@
 			// taxasEServicosMenuItem
 			// 
 			taxasEServicosMenuItem.Name = "taxasEServicosMenuItem";
-			taxasEServicosMenuItem.ShortcutKeys = Keys.F8;
+			taxasEServicosMenuItem.ShortcutKeys = Keys.F10;
 			taxasEServicosMenuItem.Size = new Size(209, 22);
 			taxasEServicosMenuItem.Text = "Taxas ou Servicos";
 			taxasEServicosMenuItem.Click += taxasOuServicosMenuItem_Click;
@@ -139,9 +139,18 @@
 			// parceiroToolStripMenuItem
 			// 
 			parceiroToolStripMenuItem.Name = "parceiroToolStripMenuItem";
+			parceiroToolStripMenuItem.ShortcutKeys = Keys.F8;
 			parceiroToolStripMenuItem.Size = new Size(209, 22);
 			parceiroToolStripMenuItem.Text = "Parceiro";
 			parceiroToolStripMenuItem.Click += parceiroToolStripMenuItem_Click;
+			// 
+			// cupomToolStripMenuItem
+			// 
+			cupomToolStripMenuItem.Name = "cupomToolStripMenuItem";
+			cupomToolStripMenuItem.ShortcutKeys = Keys.F5;
+			cupomToolStripMenuItem.Size = new Size(209, 22);
+			cupomToolStripMenuItem.Text = "Cupom";
+			cupomToolStripMenuItem.Click += cupomToolStripMenuItem_Click;
 			// 
 			// configurarPrecosToolStripMenuItem
 			// 
@@ -229,13 +238,6 @@
 			panelRegistros.Name = "panelRegistros";
 			panelRegistros.Size = new Size(686, 343);
 			panelRegistros.TabIndex = 3;
-			// 
-			// cupomToolStripMenuItem
-			// 
-			cupomToolStripMenuItem.Name = "cupomToolStripMenuItem";
-			cupomToolStripMenuItem.Size = new Size(209, 22);
-			cupomToolStripMenuItem.Text = "Cupom";
-			cupomToolStripMenuItem.Click += cupomToolStripMenuItem_Click;
 			// 
 			// TelaPrincipalForm
 			// 
