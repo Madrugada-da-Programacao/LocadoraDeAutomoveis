@@ -12,5 +12,10 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor
         {
             return registros.FirstOrDefault(x => x.Nome == nome);
         }
+
+        public List<Condutor> SelecionarTodosComCliente()
+        {
+            return registros.Include(c => c.Cliente).ToList();
+        }
     }
 }

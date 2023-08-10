@@ -3,5 +3,7 @@
     public interface IRepositorioCondutor : IRepositorio<Condutor>
 	{
 		Condutor? SelecionarPorNome(string nome);
+
+        List<Condutor> SelecionarTodosComCliente();
     }
 }

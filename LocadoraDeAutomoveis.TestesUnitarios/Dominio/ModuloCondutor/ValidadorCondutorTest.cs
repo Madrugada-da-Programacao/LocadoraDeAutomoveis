@@ -18,6 +18,29 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCondutor
         }
 
         [TestMethod]
+        public void Cliente_eh_condutor_condutor_nao_deve_ser_nulo_ou_vazio_erro()
+        {
+            //action
+            var resultado = Validador.TestValidate(Condutor);
+
+            //assert
+            resultado.ShouldHaveValidationErrorFor(x => x.ClienteEhCondutor);
+        }
+
+        [TestMethod]
+        public void Cliente_eh_condutor_condutor_nao_deve_ser_nulo_ou_vazio_ok()
+        {
+            //arrange
+            Condutor.ClienteEhCondutor = true;
+
+            //action
+            var resultado = Validador.TestValidate(Condutor);
+
+            //assert
+            resultado.ShouldNotHaveValidationErrorFor(x => x.ClienteEhCondutor);
+        }
+
+        [TestMethod]
         public void Nome_condutor_nao_deve_ser_vazio_erro()
         {
             //arrange
@@ -181,16 +204,6 @@ namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCondutor
 
             //assert
             resultado.ShouldNotHaveValidationErrorFor(x => x.Cnh);
-        }
-
-        [TestMethod]
-        public void Validade_condutor_nao_deve_ser_nulo_ou_vazio_erro()
-        {
-            //action
-            var resultado = Validador.TestValidate(Condutor);
-
-            //assert
-            resultado.ShouldHaveValidationErrorFor(x => x.Validade);
         }
 
         [TestMethod]

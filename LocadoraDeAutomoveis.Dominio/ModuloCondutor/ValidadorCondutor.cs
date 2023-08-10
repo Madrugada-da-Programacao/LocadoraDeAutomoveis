@@ -10,6 +10,9 @@
                 .MinimumLength(3)
                 .NaoPodeCaracteresEspeciais();
 
+            RuleFor(x => x.ClienteEhCondutor)
+                .NotNull();
+
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .NotNull()

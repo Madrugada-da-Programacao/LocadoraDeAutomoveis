@@ -39,7 +39,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
             registros.ForEach(r => grid.Rows.Add(r.Id
                                                 , r.Nome
-                                           //     , r.Cliente.Nome
+                                                , r.Cliente.Nome
                                                 , r.Cpf
                                                 , r.Cnh
                                                 , r.Validade.ToShortDateString()));

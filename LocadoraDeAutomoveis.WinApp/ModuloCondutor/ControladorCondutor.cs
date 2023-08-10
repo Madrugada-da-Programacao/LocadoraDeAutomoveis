@@ -119,7 +119,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloCondutor
 
         private void CarregarEntidades()
         {
-            List<Condutor> registros = RepositorioCondutor.SelecionarTodos();
+            List<Condutor> registros = RepositorioCondutor.SelecionarTodosComCliente();
 
             TabelaCondutor!.AtualizarRegistros(registros);
 
