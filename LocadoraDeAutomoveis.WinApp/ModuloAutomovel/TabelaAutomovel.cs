@@ -28,7 +28,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 				new DataGridViewTextBoxColumn { Name = "Cor", HeaderText = "Cor"},
 
-				new DataGridViewTextBoxColumn { Name = "TipoCombustivel", HeaderText = "TipoCombustivel"},
+				new DataGridViewTextBoxColumn { Name = "TipoCombustivel", HeaderText = "Tipo de Combustivel"},
 
 				new DataGridViewTextBoxColumn { Name = "CapacidadeCombustivel", HeaderText = "CapacidadeCombustivel"},
 
@@ -51,7 +51,7 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 												, r.Marca
 												, r.Modelo
 												, r.Cor
-												, r.TipoCombustivel
+												, r.TipoCombustivel.GetDescription()
 												, r.CapacidadeCombustivel
 												, r.Ano
 												, r.KM

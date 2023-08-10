@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
+﻿namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
 {
     public class ValidadorAutomovel : AbstractValidator<Automovel> , IValidadorAutomovel
     {
@@ -14,8 +7,8 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
             RuleFor(x => x.Ano)
                 .NotEmpty()
                 .NotNull()
-                .Matches(@"^\d{4}$")
-                .WithMessage("Ano Invalido por favor use o formato: AAAA");
+                .LessThan(DateTime.Now);
+
             RuleFor(x => x.Placa)
                 .NotEmpty()
                 .NotNull()
@@ -28,26 +21,27 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
                 .NaoPodeCaracteresEspeciais();
             RuleFor(x => x.Cor)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+				.MinimumLength(3);
             RuleFor(x => x.Modelo)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+				.MinimumLength(3);
             RuleFor(x => x.TipoCombustivel)
                 .IsInEnum();
             RuleFor(x => x.CapacidadeCombustivel)
                 .NotEmpty()
                 .NotNull()
-                .Must(CapacidadeCombustivel => CapacidadeCombustivel > 5)
-                .WithMessage("A capacidade de combustivel não pode ser negativa ou menor que 5L!");
+                .Must(CapacidadeCombustivel => CapacidadeCombustivel >= 1)
+                .WithMessage("A capacidade de combustivel tem que ser maior ou igual a 1!");
             RuleFor(x => x.KM)
-                .NotEmpty()
                 .NotNull()
                 .Must(km => km >= 0)
                 .WithMessage("A Quilometragem não pode ser menor que 0!");
             RuleFor(x => x.Imagem)
                 .NotEmpty()
                 .NotNull()
-                .Must(imagem => imagem.Length <= 2 * 1024 * 1024)
+                .Must(imagem => imagem != null && imagem.Length <= 2 * 1024 * 1024)
                 .WithMessage("A imagem não pode ser maior do que 2 mb");
         }
     }

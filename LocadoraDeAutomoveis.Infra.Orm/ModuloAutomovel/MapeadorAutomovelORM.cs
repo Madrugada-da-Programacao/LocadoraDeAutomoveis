@@ -14,8 +14,8 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
             builder.Property(A => A.Modelo).HasColumnType("varchar(60)").IsRequired();
             builder.Property(A => A.TipoCombustivel).HasConversion<int>().IsRequired();
             builder.Property(A => A.CapacidadeCombustivel).HasColumnType("float").IsRequired();
-            builder.Property(A => A.Ano).HasColumnType("varchar(15)").IsRequired();
-            builder.Property(A => A.KM).HasColumnType("float").IsRequired();
+            builder.Property(A => A.Ano).HasColumnType("datetime").IsRequired();
+			builder.Property(A => A.KM).HasColumnType("float").IsRequired();
             builder.Property(A => A.Imagem).HasColumnType("varbinary(max)").HasMaxLength(2 * 1024 * 1024).IsRequired();
             builder.HasOne(A => A.GrupoDeAutomovel).WithMany().HasForeignKey("FK_Automovel_GrupoDeAutomoveis");
         }

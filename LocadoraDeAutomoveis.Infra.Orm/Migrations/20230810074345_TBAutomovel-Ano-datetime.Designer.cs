@@ -4,6 +4,7 @@ using LocadoraDeAutomoveis.Infra.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
 {
     [DbContext(typeof(LocadoraDeAutomoveisDbContext))]
-    partial class LocadoraDeAutomoveisDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230810074345_TBAutomovel-Ano-datetime")]
+    partial class TBAutomovelAnodatetime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,47 +119,6 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TBCliente", (string)null);
-                });
-
-            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCondutor.Condutor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("ClienteEhCondutor")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cnh")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<DateTime>("Validade")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("TBCondutor", (string)null);
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCupom.Cupom", b =>
@@ -308,17 +270,6 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                     b.Navigation("Parceiro");
                 });
 
-            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCondutor.Condutor", b =>
-                {
-                    b.HasOne("LocadoraDeAutomoveis.Dominio.ModuloCliente.Cliente", "Cliente")
-                        .WithMany("Condutores")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_TBCondutor_TBCliente");
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca.PlanoDeCobranca", b =>
                 {
                     b.HasOne("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", "GrupoDeAutomoveis")
@@ -328,11 +279,6 @@ namespace LocadoraDeAutomoveis.Infra.Orm.Migrations
                         .HasConstraintName("FK_TBPlanoDeCobranca_TBGrupoDeAutomovel");
 
                     b.Navigation("GrupoDeAutomoveis");
-                });
-
-            modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloCliente.Cliente", b =>
-                {
-                    b.Navigation("Condutores");
                 });
 
             modelBuilder.Entity("LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis.GrupoDeAutomoveis", b =>

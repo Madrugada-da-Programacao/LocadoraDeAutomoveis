@@ -1,31 +1,26 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
 {
-    public class Automovel : EntidadeBase<Automovel>
+	public class Automovel : EntidadeBase<Automovel>
     {
-        public string Placa { get; set; }
-        public string Marca { get; set; }
-        public string Cor { get; set; }
-        public string Modelo { get; set; }
-        public TiposDeCombustivel TipoCombustivel { get; set; }
-        public float CapacidadeCombustivel { get; set; }
-        public string Ano { get; set; }
+        public string Placa { get; set; } = "";
+        public string Marca { get; set; } = "";
+        public string Cor { get; set; } = "";
+        public string Modelo { get; set; } = "";
+		public TiposDeCombustivel TipoCombustivel { get; set; }
+        public float CapacidadeCombustivel { get; set; } = 1;
+        public DateTime Ano { get; set; } = DateTime.Now.AddDays(-1);
 
         public float KM { get; set; }
 
-        public byte[] Imagem { get; set; }
+        public byte[] Imagem { get; set; } = new byte[] { 1, 2};
 
-        public GrupoDeAutomoveis GrupoDeAutomovel { get; set; }
+		public GrupoDeAutomoveis GrupoDeAutomovel { get; set; }
 
         public Automovel() { }
-        public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel)
+        public Automovel(string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, DateTime ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel)
         {
             Placa = placa;
             Marca = marca;
@@ -38,7 +33,7 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
             Imagem = imagem;
             GrupoDeAutomovel = grupoDeAutomovel;
         }
-        public Automovel(Guid ID,string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, string ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel) : this(placa, marca, cor, modelo, tipoCombustivel, capacidadeCombustivel, ano, kM, imagem, grupoDeAutomovel)
+        public Automovel(Guid ID,string placa, string marca, string cor, string modelo, TiposDeCombustivel tipoCombustivel, float capacidadeCombustivel, DateTime ano, float kM, byte[] imagem, GrupoDeAutomoveis grupoDeAutomovel) : this(placa, marca, cor, modelo, tipoCombustivel, capacidadeCombustivel, ano, kM, imagem, grupoDeAutomovel)
         {
             this.Id = ID;
         }
@@ -46,17 +41,13 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
         public enum TiposDeCombustivel
         {
             [Description("Gasolina")]
-            Gasolina = 1,
-            [Description("Etanol")]
-            Etanol = 2,
+            Gasolina = 0,
+            [Description("Gás")]
+			Gas = 1,
             [Description("Diesel")]
-            Diesel = 3,
-            [Description("Etanol & GNV")]
-            EtanolGas = 4,
-            [Description("Gasolina & GNV")]
-            GasolinaGas = 5,
-            [Description("Total Flex")]
-            Tflex = 6
+            Diesel = 2,
+            [Description("Álcool")]
+			Alcool = 3
         }
     }
 }

@@ -116,7 +116,8 @@ namespace LocadoraDeAutomoveis.WinApp.ModuloAutomovel
 
 		private void CarregarEntidades()
 		{
-			List<Automovel> registros = RepositorioAutomovel.SelecionarTodos();
+			//List<Automovel> registros = RepositorioAutomovel.SelecionarTodos();
+			List<Automovel> registros = RepositorioAutomovel.SelecionarTodosComGrupoDeAutomovel();
 
 			TabelaAutomovel!.AtualizarRegistros(registros);
 

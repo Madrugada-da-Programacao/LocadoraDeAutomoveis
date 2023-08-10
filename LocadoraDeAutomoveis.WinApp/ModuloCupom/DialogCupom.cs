@@ -1,7 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloCupom;
-using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
 using LocadoraDeAutomoveis.Dominio.ModuloParceiro;
-using LocadoraDeAutomoveis.Dominio.ModuloPlanoDeCobranca;
 
 namespace LocadoraDeAutomoveis.WinApp.ModuloCupom
 {

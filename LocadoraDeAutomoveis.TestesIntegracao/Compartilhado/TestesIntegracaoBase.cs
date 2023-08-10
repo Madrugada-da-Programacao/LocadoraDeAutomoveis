@@ -22,13 +22,15 @@ using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCondutor;
 using LocadoraDeAutomoveis.Dominio.ModuloCupom;
 using LocadoraDeAutomoveis.Infra.Orm.ModuloCupom;
+using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
+using LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel;
 
 namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 {
     public class TestesIntegracaoBase
     {
 		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Aluguel
-		//protected IRepositorioCliente RepositorioCliente { get; set; }------------> Automovel
+		protected IRepositorioAutomovel RepositorioAutomovel { get; set; }
 		protected IRepositorioCliente RepositorioCliente { get; set; }
 		protected IRepositorioCondutor RepositorioCondutor { get; set; }
 		protected IRepositorioCupom RepositorioCupom { get; set; }
@@ -60,7 +62,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			ContextoPersistencia = dbContext;
 
 			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Aluguel
-			//RepositorioCliente = new RepositorioClienteEmOrm(dbContext);------------> Automovel
+			RepositorioAutomovel = new RepositorioAutomovelEmOrm(dbContext);
 			RepositorioCliente = new RepositorioClienteEmOrm(dbContext);
 			RepositorioCondutor = new RepositorioCondutorEmOrm(dbContext);
 			RepositorioCupom= new RepositorioCupomEmOrm(dbContext);
@@ -78,12 +80,11 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			//	ContextoPersistencia.GravarDados();
 			//});
 
-			//TODO
-			//BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>------------> Automovel
-			//{
-			//	RepositorioCliente.Inserir(cliente);
-			//	ContextoPersistencia.GravarDados();
-			//});
+			BuilderSetup.SetCreatePersistenceMethod<Automovel>(automovel =>
+			{
+				RepositorioAutomovel.Inserir(automovel);
+				ContextoPersistencia.GravarDados();
+			});
 
 
 			BuilderSetup.SetCreatePersistenceMethod<Cliente>(cliente =>
@@ -150,7 +151,7 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 
 			string sqlLimpezaTabela =
 				@"" //TODO Aluguel
-			   + "" //TODO Automovel
+			   + "DELETE FROM [DBO].[TBAutomovel];"
 			   + "DELETE FROM [DBO].[TBCONDUTOR];"
                + "DELETE FROM [DBO].[TBCLIENTE];" 
 			   + "DELETE FROM [DBO].[TBCUPOM];"
@@ -159,9 +160,9 @@ namespace LocadoraDeAutomoveis.TestesIntegracao.Compartilhado
 			   + "DELETE FROM [DBO].[TBGRUPODEAUTOMOVEIS];"
 			   + "DELETE FROM [DBO].[TBPARCEIRO];"
 			   + "DELETE FROM [DBO].[TBTAXAOUSERVICO];";
-				
 
-            SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
+			
+			SqlCommand comando = new SqlCommand(sqlLimpezaTabela, sqlConnection);
 
 			sqlConnection.Open();
 

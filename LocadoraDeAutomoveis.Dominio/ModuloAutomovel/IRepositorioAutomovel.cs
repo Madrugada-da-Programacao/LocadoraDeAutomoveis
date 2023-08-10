@@ -12,5 +12,8 @@ namespace LocadoraDeAutomoveis.Dominio.ModuloAutomovel
         Automovel? SelecionarPorPlaca(string placa);
 
         List<Automovel>? SelecionarPorGrupo(GrupoDeAutomoveis grupo);
-    }
+
+        List<Automovel>? SelecionarTodosComGrupoDeAutomovel();
+
+	}
 }

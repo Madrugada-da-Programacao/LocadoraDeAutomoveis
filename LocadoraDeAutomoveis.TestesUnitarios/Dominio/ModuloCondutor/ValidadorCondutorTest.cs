@@ -1,6 +1,5 @@
 ﻿using FluentValidation.TestHelper;
 using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
-using LocadoraDeAutomoveis.Dominio.ModuloCondutor;
 
 namespace LocadoraDeAutomoveis.TestesUnitarios.Dominio.ModuloCondutor
 {

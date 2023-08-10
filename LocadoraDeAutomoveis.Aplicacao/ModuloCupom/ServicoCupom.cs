@@ -138,8 +138,9 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCupom
 			if (resultadoValidacao != null)
 				erros.AddRange(resultadoValidacao.Errors.Select(x => x.ErrorMessage));
 
-			if (NomeCupomDuplicado(registro))
-				erros.Add($"Este nome '{registro.Nome}' já está sendo utilizado");
+			//TODO remover
+			//if (NomeCupomDuplicado(registro))
+			//	erros.Add($"Este nome '{registro.Nome}' já está sendo utilizado");
 
 			foreach (string erro in erros)
 			{
@@ -149,18 +150,19 @@ namespace LocadoraDeAutomoveis.Aplicacao.ModuloCupom
 			return erros;
 		}
 
-		private bool NomeCupomDuplicado(Cupom registro)
-		{
-			Cupom? possivelRegistroComMesmoNome = repositorioCupom.SelecionarPorNome(registro.Nome);
+		//TODO remover
+		//private bool NomeCupomDuplicado(Cupom registro)
+		//{
+		//	Cupom? possivelRegistroComMesmoNome = repositorioCupom.SelecionarPorNome(registro.Nome);
 
-			if (possivelRegistroComMesmoNome != null &&
-				possivelRegistroComMesmoNome.Id != registro.Id &&
-				possivelRegistroComMesmoNome.Nome == registro.Nome)
-			{
-				return true;
-			}
+		//	if (possivelRegistroComMesmoNome != null &&
+		//		possivelRegistroComMesmoNome.Id != registro.Id &&
+		//		possivelRegistroComMesmoNome.Nome == registro.Nome)
+		//	{
+		//		return true;
+		//	}
 
-			return false;
-		}
+		//	return false;
+		//}
 	}
 }

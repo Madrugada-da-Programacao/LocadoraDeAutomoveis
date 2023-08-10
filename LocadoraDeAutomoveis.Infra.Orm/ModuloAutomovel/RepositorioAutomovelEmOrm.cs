@@ -1,10 +1,5 @@
 ﻿using LocadoraDeAutomoveis.Dominio.ModuloAutomovel;
 using LocadoraDeAutomoveis.Dominio.ModuloGrupoDeAutomoveis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
 {
@@ -21,5 +16,10 @@ namespace LocadoraDeAutomoveis.Infra.Orm.ModuloAutomovel
         {
             return registros.Where(x => x.GrupoDeAutomovel == grupoDeAutomoveis).ToList();
         }
-    }
+
+		public List<Automovel>? SelecionarTodosComGrupoDeAutomovel()
+		{
+			return registros.Include(a => a.GrupoDeAutomovel).ToList();
+		}
+	}
 }
